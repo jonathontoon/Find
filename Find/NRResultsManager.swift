@@ -18,7 +18,6 @@ class NRResultsManager: NSObject, NRResultsCommunicatorDelegate {
     }
     
     // #pragma mark - NRResultsManagerDelegate
-    
     func receivedDomainSearchJSON(objectNotation: NSData) {
         var localError: NSError? = nil
         let results: NSArray = NRModelBuilder().getResultsFromJSON(objectNotation, error: localError)

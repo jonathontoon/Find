@@ -10,9 +10,14 @@
 		440A7C291AA419F00003F624 /* NRResultsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440A7C281AA419F00003F624 /* NRResultsManager.swift */; };
 		440A7C2B1AA41A860003F624 /* NRResultsCommunicatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440A7C2A1AA41A860003F624 /* NRResultsCommunicatorDelegate.swift */; };
 		440A7C2D1AA41AA30003F624 /* NRResultsManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440A7C2C1AA41AA30003F624 /* NRResultsManagerDelegate.swift */; };
+		442E88781AA5742A00A75B92 /* NRInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442E88771AA5742A00A75B92 /* NRInfoViewController.swift */; };
+		44AC985A1AA54E45009369EB /* NRInfoCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AC98591AA54E45009369EB /* NRInfoCommunicator.swift */; };
+		44AC985C1AA54EDA009369EB /* NRInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AC985B1AA54EDA009369EB /* NRInfoManager.swift */; };
+		44AC985E1AA54F9C009369EB /* NRInfoManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AC985D1AA54F9C009369EB /* NRInfoManagerDelegate.swift */; };
+		44AC98601AA54FCE009369EB /* NRInfoCommunicatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AC985F1AA54FCE009369EB /* NRInfoCommunicatorDelegate.swift */; };
 		44B063731AA3D4950033DEB2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B063721AA3D4950033DEB2 /* AppDelegate.swift */; };
 		44B063761AA3D4950033DEB2 /* Find.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 44B063741AA3D4950033DEB2 /* Find.xcdatamodeld */; };
-		44B063781AA3D4950033DEB2 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B063771AA3D4950033DEB2 /* MainViewController.swift */; };
+		44B063781AA3D4950033DEB2 /* NRResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B063771AA3D4950033DEB2 /* NRResultsViewController.swift */; };
 		44B0637B1AA3D4950033DEB2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 44B063791AA3D4950033DEB2 /* Main.storyboard */; };
 		44B0637D1AA3D4950033DEB2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 44B0637C1AA3D4950033DEB2 /* Images.xcassets */; };
 		44B063801AA3D4950033DEB2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 44B0637E1AA3D4950033DEB2 /* LaunchScreen.xib */; };
@@ -21,6 +26,7 @@
 		44B063981AA3DAE00033DEB2 /* NRResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B063971AA3DAE00033DEB2 /* NRResult.swift */; };
 		44B0639A1AA3E0D30033DEB2 /* NRResultsCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B063991AA3E0D30033DEB2 /* NRResultsCommunicator.swift */; };
 		44B0639C1AA3E8590033DEB2 /* NRModelBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B0639B1AA3E8590033DEB2 /* NRModelBuilder.swift */; };
+		44C820B71AA5536200DF4DD8 /* NRResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C820B61AA5536200DF4DD8 /* NRResultCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,11 +43,16 @@
 		440A7C281AA419F00003F624 /* NRResultsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRResultsManager.swift; sourceTree = "<group>"; };
 		440A7C2A1AA41A860003F624 /* NRResultsCommunicatorDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRResultsCommunicatorDelegate.swift; sourceTree = "<group>"; };
 		440A7C2C1AA41AA30003F624 /* NRResultsManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRResultsManagerDelegate.swift; sourceTree = "<group>"; };
+		442E88771AA5742A00A75B92 /* NRInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRInfoViewController.swift; sourceTree = "<group>"; };
+		44AC98591AA54E45009369EB /* NRInfoCommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRInfoCommunicator.swift; sourceTree = "<group>"; };
+		44AC985B1AA54EDA009369EB /* NRInfoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRInfoManager.swift; sourceTree = "<group>"; };
+		44AC985D1AA54F9C009369EB /* NRInfoManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRInfoManagerDelegate.swift; sourceTree = "<group>"; };
+		44AC985F1AA54FCE009369EB /* NRInfoCommunicatorDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRInfoCommunicatorDelegate.swift; sourceTree = "<group>"; };
 		44B0636D1AA3D4950033DEB2 /* Find.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Find.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		44B063711AA3D4950033DEB2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		44B063721AA3D4950033DEB2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		44B063751AA3D4950033DEB2 /* Find.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Find.xcdatamodel; sourceTree = "<group>"; };
-		44B063771AA3D4950033DEB2 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		44B063771AA3D4950033DEB2 /* NRResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NRResultsViewController.swift; sourceTree = "<group>"; };
 		44B0637A1AA3D4950033DEB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		44B0637C1AA3D4950033DEB2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		44B0637F1AA3D4950033DEB2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -52,6 +63,7 @@
 		44B063971AA3DAE00033DEB2 /* NRResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRResult.swift; sourceTree = "<group>"; };
 		44B063991AA3E0D30033DEB2 /* NRResultsCommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRResultsCommunicator.swift; sourceTree = "<group>"; };
 		44B0639B1AA3E8590033DEB2 /* NRModelBuilder.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRModelBuilder.swift; sourceTree = "<group>"; };
+		44C820B61AA5536200DF4DD8 /* NRResultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRResultCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +84,30 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		44AC98571AA54DFA009369EB /* NRResult */ = {
+			isa = PBXGroup;
+			children = (
+				44B063971AA3DAE00033DEB2 /* NRResult.swift */,
+				44B063991AA3E0D30033DEB2 /* NRResultsCommunicator.swift */,
+				440A7C281AA419F00003F624 /* NRResultsManager.swift */,
+				440A7C2C1AA41AA30003F624 /* NRResultsManagerDelegate.swift */,
+				440A7C2A1AA41A860003F624 /* NRResultsCommunicatorDelegate.swift */,
+			);
+			name = NRResult;
+			sourceTree = "<group>";
+		};
+		44AC98581AA54E27009369EB /* NRInfo */ = {
+			isa = PBXGroup;
+			children = (
+				44B063951AA3D8900033DEB2 /* NRInfo.swift */,
+				44AC985B1AA54EDA009369EB /* NRInfoManager.swift */,
+				44AC98591AA54E45009369EB /* NRInfoCommunicator.swift */,
+				44AC985D1AA54F9C009369EB /* NRInfoManagerDelegate.swift */,
+				44AC985F1AA54FCE009369EB /* NRInfoCommunicatorDelegate.swift */,
+			);
+			name = NRInfo;
+			sourceTree = "<group>";
+		};
 		44B063641AA3D4950033DEB2 = {
 			isa = PBXGroup;
 			children = (
@@ -94,14 +130,12 @@
 			isa = PBXGroup;
 			children = (
 				44B063721AA3D4950033DEB2 /* AppDelegate.swift */,
-				44B063771AA3D4950033DEB2 /* MainViewController.swift */,
-				44B063951AA3D8900033DEB2 /* NRInfo.swift */,
-				44B063971AA3DAE00033DEB2 /* NRResult.swift */,
-				44B063991AA3E0D30033DEB2 /* NRResultsCommunicator.swift */,
-				440A7C2A1AA41A860003F624 /* NRResultsCommunicatorDelegate.swift */,
-				440A7C281AA419F00003F624 /* NRResultsManager.swift */,
-				440A7C2C1AA41AA30003F624 /* NRResultsManagerDelegate.swift */,
+				44B063771AA3D4950033DEB2 /* NRResultsViewController.swift */,
+				442E88771AA5742A00A75B92 /* NRInfoViewController.swift */,
+				44C820B61AA5536200DF4DD8 /* NRResultCell.swift */,
 				44B0639B1AA3E8590033DEB2 /* NRModelBuilder.swift */,
+				44AC98581AA54E27009369EB /* NRInfo */,
+				44AC98571AA54DFA009369EB /* NRResult */,
 				44B063791AA3D4950033DEB2 /* Main.storyboard */,
 				44B0637C1AA3D4950033DEB2 /* Images.xcassets */,
 				44B0637E1AA3D4950033DEB2 /* LaunchScreen.xib */,
@@ -236,15 +270,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44AC98601AA54FCE009369EB /* NRInfoCommunicatorDelegate.swift in Sources */,
 				440A7C2D1AA41AA30003F624 /* NRResultsManagerDelegate.swift in Sources */,
-				44B063781AA3D4950033DEB2 /* MainViewController.swift in Sources */,
+				44B063781AA3D4950033DEB2 /* NRResultsViewController.swift in Sources */,
 				44B0639C1AA3E8590033DEB2 /* NRModelBuilder.swift in Sources */,
+				44C820B71AA5536200DF4DD8 /* NRResultCell.swift in Sources */,
+				44AC985E1AA54F9C009369EB /* NRInfoManagerDelegate.swift in Sources */,
 				44B0639A1AA3E0D30033DEB2 /* NRResultsCommunicator.swift in Sources */,
 				440A7C291AA419F00003F624 /* NRResultsManager.swift in Sources */,
+				44AC985C1AA54EDA009369EB /* NRInfoManager.swift in Sources */,
 				44B063981AA3DAE00033DEB2 /* NRResult.swift in Sources */,
 				44B063961AA3D8900033DEB2 /* NRInfo.swift in Sources */,
 				44B063761AA3D4950033DEB2 /* Find.xcdatamodeld in Sources */,
 				440A7C2B1AA41A860003F624 /* NRResultsCommunicatorDelegate.swift in Sources */,
+				44AC985A1AA54E45009369EB /* NRInfoCommunicator.swift in Sources */,
+				442E88781AA5742A00A75B92 /* NRInfoViewController.swift in Sources */,
 				44B063731AA3D4950033DEB2 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -401,6 +441,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = FindTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Find.app/Find";
@@ -416,6 +457,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = FindTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Find.app/Find";

@@ -18,15 +18,15 @@ class NRModelBuilder: NSObject {
         
         if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
 
-            let pulledResults: NSArray = parsedObject.valueForKey("results") as! NSArray
+            let pulledResults: NSArray = parsedObject.valueForKey("results") as NSArray
             
-            for resultDic in pulledResults as! [NSDictionary] {
+            for resultDic in pulledResults as [NSDictionary] {
                 let result: NRResult = NRResult()
                 
                 for object in resultDic {
                     
-                    if result.respondsToSelector(NSSelectorFromString(object.key as! String)) {
-                        result.setValue(object.value as! String, forKey:object.key as! String)
+                    if result.respondsToSelector(NSSelectorFromString(object.key as String)) {
+                        result.setValue(object.value as String, forKey:object.key as String)
                     }
                 }
                 
@@ -40,33 +40,25 @@ class NRModelBuilder: NSObject {
         return results;
     }
     
-    func getInfoFromJSON(objectNotation: NSData!, error: NSError?) -> NSMutableArray {
-        
-        let results: NSMutableArray = NSMutableArray()
+    func getInfoFromJSON(objectNotation: NSData!, error: NSError?) -> NRInfo {
+
+        let info: NRInfo = NRInfo()
         var error: NSError? = nil
         
         if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
             
-            let pulledResults: NSArray = parsedObject.valueForKey("results") as! NSArray
-            
-            for resultDic in pulledResults as! [NSDictionary] {
-                let result: NRResult = NRResult()
+            for object in parsedObject {
                 
-                for object in resultDic {
-                    
-                    if result.respondsToSelector(NSSelectorFromString(object.key as! String)) {
-                        result.setValue(object.value as! String, forKey:object.key as! String)
-                    }
+                if info.respondsToSelector(NSSelectorFromString(object.key as String)) {
+                    info.setValue(object.value as String, forKey:object.key as String)
                 }
-                
-                results.addObject(result)
             }
             
         } else {
             println("Could not parse JSON: \(error!)")
         }
         
-        return results;
+        return info
     }
     
 }
