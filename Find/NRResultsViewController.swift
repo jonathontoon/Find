@@ -8,12 +8,13 @@
 
 import UIKit
 
-class NRResultsViewController: UIViewController, NRResultsManagerDelegate, UITableViewDelegate, UITableViewDataSource {
+class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, UISearchResultsUpdating, UISearchBarDelegate {
 
     var results: NSArray?
     var manager: NRResultsManager!
     
-    var resultsTableView: UITableView!
+    var resultsSearchBar: UISearchBar!
+    var resultsSearchController: UISearchController!
     let resultsTableViewCellIdentifier: String = "NRResultCell"
     
     override func viewDidLoad() {
@@ -27,12 +28,22 @@ class NRResultsViewController: UIViewController, NRResultsManagerDelegate, UITab
         manager.communicator.delegate = manager
         manager.delegate = self
 
-        startFetchingResults()
+        resultsSearchBar = UISearchBar(frame: CGRectMake(0, 0, self.view.frame.size.width, 44))
         
-        resultsTableView = UITableView(frame: self.view.frame)
-        resultsTableView.dataSource = self
-        resultsTableView.delegate = self
-        resultsTableView.registerClass(NRResultCell.self, forCellReuseIdentifier: resultsTableViewCellIdentifier)
+        resultsSearchController = UISearchController(searchResultsController: nil)
+        resultsSearchController.searchResultsUpdater = self
+        resultsSearchController.searchBar.searchBarStyle = .Minimal
+        resultsSearchController.searchBar.sizeToFit()
+        resultsSearchController.searchBar.delegate = self
+        resultsSearchController.searchBar.backgroundColor = UIColor.whiteColor()
+        resultsSearchController.searchBar.setShowsCancelButton(false, animated: false)
+        resultsSearchController.definesPresentationContext = true
+        resultsSearchController.hidesNavigationBarDuringPresentation = false
+        resultsSearchController.dimsBackgroundDuringPresentation = false
+
+        self.tableView.registerClass(NRResultCell.self, forCellReuseIdentifier: resultsTableViewCellIdentifier)
+        self.tableView.tableHeaderView = resultsSearchController.searchBar
+       
     }
 
     override func didReceiveMemoryWarning() {
@@ -40,9 +51,9 @@ class NRResultsViewController: UIViewController, NRResultsManagerDelegate, UITab
         // Dispose of any resources that can be recreated.
     }
     
-    func startFetchingResults() {
+    func startFetchingResultsFromQuery(query: String!) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        manager.fetchResultsForQuery("keepitreal.com")
+        manager.fetchResultsForQuery(query)
     }
     
     // #pragma mark - NRResultsManagerDelegate
@@ -52,8 +63,7 @@ class NRResultsViewController: UIViewController, NRResultsManagerDelegate, UITab
         
         dispatch_async(dispatch_get_main_queue(), {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            self.view.addSubview(self.resultsTableView)
-            self.resultsTableView.reloadData()
+            self.tableView.reloadData()
         });
     }
     
@@ -63,11 +73,11 @@ class NRResultsViewController: UIViewController, NRResultsManagerDelegate, UITab
     
     // #pragma mark - UITableViewDataSource
     
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if results != nil {
             return self.results!.count-1
         } else {
@@ -75,10 +85,11 @@ class NRResultsViewController: UIViewController, NRResultsManagerDelegate, UITab
         }
     }
     
-    // #pragma mark - UITableViewDataSource
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var cell: NRResultCell! = tableView.dequeueReusableCellWithIdentifier(resultsTableViewCellIdentifier, forIndexPath: indexPath) as NRResultCell
+    // #pragma mark - UITableViewDataSooverride urce
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
+        var cell: NRResultCell! = tableView.dequeueReusableCellWithIdentifier(resultsTableViewCellIdentifier, forIndexPath: indexPath) as NRResultCell
+            
         if cell == nil {
             cell = NRResultCell() as NRResultCell
         }
@@ -88,17 +99,41 @@ class NRResultsViewController: UIViewController, NRResultsManagerDelegate, UITab
         return cell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 60.0
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        resultsSearchController.active = false
+        
         let result: NRResult = results!.objectAtIndex(indexPath.row) as NRResult
         let infoViewController: NRInfoViewController = NRInfoViewController()
         infoViewController.initWithDomainResult(result)
         
         self.navigationController?.pushViewController(infoViewController, animated: true)
+    }
+    
+    // #pragma mark - UISearchBarDelegate
+    func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
+        resultsSearchController.searchBar.setShowsCancelButton(false, animated: false)
+    }
+    
+    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
+        searchBar.returnKeyType = .Done
+        return true
+    }
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        resultsSearchController.searchBar.setShowsCancelButton(false, animated: false)
+    }
+    
+    func searchBarSearchButtonClicked(searchBar: UISearchBar) {
+        resultsSearchController.searchBar.setShowsCancelButton(false, animated: false)
+    }
+    
+    // #pragma mark - UISearchResultsUpdating Protocol
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        startFetchingResultsFromQuery(searchController.searchBar.text)
     }
     
 }
