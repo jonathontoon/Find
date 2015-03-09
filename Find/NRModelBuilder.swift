@@ -26,7 +26,7 @@ class NRModelBuilder: NSObject {
                 for object in resultDic {
                     
                     if result.respondsToSelector(NSSelectorFromString(object.key as String)) {
-                        result.setValue(object.value as String, forKey:object.key as String)
+                        result.setValue(object.value, forKey:object.key as String)
                     }
                 }
                 
@@ -48,9 +48,13 @@ class NRModelBuilder: NSObject {
         if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
             
             for object in parsedObject {
+                println(object)
                 
                 if info.respondsToSelector(NSSelectorFromString(object.key as String)) {
-                    info.setValue(object.value as String, forKey:object.key as String)
+                    println("passed")
+                    println(object.value)
+                    println(object.key)
+                    info.setValue(object.value, forKey:object.key as String)
                 }
             }
             
@@ -61,4 +65,22 @@ class NRModelBuilder: NSObject {
         return info
     }
     
+    func getSuggestionsFromJSON(objectNotation: NSData!, error: NSError?) -> NSArray? {
+        
+        println(objectNotation)
+        
+        var suggestions: NSArray!
+        var error: NSError? = nil
+        
+        if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
+            
+            println(parsedObject)
+            //suggestions = parsedObject.objectForKey("results") as NSArray
+            
+        } else {
+            println("Could not parse JSON: \(error!)")
+        }
+        
+        return suggestions
+    }
 }

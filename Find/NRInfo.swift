@@ -14,27 +14,17 @@ import UIKit
 class NRInfo: NSObject {
     
     var domain: String?
-    var whoisURL: NSURL?
-    var registerURL: NSURL?
+    var whois_url: String?
+    var register_url: String?
     
-    struct tld {
-        var domain: String?
-        var domainIDNA: String?
-        var wikipediaURL: NSURL?
-        var ianaURL: NSURL?
-    }
-    
-    struct registrars {
-        var registrar: String?
-        var name: String?
-        var registerURL: NSURL?
-    }
-    
+    var tld: NSDictionary?
+    var registrars: NSArray?
+
     var host: String?
     var path: String?
-    var wwwURL: NSURL?
+    var www_url: String?
     var query: String?
     var subdomain: String?
-    var domainIDNA: String?
+    var domain_idna: String?
     var availability: String?
 }

@@ -8,42 +8,50 @@
 
 import UIKit
 
-class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, UISearchResultsUpdating, UISearchBarDelegate {
-
-    var results: NSArray?
-    var manager: NRResultsManager!
+class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, UISearchResultsUpdating, UISearchBarDelegate, UIScrollViewDelegate {
     
-    var resultsSearchBar: UISearchBar!
+    var results: NSArray?
+    var resultsManager: NRResultsManager!
+    
+    var isSearching: Bool! = false
+    
     var resultsSearchController: UISearchController!
+    let suggestionsTableViewCellIdentifier: String = "NRSuggestionCell"
     let resultsTableViewCellIdentifier: String = "NRResultCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.title = "Search"
+      
         self.view.backgroundColor = UIColor.whiteColor()
         
-        manager = NRResultsManager()
-        manager.communicator = NRResultsCommunicator()
-        manager.communicator.delegate = manager
-        manager.delegate = self
+        resultsManager = NRResultsManager()
+        resultsManager.communicator = NRResultsCommunicator()
+        resultsManager.communicator.delegate = resultsManager
+        resultsManager.delegate = self
 
-        resultsSearchBar = UISearchBar(frame: CGRectMake(0, 0, self.view.frame.size.width, 44))
-        
         resultsSearchController = UISearchController(searchResultsController: nil)
         resultsSearchController.searchResultsUpdater = self
-        resultsSearchController.searchBar.searchBarStyle = .Minimal
+        
+        resultsSearchController.searchBar.searchBarStyle = .Prominent
         resultsSearchController.searchBar.sizeToFit()
         resultsSearchController.searchBar.delegate = self
-        resultsSearchController.searchBar.backgroundColor = UIColor.whiteColor()
+        resultsSearchController.searchBar.backgroundColor = UIColor.clearColor()
         resultsSearchController.searchBar.setShowsCancelButton(false, animated: false)
+        
+        // Hack to change the UISearchBar style
+        (resultsSearchController.searchBar.subviews[0].subviews[1] as UITextField).borderStyle = .None
+
+        
         resultsSearchController.definesPresentationContext = true
         resultsSearchController.hidesNavigationBarDuringPresentation = false
         resultsSearchController.dimsBackgroundDuringPresentation = false
 
         self.tableView.registerClass(NRResultCell.self, forCellReuseIdentifier: resultsTableViewCellIdentifier)
-        self.tableView.tableHeaderView = resultsSearchController.searchBar
+        self.tableView.registerClass(NRSuggestionCell.self, forCellReuseIdentifier: suggestionsTableViewCellIdentifier)
+        self.navigationItem.titleView = resultsSearchController.searchBar
        
+        // Implement API stuff
+        // https://www.kimonolabs.com/api/ondemand/9c160p7k?apikey=e64b763681f140bec8391a4e8547d9dd&kimmodify=1&keyword=KEYWORD
     }
 
     override func didReceiveMemoryWarning() {
@@ -53,9 +61,9 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     
     func startFetchingResultsFromQuery(query: String!) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        manager.fetchResultsForQuery(query)
+        resultsManager.fetchResultsForQuery(query)
     }
-    
+
     // #pragma mark - NRResultsManagerDelegate
     
     func didReceiveResults(results: NSArray!) {
@@ -78,25 +86,30 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         if results != nil {
             return self.results!.count-1
         } else {
             return 0
         }
+        
     }
     
-    // #pragma mark - UITableViewDataSooverride urce
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    // #pragma mark - UITableViewDataSource
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> NRResultCell {
         
-        var cell: NRResultCell! = tableView.dequeueReusableCellWithIdentifier(resultsTableViewCellIdentifier, forIndexPath: indexPath) as NRResultCell
-            
+        var cell: NRResultCell! = tableView.dequeueReusableCellWithIdentifier(resultsTableViewCellIdentifier) as NRResultCell
+        
         if cell == nil {
-            cell = NRResultCell() as NRResultCell
+            cell = NRResultCell(style: .Default, reuseIdentifier: resultsTableViewCellIdentifier)
         }
-
-        cell.textLabel?.text = results!.objectAtIndex(indexPath.row).domain
+        
+        println((results!.objectAtIndex(indexPath.row) as NRResult).availability)
+        
+        cell.textLabel?.text = (results!.objectAtIndex(indexPath.row) as NRResult).domain! + " " + (results!.objectAtIndex(indexPath.row) as NRResult).availability!
         
         return cell
+        
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -104,36 +117,36 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        resultsSearchController.active = false
         
-        let result: NRResult = results!.objectAtIndex(indexPath.row) as NRResult
-        let infoViewController: NRInfoViewController = NRInfoViewController()
-        infoViewController.initWithDomainResult(result)
+        if isSearching == true {
+            resultsSearchController.active = false
+            
+            let result: NRResult = results!.objectAtIndex(indexPath.row) as NRResult
+            let infoViewController: NRInfoViewController = NRInfoViewController(style: .Grouped)
+            infoViewController.initWithDomainResult(result)
+           
+            self.navigationController?.pushViewController(infoViewController, animated: true)
         
-        self.navigationController?.pushViewController(infoViewController, animated: true)
+        }
     }
     
     // #pragma mark - UISearchBarDelegate
-    func searchBar(searchBar: UISearchBar, selectedScopeButtonIndexDidChange selectedScope: Int) {
-        resultsSearchController.searchBar.setShowsCancelButton(false, animated: false)
-    }
     
-    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
-        searchBar.returnKeyType = .Done
-        return true
-    }
-    
-    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
-        resultsSearchController.searchBar.setShowsCancelButton(false, animated: false)
-    }
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        resultsSearchController.searchBar.setShowsCancelButton(false, animated: false)
+        NSLog("searchBarSearchButtonClicked")
+        isSearching = true
+        startFetchingResultsFromQuery(resultsSearchController.searchBar.text)
     }
     
-    // #pragma mark - UISearchResultsUpdating Protocol
+    // #pragma mark - UIS earchResultsUpdating Protocol
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-        startFetchingResultsFromQuery(searchController.searchBar.text)
+        NSLog("updateSearchResultsForSearchController")
+    }
+    
+    // #pragma mark - UIScrollViewDelegate
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        
     }
     
 }

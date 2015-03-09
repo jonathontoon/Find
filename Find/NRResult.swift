@@ -14,7 +14,7 @@ import UIKit
 class NRResult: NSObject {
  
     var domain: String?
-    var registerURL: NSURL?
+    var register_url: String?
     var host: String?
     var path: String?
     var subdomain: String?
