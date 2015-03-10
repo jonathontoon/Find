@@ -39,6 +39,9 @@ class NRInfoViewController: UITableViewController, NRInfoManagerDelegate {
         
         self.view.backgroundColor = UIColor.redColor()
         
+        self.tableView.registerClass(NRInfoViewDefaultCell.self, forCellReuseIdentifier: "NRInfoViewDefaultCell")
+        self.tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: "NRInfoViewRegistrarCell")
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -55,6 +58,8 @@ class NRInfoViewController: UITableViewController, NRInfoManagerDelegate {
     
     func didReceiveInfo(info: NRInfo!) {
         self.info = info
+        
+        println(self.info)
         
         dispatch_async(dispatch_get_main_queue(), {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -124,17 +129,19 @@ class NRInfoViewController: UITableViewController, NRInfoManagerDelegate {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-//        var cell: NRResultCell! = tableView.dequeueReusableCellWithIdentifier(resultsTableViewCellIdentifier) as NRResultCell
-//        
-//        if cell == nil {
-//            cell = NRResultCell(style: .Default, reuseIdentifier: resultsTableViewCellIdentifier)
-//        }
-//        
-//        println((results!.objectAtIndex(indexPath.row) as NRResult).availability)
-//        
-//        cell.textLabel?.text = (results!.objectAtIndex(indexPath.row) as NRResult).domain! + " " + (results!.objectAtIndex(indexPath.row) as NRResult).availability!
-//        
-        return UITableViewCell()
+        var cell: UITableViewCell!
+        
+        if indexPath.section == 0 {
+
+            cell = createDefaultCell(indexPath)
+            
+        } else if indexPath.section == 1 {
+        
+            cell = createRegistrarCell(indexPath)
+        
+        }
+        
+        return cell
         
     }
     
@@ -146,4 +153,37 @@ class NRInfoViewController: UITableViewController, NRInfoManagerDelegate {
         
     }
     
+    func createDefaultCell(indexPath: NSIndexPath!) -> NRInfoViewDefaultCell {
+        
+        var cell: NRInfoViewDefaultCell? = tableView.dequeueReusableCellWithIdentifier("NRInfoViewDefaultCell", forIndexPath: indexPath) as? NRInfoViewDefaultCell
+        
+        if cell == nil {
+            cell = NRInfoViewDefaultCell(style: .Default, reuseIdentifier: "NRInfoViewDefaultCell")
+        }
+        
+        cell?.title.text = "Whois Info"
+        
+        if indexPath.row == 1 {
+            cell?.title.text = "TLD Wikipedia Article"
+        }
+        
+        return cell!
+        
+    }
+    
+    func createRegistrarCell(indexPath: NSIndexPath!) -> NRInfoViewRegistrarCell {
+        
+        var cell: NRInfoViewRegistrarCell? = tableView.dequeueReusableCellWithIdentifier("NRInfoViewRegistrarCell", forIndexPath: indexPath) as? NRInfoViewRegistrarCell
+        
+        if cell == nil {
+            cell = NRInfoViewRegistrarCell(style: .Default, reuseIdentifier: "NRInfoViewRegistrarCell")
+        }
+        
+        println(info.registrars?.objectAtIndex(indexPath.row).name)
+        
+        cell?.title.text = info.registrars?.objectAtIndex(indexPath.row).name
+        
+        return cell!
+        
+    }
 }
