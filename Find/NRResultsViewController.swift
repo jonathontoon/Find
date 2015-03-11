@@ -122,8 +122,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
             resultsSearchController.active = false
             
             let result: NRResult = results!.objectAtIndex(indexPath.row) as NRResult
-            let infoViewController: NRInfoViewController = NRInfoViewController(style: .Grouped)
-            infoViewController.initWithDomainResult(result)
+            let infoViewController: NRInfoViewController = NRInfoViewController(result: result)
            
             self.navigationController?.pushViewController(infoViewController, animated: true)
         

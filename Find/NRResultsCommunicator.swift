@@ -12,9 +12,10 @@ class NRResultsCommunicator: NSObject {
     
     var delegate: NRResultsCommunicatorDelegate!
     
-    func searchForDomainsThatContainQuery(query: String!) {
-        
-        let urlAsString: String = String(format: "https://domainr.com/api/json/search?client_id=example&q=%@", query)
+    func searchForDomainsThatContainQuery(query: NSString!) {
+       
+        let urlAsString: String = String(format: "https://domainr.com/api/json/search?client_id=example&q=%@", query.stringByReplacingOccurrencesOfString(" ", withString: ""))
+            
         let url: NSURL = NSURL(string: urlAsString)!
         
         NSURLConnection.sendAsynchronousRequest(NSURLRequest(URL: url), queue: NSOperationQueue(), completionHandler: {

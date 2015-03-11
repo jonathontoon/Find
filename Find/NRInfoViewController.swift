@@ -8,14 +8,19 @@
 
 import UIKit
 
-class NRInfoViewController: UITableViewController, NRInfoManagerDelegate {
+class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableViewDataSource, UITableViewDelegate {
 
     var result: NRResult!
     
     var manager: NRInfoManager!
     var info: NRInfo!
     
-    func initWithDomainResult(result: NRResult) {
+    var tableView: UITableView!
+    var actionButton: NRActionButton!
+    
+    init(result: NRResult!) {
+        super.init(nibName: nil, bundle: nil)
+        
         self.result = result
         
         manager = NRInfoManager()
@@ -24,6 +29,10 @@ class NRInfoViewController: UITableViewController, NRInfoManagerDelegate {
         manager.delegate = self
         
         startFetchingInfo()
+    }
+
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
     
     override func viewDidLoad() {
@@ -39,9 +48,24 @@ class NRInfoViewController: UITableViewController, NRInfoManagerDelegate {
         
         self.view.backgroundColor = UIColor.redColor()
         
-        self.tableView.registerClass(NRInfoViewDefaultCell.self, forCellReuseIdentifier: "NRInfoViewDefaultCell")
-        self.tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: "NRInfoViewRegistrarCell")
+        tableView = UITableView(frame: self.view.frame, style: UITableViewStyle.Grouped)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.registerClass(NRInfoViewDefaultCell.self, forCellReuseIdentifier: "NRInfoViewDefaultCell")
+        tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: "NRInfoViewRegistrarCell")
+        tableView.contentInset = UIEdgeInsetsMake(0, 0, 58.0, 0)
+        self.view.addSubview(tableView)
         
+        let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 58.0, self.view.frame.size.width, 58.0)
+        if result.availability == "available" {
+           actionButton = NRActionButton(frame: buttonFrame, buttonType: ButtonType.Available)
+        } else if result.availability == "taken" {
+           actionButton = NRActionButton(frame: buttonFrame, buttonType: ButtonType.Taken)
+        } else if result.availability == "maybe" {
+           actionButton = NRActionButton(frame: buttonFrame, buttonType: ButtonType.ComingSoon)
+        }
+        
+        self.view.addSubview(actionButton)
     }
     
     override func didReceiveMemoryWarning() {
@@ -73,7 +97,7 @@ class NRInfoViewController: UITableViewController, NRInfoManagerDelegate {
 
     // #pragma mark - UITableViewDataSource
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         
         var sectionTotal: Int = 1
         
@@ -86,7 +110,7 @@ class NRInfoViewController: UITableViewController, NRInfoManagerDelegate {
         return sectionTotal
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         var numberOfRows: Int = 0
         
@@ -116,9 +140,9 @@ class NRInfoViewController: UITableViewController, NRInfoManagerDelegate {
     
     // #pragma mark - UITableViewDelegate
     
-    override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        var height: CGFloat = 25.0
+        var height: CGFloat = 35.0
         
         if section == 1 {
             height = 45.0
@@ -127,7 +151,11 @@ class NRInfoViewController: UITableViewController, NRInfoManagerDelegate {
         return height
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 0.0
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell: UITableViewCell!
         
@@ -145,11 +173,11 @@ class NRInfoViewController: UITableViewController, NRInfoManagerDelegate {
         
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60.0
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 54.0
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
     }
     
@@ -166,7 +194,7 @@ class NRInfoViewController: UITableViewController, NRInfoManagerDelegate {
         if indexPath.row == 1 {
             cell?.title.text = "TLD Wikipedia Article"
         }
-        
+
         return cell!
         
     }
@@ -179,9 +207,11 @@ class NRInfoViewController: UITableViewController, NRInfoManagerDelegate {
             cell = NRInfoViewRegistrarCell(style: .Default, reuseIdentifier: "NRInfoViewRegistrarCell")
         }
         
-        println(info.registrars?.objectAtIndex(indexPath.row).name)
+        cell?.title.text = NSString(format: "%d", info.registrars!.count - 5) + "More"
         
-        cell?.title.text = info.registrars?.objectAtIndex(indexPath.row).name
+        if indexPath.row < 5 {
+            cell?.title.text = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as NSString
+        }
         
         return cell!
         
