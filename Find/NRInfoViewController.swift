@@ -56,7 +56,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 58.0, 0)
         self.view.addSubview(tableView)
         
-        let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 58.0, self.view.frame.size.width, 58.0)
+        let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 50.0, self.view.frame.size.width, 50.0)
         if result.availability == "available" {
            actionButton = NRActionButton(frame: buttonFrame, buttonType: ButtonType.Available)
         } else if result.availability == "taken" {
@@ -174,7 +174,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 54.0
+        return 60.0
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -190,6 +190,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         }
         
         cell?.title.text = "Whois Info"
+        cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         
         if indexPath.row == 1 {
             cell?.title.text = "TLD Wikipedia Article"
@@ -207,7 +208,9 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             cell = NRInfoViewRegistrarCell(style: .Default, reuseIdentifier: "NRInfoViewRegistrarCell")
         }
         
-        cell?.title.text = NSString(format: "%d", info.registrars!.count - 5) + "More"
+        cell?.title.text = NSString(format: "View %d ", info.registrars!.count - 5) + "Others"
+        cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        
         
         if indexPath.row < 5 {
             cell?.title.text = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as NSString

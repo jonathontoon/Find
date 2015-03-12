@@ -15,7 +15,7 @@ class NRInfoViewDefaultCell: UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        title = UILabel(frame: CGRectMake(15.0, 0 , 225.0, 54.0))
+        title = UILabel(frame: CGRectMake(15.0, 0 , 225.0, 60.0))
         title.backgroundColor = UIColor.yellowColor()
         self.contentView.addSubview(title)
     }

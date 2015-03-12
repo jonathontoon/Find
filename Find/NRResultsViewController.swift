@@ -104,8 +104,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
             cell = NRResultCell(style: .Default, reuseIdentifier: resultsTableViewCellIdentifier)
         }
         
-        println((results!.objectAtIndex(indexPath.row) as NRResult).availability)
-        
+        cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         cell.textLabel?.text = (results!.objectAtIndex(indexPath.row) as NRResult).domain! + " " + (results!.objectAtIndex(indexPath.row) as NRResult).availability!
         
         return cell
