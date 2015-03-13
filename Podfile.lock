@@ -1,0 +1,22 @@
+PODS:
+  - UIColor+Hex (1.0.1):
+    - UIColor+Hex/NSColor (= 1.0.1)
+    - UIColor+Hex/UIColor (= 1.0.1)
+  - UIColor+Hex/UIColor (1.0.1)
+
+DEPENDENCIES:
+  - UIColor+Hex (from `https://github.com/Inferis/UIColor-Hex.git`)
+
+EXTERNAL SOURCES:
+  UIColor+Hex:
+    :git: https://github.com/Inferis/UIColor-Hex.git
+
+CHECKOUT OPTIONS:
+  UIColor+Hex:
+    :commit: 866b6e3785df690f75975aea699b11a72081c415
+    :git: https://github.com/Inferis/UIColor-Hex.git
+
+SPEC CHECKSUMS:
+  UIColor+Hex: 5ca7532528968af382128af7bfe73afe0839ba1e
+
+COCOAPODS: 0.36.0

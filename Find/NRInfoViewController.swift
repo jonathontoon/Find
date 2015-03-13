@@ -46,7 +46,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         self.navigationItem.titleView?.backgroundColor = UIColor.clearColor()
         self.navigationItem.titleView?.layer.backgroundColor = UIColor.clearColor().CGColor
         
-        self.view.backgroundColor = UIColor.redColor()
+        self.view.backgroundColor = UIColor(CSS: "F9FAF9")
         
         tableView = UITableView(frame: self.view.frame, style: UITableViewStyle.Grouped)
         tableView.delegate = self
@@ -54,6 +54,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         tableView.registerClass(NRInfoViewDefaultCell.self, forCellReuseIdentifier: "NRInfoViewDefaultCell")
         tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: "NRInfoViewRegistrarCell")
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 58.0, 0)
+        tableView.backgroundColor = UIColor(CSS: "F9FAF9")
         self.view.addSubview(tableView)
         
         let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 50.0, self.view.frame.size.width, 50.0)
@@ -62,10 +63,14 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         } else if result.availability == "taken" {
            actionButton = NRActionButton(frame: buttonFrame, buttonType: ButtonType.Taken)
         } else if result.availability == "maybe" {
+           println("maybe")
            actionButton = NRActionButton(frame: buttonFrame, buttonType: ButtonType.ComingSoon)
         }
         
-        self.view.addSubview(actionButton)
+        if actionButton != nil {
+            println("Not nil")
+            self.view.addSubview(actionButton)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -142,10 +147,10 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        var height: CGFloat = 35.0
+        var height: CGFloat = 36.0
         
         if section == 1 {
-            height = 45.0
+            height = 56.0
         }
         
         return height
@@ -174,7 +179,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60.0
+        return 45.0
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

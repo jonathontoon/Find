@@ -20,14 +20,18 @@ class NRActionButton: UIButton {
         super.init(frame: frame)
         
         if buttonType == ButtonType.Available {
-            self.titleLabel?.text = "Buy Now"
+            self.setTitle("Buy Now", forState: UIControlState.Normal)
             self.backgroundColor = UIColor.greenColor()
         } else if buttonType == ButtonType.Taken {
-            self.titleLabel?.text = "Make An Offer"
+            self.setTitle("Make An Offer", forState: UIControlState.Normal)
             self.backgroundColor = UIColor.blueColor()
         } else if buttonType == ButtonType.ComingSoon {
-            self.titleLabel?.text = "Reserve For Free"
+            self.setTitle("Reserve For Free", forState: UIControlState.Normal)
+            self.backgroundColor = UIColor.greenColor()
         }
+        
+        self.titleLabel?.textColor = UIColor.whiteColor()
+        self.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 17.0)
     }
 
     required init(coder aDecoder: NSCoder) {

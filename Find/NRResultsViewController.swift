@@ -22,7 +22,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
       
-        self.view.backgroundColor = UIColor.whiteColor()
+        self.view.backgroundColor = UIColor(CSS: "F9FAF9")
         
         resultsManager = NRResultsManager()
         resultsManager.communicator = NRResultsCommunicator()
@@ -48,6 +48,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
 
         self.tableView.registerClass(NRResultCell.self, forCellReuseIdentifier: resultsTableViewCellIdentifier)
         self.tableView.registerClass(NRSuggestionCell.self, forCellReuseIdentifier: suggestionsTableViewCellIdentifier)
+        self.tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 0, 0)
         self.navigationItem.titleView = resultsSearchController.searchBar
        
         // Implement API stuff

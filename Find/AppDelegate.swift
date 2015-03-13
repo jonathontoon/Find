@@ -18,6 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         let navigationController: UINavigationController = UINavigationController(rootViewController: NRResultsViewController())
+        navigationController.navigationBar.barTintColor = UIColor.whiteColor()
+        navigationController.navigationBar.translucent = false
+        navigationController.navigationBar.tintColor = UIColor(CSS: "#2870B0")
+        
         window?.rootViewController = navigationController
         
         return true
