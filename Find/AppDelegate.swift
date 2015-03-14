@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let navigationController: UINavigationController = UINavigationController(rootViewController: NRResultsViewController())
         navigationController.navigationBar.barTintColor = UIColor.whiteColor()
         navigationController.navigationBar.translucent = false
-        navigationController.navigationBar.tintColor = UIColor(CSS: "#2870B0")
+        navigationController.navigationBar.tintColor = NRColor().domainrBlueColor()
         
         window?.rootViewController = navigationController
         

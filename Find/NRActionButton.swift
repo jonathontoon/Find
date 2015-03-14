@@ -21,13 +21,13 @@ class NRActionButton: UIButton {
         
         if buttonType == ButtonType.Available {
             self.setTitle("Buy Now", forState: UIControlState.Normal)
-            self.backgroundColor = UIColor.greenColor()
+            self.backgroundColor = NRColor().domainrGreenColor()
         } else if buttonType == ButtonType.Taken {
             self.setTitle("Make An Offer", forState: UIControlState.Normal)
-            self.backgroundColor = UIColor.blueColor()
+            self.backgroundColor = NRColor().domainrBlueColor()
         } else if buttonType == ButtonType.ComingSoon {
             self.setTitle("Reserve For Free", forState: UIControlState.Normal)
-            self.backgroundColor = UIColor.greenColor()
+            self.backgroundColor = NRColor().domainrGreenColor()
         }
         
         self.titleLabel?.textColor = UIColor.whiteColor()

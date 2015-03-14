@@ -46,7 +46,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         self.navigationItem.titleView?.backgroundColor = UIColor.clearColor()
         self.navigationItem.titleView?.layer.backgroundColor = UIColor.clearColor().CGColor
         
-        self.view.backgroundColor = UIColor(CSS: "F9FAF9")
+        self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
         
         tableView = UITableView(frame: self.view.frame, style: UITableViewStyle.Grouped)
         tableView.delegate = self
@@ -54,10 +54,10 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         tableView.registerClass(NRInfoViewDefaultCell.self, forCellReuseIdentifier: "NRInfoViewDefaultCell")
         tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: "NRInfoViewRegistrarCell")
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 58.0, 0)
-        tableView.backgroundColor = UIColor(CSS: "F9FAF9")
+        tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
         self.view.addSubview(tableView)
         
-        let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 50.0, self.view.frame.size.width, 50.0)
+        let buttonFrame: CGRect = CGRectMake(0, (self.view.frame.size.height - 64.0) - 50.0, self.view.frame.size.width, 50.0)
         if result.availability == "available" {
            actionButton = NRActionButton(frame: buttonFrame, buttonType: ButtonType.Available)
         } else if result.availability == "taken" {

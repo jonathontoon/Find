@@ -22,7 +22,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     override func viewDidLoad() {
         super.viewDidLoad()
       
-        self.view.backgroundColor = UIColor(CSS: "F9FAF9")
+        self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
         
         resultsManager = NRResultsManager()
         resultsManager.communicator = NRResultsCommunicator()
@@ -89,8 +89,10 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if results != nil {
+            self.tableView.separatorStyle = .SingleLine
             return self.results!.count-1
         } else {
+            self.tableView.separatorStyle = .None
             return 0
         }
         
