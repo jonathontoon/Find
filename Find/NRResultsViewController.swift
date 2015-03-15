@@ -15,6 +15,8 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     
     var isSearching: Bool! = false
     
+    var query: String!
+    
     var resultsSearchController: UISearchController!
     let resultsTableViewCellIdentifier: String = "NRResultCell"
     let suggestionOptionCellIdentifier: String = "NRSuggestionOptionCell"
@@ -36,8 +38,14 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         resultsSearchController.searchBar.sizeToFit()
         resultsSearchController.searchBar.delegate = self
         resultsSearchController.searchBar.backgroundColor = UIColor.clearColor()
-        resultsSearchController.searchBar.placeholder = "Search for a name or URL..."
         resultsSearchController.searchBar.setShowsCancelButton(false, animated: false)
+        
+        if self.query != nil {
+            resultsSearchController.searchBar.placeholder = self.query
+            resultsSearchController.searchBar.text = self.query
+        } else {
+            resultsSearchController.searchBar.placeholder = "Search for a name or URL..."
+        }
         
         // Rough code to change the UISearchBar style
         (resultsSearchController.searchBar.subviews[0].subviews[1] as UITextField).borderStyle = .None
@@ -48,7 +56,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
 
         self.tableView.registerClass(NRResultCell.self, forCellReuseIdentifier: resultsTableViewCellIdentifier)
         self.tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: suggestionOptionCellIdentifier)
-        self.tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 0, 0)
+        self.tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 36.0, 0)
         self.navigationItem.titleView = resultsSearchController.searchBar
        
         // Implement API stuff
@@ -89,6 +97,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         var numberOfRows: Int!
+        self.tableView.separatorStyle = .SingleLine
         
         if isSearching == true && resultsSearchController.searchBar.text != nil {
             
@@ -102,6 +111,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
                 
             } else {
                 
+                self.tableView.separatorStyle = .None
                 numberOfRows = 0
                 
             }
@@ -181,7 +191,8 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         NSLog("searchBarSearchButtonClicked")
         isSearching = false
-        startFetchingResultsFromQuery(resultsSearchController.searchBar.text)
+        self.query = searchBar.text
+        startFetchingResultsFromQuery(self.query)
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
@@ -191,6 +202,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     
     func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
         isSearching = true
+        //searchBar.text = self.query != nil ? self.query : ""
         return true
     }
     
@@ -198,9 +210,13 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         self.tableView.reloadData()
     }
     
-    // #pragma mark - UIS earchResultsUpdating Protocol
+    // #pragma mark - UISearchResultsUpdating Protocol
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         NSLog("updateSearchResultsForSearchController")
+        
+        if searchController.searchBar.text != nil {
+            self.query = searchController.searchBar.text
+        }
     }
     
     // #pragma mark - UIScrollViewDelegate

@@ -38,6 +38,7 @@
 		44B920401AAB65FE00D8DB68 /* NRSearchSuggestionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B9203F1AAB65FE00D8DB68 /* NRSearchSuggestionCell.swift */; };
 		44C8129F1AAFCDC90098A68A /* NRActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C8129E1AAFCDC90098A68A /* NRActionButton.swift */; };
 		44C820B71AA5536200DF4DD8 /* NRResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C820B61AA5536200DF4DD8 /* NRResultCell.swift */; };
+		44CF69391AB5F02600341894 /* NRRegistrarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CF69381AB5F02600341894 /* NRRegistrarViewController.swift */; };
 		44F42BFC1AAD5684009C5EC5 /* NRDefaultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F42BFB1AAD5684009C5EC5 /* NRDefaultCell.swift */; };
 		44F42BFE1AAD5747009C5EC5 /* NRInfoViewRegistrarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F42BFD1AAD5747009C5EC5 /* NRInfoViewRegistrarCell.swift */; };
 /* End PBXBuildFile section */
@@ -87,6 +88,7 @@
 		44B9203F1AAB65FE00D8DB68 /* NRSearchSuggestionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRSearchSuggestionCell.swift; sourceTree = "<group>"; };
 		44C8129E1AAFCDC90098A68A /* NRActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRActionButton.swift; sourceTree = "<group>"; };
 		44C820B61AA5536200DF4DD8 /* NRResultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRResultCell.swift; sourceTree = "<group>"; };
+		44CF69381AB5F02600341894 /* NRRegistrarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRRegistrarViewController.swift; sourceTree = "<group>"; };
 		44F42BFB1AAD5684009C5EC5 /* NRDefaultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRDefaultCell.swift; sourceTree = "<group>"; };
 		44F42BFD1AAD5747009C5EC5 /* NRInfoViewRegistrarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRInfoViewRegistrarCell.swift; sourceTree = "<group>"; };
 		5A3E0785701369F9135B46D4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 			children = (
 				44B063721AA3D4950033DEB2 /* AppDelegate.swift */,
 				443B1FF01AB43052007F2782 /* NRColor.swift */,
+				44CF693A1AB5F02900341894 /* NRRegistrar */,
 				4432BB491AB548D1004BC114 /* NRSuggestions */,
 				4432BB481AB54184004BC114 /* NRResults */,
 				442A97C51AAE8F0500AAD346 /* NRInfoView */,
@@ -276,6 +279,14 @@
 				44B0638A1AA3D4950033DEB2 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		44CF693A1AB5F02900341894 /* NRRegistrar */ = {
+			isa = PBXGroup;
+			children = (
+				44CF69381AB5F02600341894 /* NRRegistrarViewController.swift */,
+			);
+			name = NRRegistrar;
 			sourceTree = "<group>";
 		};
 		4D9F3D7BE09D19DF64ED91DA /* Frameworks */ = {
@@ -438,6 +449,7 @@
 				44B920381AAB5D9400D8DB68 /* NRSuggestionsManager.swift in Sources */,
 				44B063981AA3DAE00033DEB2 /* NRResult.swift in Sources */,
 				443B1FF11AB43052007F2782 /* NRColor.swift in Sources */,
+				44CF69391AB5F02600341894 /* NRRegistrarViewController.swift in Sources */,
 				44B063961AA3D8900033DEB2 /* NRInfo.swift in Sources */,
 				44B063761AA3D4950033DEB2 /* Find.xcdatamodeld in Sources */,
 				4432BB4B1AB54FE2004BC114 /* NRSuggestionsViewController.swift in Sources */,

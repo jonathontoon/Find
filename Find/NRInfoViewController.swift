@@ -53,7 +53,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         tableView.dataSource = self
         tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: "NRDefaultCell")
         tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: "NRInfoViewRegistrarCell")
-        tableView.contentInset = UIEdgeInsetsMake(0, 0, 58.0, 0)
+        tableView.contentInset = UIEdgeInsetsMake(0, 0, 120.0, 0)
         tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
         self.view.addSubview(tableView)
         
@@ -131,10 +131,10 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             }
             
             if section == 1 {
-                if info.registrars?.count < 5 {
+                if info.registrars?.count < 6 {
                     numberOfRows = info.registrars!.count
                 } else {
-                    numberOfRows = 6
+                    numberOfRows = 7
                 }
             }
         }
@@ -180,6 +180,14 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
+        if indexPath.row >= 6 {
+            println("yes")
+            let newArray: NSArray = info.registrars!.subarrayWithRange(NSMakeRange(7, info.registrars!.count)) as NSArray
+            let registrarsViewController: NRRegistrarViewController = NRRegistrarViewController(registrars: newArray)
+            self.navigationController?.pushViewController(registrarsViewController, animated: true)
+            
+        }
+        
     }
     
     func createDefaultCell(indexPath: NSIndexPath!) -> NRDefaultCell {
@@ -209,11 +217,11 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             cell = NRInfoViewRegistrarCell(style: .Default, reuseIdentifier: "NRInfoViewRegistrarCell")
         }
         
-        cell?.textLabel?.text = NSString(format: "View %d ", info.registrars!.count - 5) + "Others"
+        cell?.textLabel?.text = NSString(format: "View %d ", info.registrars!.count - 6) + "Others"
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         
         
-        if indexPath.row < 5 {
+        if indexPath.row < 6 {
             cell?.textLabel?.text = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as NSString
         }
         
