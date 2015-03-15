@@ -175,14 +175,14 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     }
     
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 45.0
+        return 60.0
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
         if indexPath.row >= 6 {
             println("yes")
-            let newArray: NSArray = info.registrars!.subarrayWithRange(NSMakeRange(7, info.registrars!.count)) as NSArray
+            let newArray: NSArray = info.registrars!.objectsAtIndexes(NSIndexSet(indexesInRange: NSMakeRange(6, info.registrars!.count-8))) as NSArray
             let registrarsViewController: NRRegistrarViewController = NRRegistrarViewController(registrars: newArray)
             self.navigationController?.pushViewController(registrarsViewController, animated: true)
             

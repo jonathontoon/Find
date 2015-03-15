@@ -25,6 +25,13 @@ class NRRegistrarViewController: UITableViewController {
     }
     
     override func viewDidLoad() {
+        
+        self.title = "More Registrars"
+        self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
+        
+        let backButtonItem: UIBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
+        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButtonItem
+        
         self.tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: registrarsTableViewCellIdentifier)
         self.tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 36.0, 0)
     }

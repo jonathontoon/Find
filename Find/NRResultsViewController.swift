@@ -177,6 +177,9 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         } else if isSearching == true {
             
             if indexPath.row == 0 {
+                
+                println("did execute?")
+                
                 viewControllerForPush = NRSuggestionsViewController(query: resultsSearchController.searchBar.text)
             } else {
                 // Search Using History
@@ -202,7 +205,6 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     
     func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
         isSearching = true
-        //searchBar.text = self.query != nil ? self.query : ""
         return true
     }
     
