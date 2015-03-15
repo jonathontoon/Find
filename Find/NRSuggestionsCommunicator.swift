@@ -14,10 +14,8 @@ class NRSuggestionsCommunicator: NSObject {
     
     func getSuggestionsForDomain(query: String!) {
         
-        let encodedString: String = query.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-        let urlAsString: String = String(format: "https://www.kimonolabs.com/api/ondemand/5kzxkxfy?apikey=e64b763681f140bec8391a4e8547d9dd&kimmodify=1&domain-name=%@", encodedString)
-        println(urlAsString)
-        
+        let urlAsString: String = String(format: "https://www.kimonolabs.com/api/ondemand/5kzxkxfy?apikey=e64b763681f140bec8391a4e8547d9dd&kimmodify=1&domain-name=%@", query.stringByReplacingOccurrencesOfString(" ", withString: ""))
+       
         let url: NSURL = NSURL(string: urlAsString)!
         
         NSURLConnection.sendAsynchronousRequest(NSURLRequest(URL: url), queue: NSOperationQueue(), completionHandler: {

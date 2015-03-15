@@ -14,6 +14,10 @@ class NRColor: UIColor {
         return UIColor(CSS: "F9FAF9")
     }
     
+    func domainrRegularDarkGreyColor() -> UIColor {
+        return UIColor(CSS: "414240")
+    }
+    
     func domainrSubtextGreyColor() -> UIColor {
         return UIColor(CSS: "949693")
     }

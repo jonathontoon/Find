@@ -8,6 +8,6 @@
 
 import UIKit
 
-class NRInfoViewRegistrarCell: NRInfoViewDefaultCell {
+class NRInfoViewRegistrarCell: NRDefaultCell {
     
 }

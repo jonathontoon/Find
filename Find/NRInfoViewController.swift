@@ -41,7 +41,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         let backButtonItem: UIBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButtonItem
         
-        let subTitleView: NRNavigationBarTitleView = NRNavigationBarTitleView(frame:CGRectMake(-100, 0, 200, self.navigationController!.navigationBar.frame.size.height), title: self.result.domain, subTitle: self.result.availability)
+        let subTitleView: NRNavigationBarTitleView = NRNavigationBarTitleView(frame:CGRectMake(-100, 0, 200, self.navigationController!.navigationBar.frame.size.height), title: self.result.domain, subTitle: self.result.availability?.capitalizedString)
         self.navigationItem.titleView = subTitleView
         self.navigationItem.titleView?.backgroundColor = UIColor.clearColor()
         self.navigationItem.titleView?.layer.backgroundColor = UIColor.clearColor().CGColor
@@ -51,7 +51,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         tableView = UITableView(frame: self.view.frame, style: UITableViewStyle.Grouped)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.registerClass(NRInfoViewDefaultCell.self, forCellReuseIdentifier: "NRInfoViewDefaultCell")
+        tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: "NRDefaultCell")
         tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: "NRInfoViewRegistrarCell")
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 58.0, 0)
         tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
@@ -150,7 +150,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         var height: CGFloat = 36.0
         
         if section == 1 {
-            height = 56.0
+            height = 46.0
         }
         
         return height
@@ -165,13 +165,9 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         var cell: UITableViewCell!
         
         if indexPath.section == 0 {
-
             cell = createDefaultCell(indexPath)
-            
         } else if indexPath.section == 1 {
-        
             cell = createRegistrarCell(indexPath)
-        
         }
         
         return cell
@@ -186,19 +182,19 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         
     }
     
-    func createDefaultCell(indexPath: NSIndexPath!) -> NRInfoViewDefaultCell {
+    func createDefaultCell(indexPath: NSIndexPath!) -> NRDefaultCell {
         
-        var cell: NRInfoViewDefaultCell? = tableView.dequeueReusableCellWithIdentifier("NRInfoViewDefaultCell", forIndexPath: indexPath) as? NRInfoViewDefaultCell
+        var cell: NRDefaultCell? = tableView.dequeueReusableCellWithIdentifier("NRDefaultCell", forIndexPath: indexPath) as? NRDefaultCell
         
         if cell == nil {
-            cell = NRInfoViewDefaultCell(style: .Default, reuseIdentifier: "NRInfoViewDefaultCell")
+            cell = NRDefaultCell(style: .Default, reuseIdentifier: "NRDefaultCell")
         }
-        
-        cell?.title.text = "Whois Info"
+
+        cell?.textLabel?.text = "Whois Info"
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         
         if indexPath.row == 1 {
-            cell?.title.text = "TLD Wikipedia Article"
+            cell?.textLabel?.text = "TLD Wikipedia Article"
         }
 
         return cell!
@@ -213,12 +209,12 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             cell = NRInfoViewRegistrarCell(style: .Default, reuseIdentifier: "NRInfoViewRegistrarCell")
         }
         
-        cell?.title.text = NSString(format: "View %d ", info.registrars!.count - 5) + "Others"
+        cell?.textLabel?.text = NSString(format: "View %d ", info.registrars!.count - 5) + "Others"
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         
         
         if indexPath.row < 5 {
-            cell?.title.text = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as NSString
+            cell?.textLabel?.text = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as NSString
         }
         
         return cell!

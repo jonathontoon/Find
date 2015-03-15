@@ -1,5 +1,5 @@
 //
-//  NRSuggestionCell.swift
+//  NRSearchSuggestionCell.swift
 //  Find
 //
 //  Created by Jonathon Toon on 3/2/15.
@@ -8,6 +8,6 @@
 
 import UIKit
 
-class NRSuggestionCell: UITableViewCell {
+class NRSearchSuggestionCell: NRDefaultCell {
     
 }

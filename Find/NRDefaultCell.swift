@@ -1,5 +1,5 @@
 //
-//  NRInfoViewDefaultCell.swift
+//  NRDefaultCell.swift
 //  Find
 //
 //  Created by Jonathon Toon on 3/8/15.
@@ -8,16 +8,12 @@
 
 import UIKit
 
-class NRInfoViewDefaultCell: UITableViewCell {
+class NRDefaultCell: UITableViewCell {
 
-    var title: UILabel!
-    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        title = UILabel(frame: CGRectMake(15.0, 0 , 225.0, 45.0))
-        title.backgroundColor = UIColor.yellowColor()
-        self.contentView.addSubview(title)
+
+        self.textLabel?.textColor = NRColor().domainrRegularDarkGreyColor()
     }
 
     required init(coder aDecoder: NSCoder) {

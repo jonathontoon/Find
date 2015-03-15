@@ -70,7 +70,7 @@ class NRModelBuilder: NSObject {
         if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
             
             println(parsedObject)
-            //suggestions = parsedObject.objectForKey("results") as NSArray
+            suggestions = parsedObject.objectForKey("results") as NSArray
             
         } else {
             println("Could not parse JSON: \(error!)")

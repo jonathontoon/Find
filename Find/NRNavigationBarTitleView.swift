@@ -40,18 +40,18 @@ class NRNavigationBarTitleView: UIView {
         titleLabel.backgroundColor = UIColor.clearColor()
         titleLabel.layer.backgroundColor = UIColor.clearColor().CGColor
         titleLabel.frame.origin.x = self.frame.width/2 - (titleLabel.frame.width/2)
-        titleLabel.frame.origin.y = 2.0
+        //titleLabel.frame.origin.y = 2.0
         self.addSubview(titleLabel)
         
         subTitle = UILabel()
-        subTitle.text = subTitleString.uppercaseString
+        subTitle.text = subTitleString
         subTitle.textColor = UIColor.blackColor()
-        subTitle.font = UIFont(name: "HelveticaNeue", size: 10.0)
+        subTitle.font = UIFont(name: "HelveticaNeue", size: 14.0)
         subTitle.sizeToFit()
         subTitle.backgroundColor = UIColor.clearColor()
         subTitle.layer.backgroundColor = UIColor.clearColor().CGColor
         subTitle.frame.origin.x = self.frame.width/2 - (subTitle.frame.width/2)
-        subTitle.frame.origin.y = titleLabel.frame.origin.y + titleLabel.frame.size.height + 2.0
+        subTitle.frame.origin.y = titleLabel.frame.origin.y + titleLabel.frame.size.height - 2.0
         self.addSubview(subTitle)
     }
     

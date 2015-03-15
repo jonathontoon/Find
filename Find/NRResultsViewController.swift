@@ -16,8 +16,8 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     var isSearching: Bool! = false
     
     var resultsSearchController: UISearchController!
-    let suggestionsTableViewCellIdentifier: String = "NRSuggestionCell"
     let resultsTableViewCellIdentifier: String = "NRResultCell"
+    let suggestionOptionCellIdentifier: String = "NRSuggestionOptionCell"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -36,18 +36,18 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         resultsSearchController.searchBar.sizeToFit()
         resultsSearchController.searchBar.delegate = self
         resultsSearchController.searchBar.backgroundColor = UIColor.clearColor()
+        resultsSearchController.searchBar.placeholder = "Search for a name or URL..."
         resultsSearchController.searchBar.setShowsCancelButton(false, animated: false)
         
-        // Hack to change the UISearchBar style
+        // Rough code to change the UISearchBar style
         (resultsSearchController.searchBar.subviews[0].subviews[1] as UITextField).borderStyle = .None
-
         
         resultsSearchController.definesPresentationContext = true
         resultsSearchController.hidesNavigationBarDuringPresentation = false
         resultsSearchController.dimsBackgroundDuringPresentation = false
 
         self.tableView.registerClass(NRResultCell.self, forCellReuseIdentifier: resultsTableViewCellIdentifier)
-        self.tableView.registerClass(NRSuggestionCell.self, forCellReuseIdentifier: suggestionsTableViewCellIdentifier)
+        self.tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: suggestionOptionCellIdentifier)
         self.tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 0, 0)
         self.navigationItem.titleView = resultsSearchController.searchBar
        
@@ -88,27 +88,64 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if results != nil {
-            self.tableView.separatorStyle = .SingleLine
-            return self.results!.count-1
+        var numberOfRows: Int!
+        
+        if isSearching == true && resultsSearchController.searchBar.text != nil {
+            
+            numberOfRows = 1
+            
         } else {
-            self.tableView.separatorStyle = .None
-            return 0
+
+            if results != nil {
+                
+                numberOfRows = self.results!.count-1
+                
+            } else {
+                
+                numberOfRows = 0
+                
+            }
+            
         }
         
+        return numberOfRows
     }
     
     // #pragma mark - UITableViewDataSource
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> NRResultCell {
+    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell: NRResultCell! = tableView.dequeueReusableCellWithIdentifier(resultsTableViewCellIdentifier) as NRResultCell
+        var cell: UITableViewCell!
         
-        if cell == nil {
-            cell = NRResultCell(style: .Default, reuseIdentifier: resultsTableViewCellIdentifier)
+        if isSearching == false {
+            
+            if self.results?.count > 0 {
+                
+                cell = tableView.dequeueReusableCellWithIdentifier(resultsTableViewCellIdentifier) as NRResultCell
+            
+                if cell == nil {
+                    cell = NRResultCell(style: .Default, reuseIdentifier: resultsTableViewCellIdentifier)
+                }
+                
+                cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+                cell.textLabel?.text = (results!.objectAtIndex(indexPath.row) as NRResult).domain! + " " + (results!.objectAtIndex(indexPath.row) as NRResult).availability!
+            }
+        
+        } else if isSearching == true && resultsSearchController.searchBar.text != nil {
+            
+            println("yes")
+            
+            println(resultsSearchController.searchBar.text)
+            
+            cell = tableView.dequeueReusableCellWithIdentifier(suggestionOptionCellIdentifier) as NRDefaultCell
+            
+            if cell == nil {
+                cell = NRDefaultCell(style: .Default, reuseIdentifier: suggestionOptionCellIdentifier)
+            }
+            
+            cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            cell.textLabel?.text = "Suggestions for \"" + resultsSearchController.searchBar.text.stringByReplacingOccurrencesOfString(" ", withString: "") + "\""
+            
         }
-        
-        cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-        cell.textLabel?.text = (results!.objectAtIndex(indexPath.row) as NRResult).domain! + " " + (results!.objectAtIndex(indexPath.row) as NRResult).availability!
         
         return cell
         
@@ -120,24 +157,45 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        if isSearching == true {
-            resultsSearchController.active = false
+        var viewControllerForPush: UIViewController!
+        
+        if isSearching == false && self.results?.count > 0 {
             
             let result: NRResult = results!.objectAtIndex(indexPath.row) as NRResult
-            let infoViewController: NRInfoViewController = NRInfoViewController(result: result)
+            viewControllerForPush = NRInfoViewController(result: result)
            
-            self.navigationController?.pushViewController(infoViewController, animated: true)
-        
+        } else if isSearching == true {
+            
+            if indexPath.row == 0 {
+                viewControllerForPush = NRSuggestionsViewController(query: resultsSearchController.searchBar.text)
+            } else {
+                // Search Using History
+            }
         }
+        
+        self.navigationController?.pushViewController(viewControllerForPush, animated: true)
     }
     
     // #pragma mark - UISearchBarDelegate
     
-    
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
         NSLog("searchBarSearchButtonClicked")
-        isSearching = true
+        isSearching = false
         startFetchingResultsFromQuery(resultsSearchController.searchBar.text)
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        isSearching = false
+        self.tableView.reloadData()
+    }
+    
+    func searchBarShouldBeginEditing(searchBar: UISearchBar) -> Bool {
+        isSearching = true
+        return true
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        self.tableView.reloadData()
     }
     
     // #pragma mark - UIS earchResultsUpdating Protocol
