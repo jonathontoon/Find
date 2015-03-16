@@ -27,4 +27,8 @@ class NRInfo: NSObject {
     var subdomain: String?
     var domain_idna: String?
     var availability: String?
+    
+    var is_idn: Bool! = false
+    var alternatives: NSArray!
+    
 }

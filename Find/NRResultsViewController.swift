@@ -162,7 +162,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 60.0
+        return 45.0
     }
 
     override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
