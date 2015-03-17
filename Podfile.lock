@@ -1,22 +1,30 @@
 PODS:
+  - SVWebViewController (1.0)
   - UIColor+Hex (1.0.1):
     - UIColor+Hex/NSColor (= 1.0.1)
     - UIColor+Hex/UIColor (= 1.0.1)
   - UIColor+Hex/UIColor (1.0.1)
 
 DEPENDENCIES:
+  - SVWebViewController (from `https://github.com/jonathontoon/SVWebViewController.git`)
   - UIColor+Hex (from `https://github.com/Inferis/UIColor-Hex.git`)
 
 EXTERNAL SOURCES:
+  SVWebViewController:
+    :git: https://github.com/jonathontoon/SVWebViewController.git
   UIColor+Hex:
     :git: https://github.com/Inferis/UIColor-Hex.git
 
 CHECKOUT OPTIONS:
+  SVWebViewController:
+    :commit: 5375f927659ef5492464741aea63ad6089e670f0
+    :git: https://github.com/jonathontoon/SVWebViewController.git
   UIColor+Hex:
     :commit: 866b6e3785df690f75975aea699b11a72081c415
     :git: https://github.com/Inferis/UIColor-Hex.git
 
 SPEC CHECKSUMS:
+  SVWebViewController: aa2e18a41ff5f45be7aeec8e92ca5bcc50b5ebb1
   UIColor+Hex: 5ca7532528968af382128af7bfe73afe0839ba1e
 
 COCOAPODS: 0.36.0

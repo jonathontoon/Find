@@ -62,6 +62,7 @@
 		4432BB4A1AB54FE2004BC114 /* NRSuggestionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRSuggestionsViewController.swift; sourceTree = "<group>"; };
 		443B1FF01AB43052007F2782 /* NRColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRColor.swift; sourceTree = "<group>"; };
 		44509D0E1AACF4B900F84601 /* NRNavigationBarTitleView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRNavigationBarTitleView.swift; sourceTree = "<group>"; };
+		4450E3E41AB7AEF9009A53E2 /* Find-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Find-Bridging-Header.h"; sourceTree = "<group>"; };
 		44AC98591AA54E45009369EB /* NRInfoCommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRInfoCommunicator.swift; sourceTree = "<group>"; };
 		44AC985B1AA54EDA009369EB /* NRInfoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRInfoManager.swift; sourceTree = "<group>"; };
 		44AC985D1AA54F9C009369EB /* NRInfoManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRInfoManagerDelegate.swift; sourceTree = "<group>"; };
@@ -258,6 +259,7 @@
 		44B063701AA3D4950033DEB2 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				4450E3E41AB7AEF9009A53E2 /* Find-Bridging-Header.h */,
 				44099AF61AB2B5CD009FAA30 /* Podfile */,
 				44B063711AA3D4950033DEB2 /* Info.plist */,
 			);

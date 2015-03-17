@@ -34,6 +34,8 @@ class NRRegistrarViewController: UITableViewController {
         
         self.tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: registrarsTableViewCellIdentifier)
         self.tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 36.0, 0)
+        self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        
     }
     
     // #pragma mark - UITableViewDataSource

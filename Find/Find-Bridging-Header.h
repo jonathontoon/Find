@@ -9,3 +9,9 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import "UIColor+Hex.h"
+
+#import "SVModalWebViewController.h"
+#import "SVWebViewController.h"
+#import "SVWebViewControllerActivity.h"
+#import "SVWebViewControllerActivityChrome.h"
+#import "SVWebViewControllerActivitySafari.h"

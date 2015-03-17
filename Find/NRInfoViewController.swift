@@ -55,6 +55,8 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: "NRInfoViewRegistrarCell")
         tableView.contentInset = UIEdgeInsetsMake(0, 0, 120.0, 0)
         tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
+        tableView.tableFooterView = UIView(frame: CGRectZero)
+        
         self.view.addSubview(tableView)
         
         let buttonFrame: CGRect = CGRectMake(0, (self.view.frame.size.height - 64.0) - 50.0, self.view.frame.size.width, 50.0)
@@ -69,6 +71,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         
         if actionButton != nil {
             println("Not nil")
+            actionButton.addTarget(self, action: "presentAction", forControlEvents: UIControlEvents.TouchUpInside)
             self.view.addSubview(actionButton)
         }
     }
@@ -76,6 +79,20 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func presentAction() {
+        println("pressed")
+        let registerURL: NSURL! = NSURL(string: info.register_url!)
+
+        let registerViewController: SVModalWebViewController = SVModalWebViewController(URL: registerURL)
+        registerViewController.title = info.registrars?.objectAtIndex(0).valueForKey("name") as? String
+        registerViewController.navigationBar.barTintColor = UIColor.whiteColor()
+        registerViewController.navigationBar.translucent = false
+        registerViewController.navigationBar.tintColor = NRColor().domainrBlueColor()
+
+        self.presentedViewController?.presentViewController(registerViewController, animated: true, completion: nil)
+        
     }
     
     func startFetchingInfo() {
@@ -180,10 +197,41 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        if indexPath.row >= 6 {
-            let newArray: NSArray = info.registrars!.objectsAtIndexes(NSIndexSet(indexesInRange: NSMakeRange(6, info.registrars!.count-8))) as NSArray
-            let registrarsViewController: NRRegistrarViewController = NRRegistrarViewController(registrars: newArray)
-            self.navigationController?.pushViewController(registrarsViewController, animated: true)
+        if indexPath.section == 0 {
+            
+            if indexPath.row == 0 {
+                
+                let whoisURL: NSURL! = NSURL(string: info.whois_url!)
+                let whoisViewController: SVWebViewController = SVWebViewController(URL: whoisURL)
+                whoisViewController.title = "Whois Info"
+                self.navigationController?.pushViewController(whoisViewController, animated: true)
+                
+            } else if indexPath.row == 1 {
+                
+                let wikipediaURL: NSURL! = NSURL(string: info.tld!.valueForKey("wikipedia_url") as String)
+                let wikipediaViewController: SVWebViewController = SVWebViewController(URL: wikipediaURL)
+                wikipediaViewController.title = "TLD Wikipedia Article"
+                self.navigationController?.pushViewController(wikipediaViewController, animated: true)
+            
+            }
+        
+        } else if indexPath.section == 1 {
+            
+            if indexPath.row >= 6 {
+                
+                let newArray: NSArray = info.registrars!.objectsAtIndexes(NSIndexSet(indexesInRange: NSMakeRange(6, info.registrars!.count-8))) as NSArray
+                let registrarsViewController: NRRegistrarViewController = NRRegistrarViewController(registrars: newArray)
+                self.navigationController?.pushViewController(registrarsViewController, animated: true)
+            
+            } else {
+                
+                let registrarURL: NSURL! = NSURL(string: info.registrars!.objectAtIndex(indexPath.row).valueForKey("register_url") as String)
+                let registrarViewController: SVWebViewController = SVWebViewController(URL: registrarURL)
+                registrarViewController.title = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String
+                self.navigationController?.pushViewController(registrarViewController, animated: true)
+                
+            }
+            
         }
         
     }

@@ -57,6 +57,8 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         self.tableView.registerClass(NRResultCell.self, forCellReuseIdentifier: resultsTableViewCellIdentifier)
         self.tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: suggestionOptionCellIdentifier)
         self.tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 36.0, 0)
+        self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        
         self.navigationItem.titleView = resultsSearchController.searchBar
        
         // Implement API stuff

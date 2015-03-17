@@ -50,6 +50,52 @@ install_resource()
       ;;
   esac
 }
+if [[ "$CONFIGURATION" == "Debug" ]]; then
+  install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle/SVWebViewControllerBack.png"
+  install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle/SVWebViewControllerBack@2x.png"
+  install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle/SVWebViewControllerNext.png"
+  install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle/SVWebViewControllerNext@2x.png"
+  install_resource "SVWebViewController/SVWebViewController/UIActivities/Chrome/SVWebViewControllerActivityChrome-iPad.png"
+  install_resource "SVWebViewController/SVWebViewController/UIActivities/Chrome/SVWebViewControllerActivityChrome-iPad@2x.png"
+  install_resource "SVWebViewController/SVWebViewController/UIActivities/Chrome/SVWebViewControllerActivityChrome@2x.png"
+  install_resource "SVWebViewController/SVWebViewController/UIActivities/Safari/SVWebViewControllerActivitySafari-iPad.png"
+  install_resource "SVWebViewController/SVWebViewController/UIActivities/Safari/SVWebViewControllerActivitySafari-iPad@2x.png"
+  install_resource "SVWebViewController/SVWebViewController/UIActivities/Safari/SVWebViewControllerActivitySafari@2x.png"
+  install_resource "SVWebViewController/SVWebViewController/da.lproj"
+  install_resource "SVWebViewController/SVWebViewController/de.lproj"
+  install_resource "SVWebViewController/SVWebViewController/en.lproj"
+  install_resource "SVWebViewController/SVWebViewController/es-ES.lproj"
+  install_resource "SVWebViewController/SVWebViewController/es.lproj"
+  install_resource "SVWebViewController/SVWebViewController/fr.lproj"
+  install_resource "SVWebViewController/SVWebViewController/ja.lproj"
+  install_resource "SVWebViewController/SVWebViewController/pt.lproj"
+  install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle"
+  install_resource "SVWebViewController/SVWebViewController/zh-Hans.lproj"
+  install_resource "SVWebViewController/SVWebViewController/zh-Hant.lproj"
+fi
+if [[ "$CONFIGURATION" == "Release" ]]; then
+  install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle/SVWebViewControllerBack.png"
+  install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle/SVWebViewControllerBack@2x.png"
+  install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle/SVWebViewControllerNext.png"
+  install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle/SVWebViewControllerNext@2x.png"
+  install_resource "SVWebViewController/SVWebViewController/UIActivities/Chrome/SVWebViewControllerActivityChrome-iPad.png"
+  install_resource "SVWebViewController/SVWebViewController/UIActivities/Chrome/SVWebViewControllerActivityChrome-iPad@2x.png"
+  install_resource "SVWebViewController/SVWebViewController/UIActivities/Chrome/SVWebViewControllerActivityChrome@2x.png"
+  install_resource "SVWebViewController/SVWebViewController/UIActivities/Safari/SVWebViewControllerActivitySafari-iPad.png"
+  install_resource "SVWebViewController/SVWebViewController/UIActivities/Safari/SVWebViewControllerActivitySafari-iPad@2x.png"
+  install_resource "SVWebViewController/SVWebViewController/UIActivities/Safari/SVWebViewControllerActivitySafari@2x.png"
+  install_resource "SVWebViewController/SVWebViewController/da.lproj"
+  install_resource "SVWebViewController/SVWebViewController/de.lproj"
+  install_resource "SVWebViewController/SVWebViewController/en.lproj"
+  install_resource "SVWebViewController/SVWebViewController/es-ES.lproj"
+  install_resource "SVWebViewController/SVWebViewController/es.lproj"
+  install_resource "SVWebViewController/SVWebViewController/fr.lproj"
+  install_resource "SVWebViewController/SVWebViewController/ja.lproj"
+  install_resource "SVWebViewController/SVWebViewController/pt.lproj"
+  install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle"
+  install_resource "SVWebViewController/SVWebViewController/zh-Hans.lproj"
+  install_resource "SVWebViewController/SVWebViewController/zh-Hant.lproj"
+fi
 
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"
 if [[ "${ACTION}" == "install" ]]; then

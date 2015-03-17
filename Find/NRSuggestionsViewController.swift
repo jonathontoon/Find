@@ -44,6 +44,7 @@ class NRSuggestionsViewController: UITableViewController, NRSuggestionsManagerDe
         
         self.tableView.registerClass(NRSearchSuggestionCell.self, forCellReuseIdentifier: suggestionsTableViewCellIdentifier)
         self.tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 0, 0)
+        self.tableView.tableFooterView = UIView(frame: CGRectZero)
         
         startFetchingSuggestionForQuery(query)
     }

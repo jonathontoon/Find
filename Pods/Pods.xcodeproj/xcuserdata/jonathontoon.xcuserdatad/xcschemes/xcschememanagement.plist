@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-SVWebViewController.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-UIColor+Hex.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -17,12 +22,17 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>7B24B80819A91E5D0E0A3CAB</key>
+		<key>1566611B2693FC1A30BCBB40</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>810121BD6AF90EA38E98F6F2</key>
+		<key>69ED9638A66C1CD65DD13CDB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>E2BB80E04DDEAFA1919F6E9C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
