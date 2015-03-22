@@ -38,10 +38,10 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let backButtonItem: UIBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButtonItem
+        let leftButtonItem: UIBarButtonItem = UIBarButtonItem(title: "X", style: .Plain, target: self, action: "dismissViewController")
+        self.navigationController?.navigationBar.topItem?.leftBarButtonItem = leftButtonItem
         
-        let subTitleView: NRNavigationBarTitleView = NRNavigationBarTitleView(frame:CGRectMake(-100, 0, 200, self.navigationController!.navigationBar.frame.size.height), title: self.result.domain, subTitle: self.result.availability?.capitalizedString)
+        let subTitleView: NRNavigationBarTitleView = NRNavigationBarTitleView(frame:CGRectMake(0, 0, 200, self.navigationController!.navigationBar.frame.size.height), title: self.result.domain, subTitle: self.result.availability?.capitalizedString)
         self.navigationItem.titleView = subTitleView
         self.navigationItem.titleView?.backgroundColor = UIColor.clearColor()
         self.navigationItem.titleView?.layer.backgroundColor = UIColor.clearColor().CGColor
@@ -59,7 +59,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         
         self.view.addSubview(tableView)
         
-        let buttonFrame: CGRect = CGRectMake(0, (self.view.frame.size.height - 64.0) - 50.0, self.view.frame.size.width, 50.0)
+        let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 50.0, self.view.frame.size.width, 50.0)
         if result.availability == "available" {
            actionButton = NRActionButton(frame: buttonFrame, buttonType: ButtonType.Available)
         } else if result.availability == "taken" {
@@ -82,7 +82,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     }
     
     func presentAction() {
-        println("pressed")
+
         let registerURL: NSURL! = NSURL(string: info.register_url!)
 
         let registerViewController: SVModalWebViewController = SVModalWebViewController(URL: registerURL)
@@ -91,7 +91,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         registerViewController.navigationBar.translucent = false
         registerViewController.navigationBar.tintColor = NRColor().domainrBlueColor()
 
-        self.presentedViewController?.presentViewController(registerViewController, animated: true, completion: nil)
+        self.presentViewController(registerViewController, animated: true, completion: nil)
         
     }
     
@@ -273,5 +273,9 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         
         return cell!
         
+    }
+    
+    func dismissViewController() {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
 }

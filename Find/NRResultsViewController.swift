@@ -188,7 +188,17 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
             }
         }
         
-        self.navigationController?.pushViewController(viewControllerForPush, animated: true)
+        self.resultsSearchController.active = false
+        
+        if viewControllerForPush.isKindOfClass(NRInfoViewController) {
+            
+            var navigationController: UINavigationController = UINavigationController(navigationBarClass: NRInfoViewNavigationBar.self, toolbarClass: nil)
+            navigationController.viewControllers = [viewControllerForPush]
+            self.presentViewController(navigationController, animated: true, completion: nil)
+            
+        } else {
+            self.navigationController?.pushViewController(viewControllerForPush, animated: true)
+        }
     }
     
     // #pragma mark - UISearchBarDelegate
