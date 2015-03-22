@@ -8,12 +8,15 @@
 
 import UIKit
 
-class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableViewDataSource, UITableViewDelegate {
+class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
 
     var result: NRResult!
     
     var manager: NRInfoManager!
     var info: NRInfo!
+    
+    var navigationBarView: NRInfoNavigationBarView!
+    var previousScrollOffsetY: CGFloat!
     
     var tableView: UITableView!
     var actionButton: NRActionButton!
@@ -37,46 +40,37 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         self.setNeedsStatusBarAppearanceUpdate()
-        
-        let leftButtonItem: UIBarButtonItem = UIBarButtonItem(title: "X", style: .Plain, target: self, action: "dismissViewController")
-        self.navigationController?.navigationBar.topItem?.leftBarButtonItem = leftButtonItem
-        
-        let subTitleView: NRNavigationBarTitleView = NRNavigationBarTitleView(frame:CGRectMake(0, 0, 200, self.navigationController!.navigationBar.frame.size.height), title: self.result.domain, subTitle: self.result.availability?.capitalizedString)
-        self.navigationItem.titleView = subTitleView
-        self.navigationItem.titleView?.backgroundColor = UIColor.clearColor()
-        self.navigationItem.titleView?.layer.backgroundColor = UIColor.clearColor().CGColor
-        self.navigationController?.navigationBar.drawRect(self.navigationController!.navigationBar.frame)
-        
+        self.automaticallyAdjustsScrollViewInsets = false
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
-        
-        tableView = UITableView(frame: CGRectMake(0, -20, self.view.frame.size.width, self.view.frame.size.height - 30.0), style: UITableViewStyle.Grouped)
+
+        tableView = UITableView(frame: CGRectMake(0, 0, self.view.frame.size.width, (self.view.frame.size.height - 50)), style: UITableViewStyle.Grouped)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: "NRDefaultCell")
         tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: "NRInfoViewRegistrarCell")
-        //tableView.contentInset = UIEdgeInsetsMake(0, 0, 120.0, 0)
         tableView.backgroundColor = UIColor.redColor()
+        tableView.tableHeaderView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 170), title: self.result.domain, subTitle: self.result.availability?.capitalizedString)
+        tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
+        tableView.stickyHeader = true
         tableView.tableFooterView = UIView(frame: CGRectZero)
         
         self.view.addSubview(tableView)
         
         let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 50.0, self.view.frame.size.width, 50.0)
-        if result.availability == "available" {
-           actionButton = NRActionButton(frame: buttonFrame, buttonType: ButtonType.Available)
-        } else if result.availability == "taken" {
+        actionButton = NRActionButton(frame: buttonFrame, buttonType: ButtonType.Available)
+        
+        if result.availability == "taken" {
            actionButton = NRActionButton(frame: buttonFrame, buttonType: ButtonType.Taken)
         } else if result.availability == "maybe" {
            println("maybe")
            actionButton = NRActionButton(frame: buttonFrame, buttonType: ButtonType.ComingSoon)
         }
         
-        if actionButton != nil {
-            println("Not nil")
-            actionButton.addTarget(self, action: "presentAction", forControlEvents: UIControlEvents.TouchUpInside)
-            self.view.addSubview(actionButton)
-        }
+        actionButton.addTarget(self, action: "presentAction", forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(actionButton)
     }
     
     override func didReceiveMemoryWarning() {
@@ -278,7 +272,56 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         
     }
     
+    // #pragma mark - UIScrollViewDelegate
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        resizeHeaderView(scrollView)
+    }
+    
+    func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
+        resizeHeaderView(scrollView)
+    }
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        resizeHeaderView(scrollView)
+    }
+    
+    func scrollViewWillBeginDragging(scrollView: UIScrollView) {
+        resizeHeaderView(scrollView)
+    }
+    
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
+        resizeHeaderView(scrollView)
+    }
+    
     func dismissViewController() {
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func resizeHeaderView(scrollView: UIScrollView) {
+        
+        if previousScrollOffsetY == nil {
+            previousScrollOffsetY = scrollView.contentOffset.y
+        }
+        
+        if scrollView.isEqual(tableView) {
+            
+            let velocity: CGFloat = scrollView.panGestureRecognizer.velocityInView(scrollView).y
+            let offset: CGFloat = scrollView.contentOffset.y
+            
+            if offset < 105.0 {
+                tableView.tableHeaderView!.frame.size.height += (previousScrollOffsetY - scrollView.contentOffset.y)
+                previousScrollOffsetY = offset
+            } else {
+                tableView.tableHeaderView!.frame.size.height = 64.0
+                previousScrollOffsetY = 105.0
+            }
+            
+            tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
+        }
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
     }
 }

@@ -29,6 +29,8 @@ class NRRegistrarViewController: UITableViewController {
         self.title = "More Registrars"
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
         
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        
         let backButtonItem: UIBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButtonItem
         

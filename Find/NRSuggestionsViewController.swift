@@ -32,8 +32,8 @@ class NRSuggestionsViewController: UITableViewController, NRSuggestionsManagerDe
         let backButtonItem: UIBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButtonItem
         
-        let subTitleView: NRNavigationBarTitleView = NRNavigationBarTitleView(frame:CGRectMake(-100, 0, 200, self.navigationController!.navigationBar.frame.size.height), title: "Suggestions For", subTitle: "\""+self.query+"\"")
-        self.navigationItem.titleView = subTitleView
+        self.title = "Search Suggestions"
+        
         self.navigationItem.titleView?.backgroundColor = UIColor.clearColor()
         self.navigationItem.titleView?.layer.backgroundColor = UIColor.clearColor().CGColor
         

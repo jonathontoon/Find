@@ -1,5 +1,5 @@
 //
-//  NRNavigationBarTitleView.swift
+//  NRInfoNavigationBarView.swift
 //  Find
 //
 //  Created by Jonathon Toon on 3/8/15.
@@ -8,16 +8,22 @@
 
 import UIKit
 
-class NRNavigationBarTitleView: UIView {
+class NRInfoNavigationBarView: UIView {
 
-    var titleString: String!
+    var titleString: String?
     var titleLabel: UILabel!
     
-    var subTitleString: String!
+    var subTitleString: String?
     var subTitle: UILabel!
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    }
     
     init(frame:CGRect, title:String!, subTitle:String!) {
         super.init(frame: frame)
+        
+        self.backgroundColor = NRColor().domainrBackgroundBlackColor()
         
         titleString = title
         subTitleString = subTitle
@@ -29,18 +35,16 @@ class NRNavigationBarTitleView: UIView {
     
     override func drawRect(rect: CGRect) {
         self.backgroundColor = UIColor.clearColor()
-        self.layer.backgroundColor = UIColor.clearColor().CGColor
-        self.sizeToFit()
+        self.layer.backgroundColor = UIColor.blueColor().CGColor
         
         titleLabel = UILabel()
         titleLabel.text = titleString
         titleLabel.textColor = UIColor.blackColor()
-        titleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 17.0)
+        titleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 21.0)
         titleLabel.sizeToFit()
         titleLabel.backgroundColor = UIColor.clearColor()
         titleLabel.layer.backgroundColor = UIColor.clearColor().CGColor
         titleLabel.frame.origin.x = self.frame.width/2 - (titleLabel.frame.width/2)
-        //titleLabel.frame.origin.y = 2.0
         self.addSubview(titleLabel)
         
         subTitle = UILabel()

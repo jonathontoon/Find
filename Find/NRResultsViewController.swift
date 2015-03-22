@@ -192,9 +192,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         
         if viewControllerForPush.isKindOfClass(NRInfoViewController) {
             
-            var navigationController: UINavigationController = UINavigationController(navigationBarClass: NRInfoViewNavigationBar.self, toolbarClass: nil)
-            navigationController.viewControllers = [viewControllerForPush]
-            navigationController.navigationBar.barStyle = UIBarStyle.Black
+            var navigationController: UINavigationController = UINavigationController(rootViewController: viewControllerForPush)
             self.presentViewController(navigationController, animated: true, completion: nil)
             
         } else {
