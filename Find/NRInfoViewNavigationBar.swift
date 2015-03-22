@@ -17,7 +17,7 @@ class NRInfoViewNavigationBar: UINavigationBar {
         superRect.size.height = 140.0
         
         self.frame = superRect
-
+        self.backgroundColor = NRColor().domainrBackgroundBlackColor()
     }
     
 }

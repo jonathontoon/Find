@@ -23,7 +23,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
+
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
         
         resultsManager = NRResultsManager()
@@ -194,6 +194,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
             
             var navigationController: UINavigationController = UINavigationController(navigationBarClass: NRInfoViewNavigationBar.self, toolbarClass: nil)
             navigationController.viewControllers = [viewControllerForPush]
+            navigationController.navigationBar.barStyle = UIBarStyle.Black
             self.presentViewController(navigationController, animated: true, completion: nil)
             
         } else {
@@ -237,6 +238,5 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         
     }
-    
 }
 

@@ -37,7 +37,9 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.setNeedsStatusBarAppearanceUpdate()
+        
         let leftButtonItem: UIBarButtonItem = UIBarButtonItem(title: "X", style: .Plain, target: self, action: "dismissViewController")
         self.navigationController?.navigationBar.topItem?.leftBarButtonItem = leftButtonItem
         
@@ -45,16 +47,17 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         self.navigationItem.titleView = subTitleView
         self.navigationItem.titleView?.backgroundColor = UIColor.clearColor()
         self.navigationItem.titleView?.layer.backgroundColor = UIColor.clearColor().CGColor
+        self.navigationController?.navigationBar.drawRect(self.navigationController!.navigationBar.frame)
         
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
         
-        tableView = UITableView(frame: self.view.frame, style: UITableViewStyle.Grouped)
+        tableView = UITableView(frame: CGRectMake(0, -20, self.view.frame.size.width, self.view.frame.size.height - 30.0), style: UITableViewStyle.Grouped)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: "NRDefaultCell")
         tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: "NRInfoViewRegistrarCell")
-        tableView.contentInset = UIEdgeInsetsMake(0, 0, 120.0, 0)
-        tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
+        //tableView.contentInset = UIEdgeInsetsMake(0, 0, 120.0, 0)
+        tableView.backgroundColor = UIColor.redColor()
         tableView.tableFooterView = UIView(frame: CGRectZero)
         
         self.view.addSubview(tableView)
@@ -148,10 +151,10 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             }
             
             if section == 1 {
-                if info.registrars?.count < 6 {
+                if info.registrars?.count < 5 {
                     numberOfRows = info.registrars!.count
                 } else {
-                    numberOfRows = 7
+                    numberOfRows = 5
                 }
             }
         }
@@ -217,9 +220,9 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         
         } else if indexPath.section == 1 {
             
-            if indexPath.row >= 6 {
+            if indexPath.row >= 4 {
                 
-                let newArray: NSArray = info.registrars!.objectsAtIndexes(NSIndexSet(indexesInRange: NSMakeRange(6, info.registrars!.count-8))) as NSArray
+                let newArray: NSArray = info.registrars!.objectsAtIndexes(NSIndexSet(indexesInRange: NSMakeRange(4, info.registrars!.count-8))) as NSArray
                 let registrarsViewController: NRRegistrarViewController = NRRegistrarViewController(registrars: newArray)
                 self.navigationController?.pushViewController(registrarsViewController, animated: true)
             
@@ -263,11 +266,11 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             cell = NRInfoViewRegistrarCell(style: .Default, reuseIdentifier: "NRInfoViewRegistrarCell")
         }
         
-        cell?.textLabel?.text = NSString(format: "View %d ", info.registrars!.count - 6) + "Others"
+        cell?.textLabel?.text = NSString(format: "View %d ", info.registrars!.count - 4) + "Others"
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         
         
-        if indexPath.row < 6 {
+        if indexPath.row < 4 {
             cell?.textLabel?.text = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as NSString
         }
         
