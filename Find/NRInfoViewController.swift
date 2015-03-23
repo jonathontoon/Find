@@ -164,7 +164,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         var height: CGFloat = 36.0
         
         if section == 1 {
-            height = 46.0
+            height = 45.0
         }
         
         return height
