@@ -40,8 +40,12 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.translucent = true
+        
+        //self.navigationController?.setNavigationBarHidden(true, animated: false)
         self.setNeedsStatusBarAppearanceUpdate()
         self.automaticallyAdjustsScrollViewInsets = false
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
