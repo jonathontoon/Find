@@ -8,30 +8,24 @@
 
 import UIKit
 
-enum ButtonType {
-    case Available
-    case Taken
-    case ComingSoon
-}
-
 class NRActionButton: UIButton {
 
-    init(frame: CGRect, buttonType: ButtonType) {
+    init(frame: CGRect, buttonType: AvailabilityType) {
         super.init(frame: frame)
         
-        if buttonType == ButtonType.Available {
+        if buttonType == AvailabilityType.Available {
             self.setTitle("Buy Now", forState: UIControlState.Normal)
             self.backgroundColor = NRColor().domainrGreenColor()
-        } else if buttonType == ButtonType.Taken {
+        } else if buttonType == AvailabilityType.Taken {
             self.setTitle("Make An Offer", forState: UIControlState.Normal)
             self.backgroundColor = NRColor().domainrBlueColor()
-        } else if buttonType == ButtonType.ComingSoon {
+        } else if buttonType == AvailabilityType.ComingSoon {
             self.setTitle("Reserve For Free", forState: UIControlState.Normal)
             self.backgroundColor = NRColor().domainrGreenColor()
         }
         
         self.titleLabel?.textColor = UIColor.whiteColor()
-        self.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 17.0)
+        self.titleLabel?.font = UIFont(name: "HelveticaNeue-Medium", size: 18.0)
     }
 
     required init(coder aDecoder: NSCoder) {

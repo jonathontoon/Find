@@ -10,23 +10,28 @@ import UIKit
 
 class NRInfoNavigationBarView: UIView {
 
+    var containerView: UIView!
+    
     var titleString: String?
     var titleLabel: UILabel!
     
     var subTitleString: String?
-    var subTitle: UILabel!
+    var subTitle: NRSubtitleLabel!
+    
+    var type: AvailabilityType!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
-    init(frame:CGRect, title:String!, subTitle:String!) {
+    init(frame:CGRect, title:String!, subTitle:String!, labelType: AvailabilityType!) {
         super.init(frame: frame)
         
         self.backgroundColor = NRColor().domainrBackgroundBlackColor()
         
         titleString = title
         subTitleString = subTitle
+        type = labelType
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -39,24 +44,51 @@ class NRInfoNavigationBarView: UIView {
         
         titleLabel = UILabel()
         titleLabel.text = titleString
-        titleLabel.textColor = UIColor.blackColor()
-        titleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 21.0)
+        titleLabel.textColor = UIColor.whiteColor()
+        titleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 22.0)
         titleLabel.sizeToFit()
         titleLabel.backgroundColor = UIColor.clearColor()
         titleLabel.layer.backgroundColor = UIColor.clearColor().CGColor
-        titleLabel.frame.origin.x = self.frame.width/2 - (titleLabel.frame.width/2)
+        titleLabel.frame.origin.x = round(self.frame.width/2 - (titleLabel.frame.width/2))
         self.addSubview(titleLabel)
         
-        subTitle = UILabel()
-        subTitle.text = subTitleString
-        subTitle.textColor = UIColor.blackColor()
-        subTitle.font = UIFont(name: "HelveticaNeue", size: 14.0)
+        subTitle = NRSubtitleLabel()
+        subTitle.text = subTitleString?.uppercaseString
+        subTitle.textColor = UIColor.whiteColor()
+        subTitle.font = UIFont(name: "HelveticaNeue", size: 10.0)
+        subTitle.backgroundColor = NRColor().domainrGreenColor()
+        subTitle.textAlignment = NSTextAlignment.Center
+        subTitle.layer.cornerRadius = 2.0
+        subTitle.clipsToBounds = true
         subTitle.sizeToFit()
-        subTitle.backgroundColor = UIColor.clearColor()
+        
+        if type == AvailabilityType.Taken {
+            subTitle.backgroundColor = NRColor().domainrBlueColor()
+        }
+        
+        if type == AvailabilityType.Unavailable {
+            subTitle.backgroundColor = NRColor().domainrRedColor()
+        }
+        
         subTitle.layer.backgroundColor = UIColor.clearColor().CGColor
-        subTitle.frame.origin.x = self.frame.width/2 - (subTitle.frame.width/2)
-        subTitle.frame.origin.y = titleLabel.frame.origin.y + titleLabel.frame.size.height - 2.0
+        subTitle.frame.origin.x = round(self.frame.width/2 - (subTitle.frame.width/2))
         self.addSubview(subTitle)
+        
+        centerElements()
     }
     
+    func centerElements() {
+
+        titleLabel.frame.origin.y = round((self.frame.size.height/2 - titleLabel.frame.height/2) - 8.0)
+        subTitle.frame.origin.y = round(titleLabel.frame.origin.y + titleLabel.frame.size.height + 5.0)
+        
+        subTitle.alpha = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 74.0, t1: 1.0, t2: 0.0)
+    }
+    
+    // http://stackoverflow.com/a/6237034/553149
+    func mapCGFloatRange(v:CGFloat, r1:CGFloat, r2:CGFloat, t1:CGFloat, t2:CGFloat) -> CGFloat {
+    
+        let norm: CGFloat = (v-r1)/(r2-r1)
+        return (t1*(1-norm) + t2*norm)
+    }
 }

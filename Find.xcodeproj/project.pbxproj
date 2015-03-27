@@ -17,6 +17,7 @@
 		4432BB4B1AB54FE2004BC114 /* NRSuggestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4432BB4A1AB54FE2004BC114 /* NRSuggestionsViewController.swift */; };
 		443B1FF11AB43052007F2782 /* NRColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443B1FF01AB43052007F2782 /* NRColor.swift */; };
 		44509D0F1AACF4B900F84601 /* NRInfoNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44509D0E1AACF4B900F84601 /* NRInfoNavigationBarView.swift */; };
+		44730E7E1AC512F300B76874 /* NRSubtitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44730E7D1AC512F300B76874 /* NRSubtitleLabel.swift */; };
 		44AC985A1AA54E45009369EB /* NRInfoCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AC98591AA54E45009369EB /* NRInfoCommunicator.swift */; };
 		44AC985C1AA54EDA009369EB /* NRInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AC985B1AA54EDA009369EB /* NRInfoManager.swift */; };
 		44AC985E1AA54F9C009369EB /* NRInfoManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AC985D1AA54F9C009369EB /* NRInfoManagerDelegate.swift */; };
@@ -66,6 +67,7 @@
 		443B1FF01AB43052007F2782 /* NRColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRColor.swift; sourceTree = "<group>"; };
 		44509D0E1AACF4B900F84601 /* NRInfoNavigationBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRInfoNavigationBarView.swift; sourceTree = "<group>"; };
 		4450E3E41AB7AEF9009A53E2 /* Find-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Find-Bridging-Header.h"; sourceTree = "<group>"; };
+		44730E7D1AC512F300B76874 /* NRSubtitleLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRSubtitleLabel.swift; sourceTree = "<group>"; };
 		44AC98591AA54E45009369EB /* NRInfoCommunicator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRInfoCommunicator.swift; sourceTree = "<group>"; };
 		44AC985B1AA54EDA009369EB /* NRInfoManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRInfoManager.swift; sourceTree = "<group>"; };
 		44AC985D1AA54F9C009369EB /* NRInfoManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRInfoManagerDelegate.swift; sourceTree = "<group>"; };
@@ -196,6 +198,7 @@
 		4432BB4F1AB55090004BC114 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				44730E7D1AC512F300B76874 /* NRSubtitleLabel.swift */,
 				44509D0E1AACF4B900F84601 /* NRInfoNavigationBarView.swift */,
 				442E88771AA5742A00A75B92 /* NRInfoViewController.swift */,
 				44C8129E1AAFCDC90098A68A /* NRActionButton.swift */,
@@ -448,6 +451,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				44730E7E1AC512F300B76874 /* NRSubtitleLabel.swift in Sources */,
 				44AC98601AA54FCE009369EB /* NRInfoCommunicatorDelegate.swift in Sources */,
 				440A7C2D1AA41AA30003F624 /* NRResultsManagerDelegate.swift in Sources */,
 				44B063781AA3D4950033DEB2 /* NRResultsViewController.swift in Sources */,

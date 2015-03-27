@@ -8,12 +8,21 @@
 
 import UIKit
 
+enum AvailabilityType {
+    case Available
+    case Taken
+    case ComingSoon
+    case Unavailable
+}
+
 class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
 
     var result: NRResult!
     
     var manager: NRInfoManager!
     var info: NRInfo!
+    
+    var availabilityType: AvailabilityType! = AvailabilityType.Available
     
     var navigationBarView: NRInfoNavigationBarView!
     var previousScrollOffsetY: CGFloat!
@@ -44,19 +53,29 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.translucent = true
+        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
         
-        //self.navigationController?.setNavigationBarHidden(true, animated: false)
-        self.setNeedsStatusBarAppearanceUpdate()
+        let cancelButtonItem: UIBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "dismissViewController")
+        cancelButtonItem.tintColor = UIColor.whiteColor()
+        self.navigationController?.navigationBar.topItem?.leftBarButtonItem = cancelButtonItem
+        
         self.automaticallyAdjustsScrollViewInsets = false
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
-
+        
+        if result.availability == "taken" {
+            availabilityType = AvailabilityType.Taken
+        } else if result.availability == "maybe" {
+            availabilityType = AvailabilityType.ComingSoon
+        }
+        
         tableView = UITableView(frame: CGRectMake(0, 0, self.view.frame.size.width, (self.view.frame.size.height - 50)), style: UITableViewStyle.Grouped)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: "NRDefaultCell")
         tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: "NRInfoViewRegistrarCell")
-        tableView.backgroundColor = UIColor.redColor()
-        tableView.tableHeaderView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 170), title: self.result.domain, subTitle: self.result.availability?.capitalizedString)
+        tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
+        navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 180), title: self.result.domain, subTitle: self.result.availability?.capitalizedString, labelType: availabilityType)
+        tableView.tableHeaderView = navigationBarView
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
         tableView.stickyHeader = true
         tableView.tableFooterView = UIView(frame: CGRectZero)
@@ -64,15 +83,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         self.view.addSubview(tableView)
         
         let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 50.0, self.view.frame.size.width, 50.0)
-        actionButton = NRActionButton(frame: buttonFrame, buttonType: ButtonType.Available)
-        
-        if result.availability == "taken" {
-           actionButton = NRActionButton(frame: buttonFrame, buttonType: ButtonType.Taken)
-        } else if result.availability == "maybe" {
-           println("maybe")
-           actionButton = NRActionButton(frame: buttonFrame, buttonType: ButtonType.ComingSoon)
-        }
-        
+        actionButton = NRActionButton(frame: buttonFrame, buttonType: availabilityType)
         actionButton.addTarget(self, action: "presentAction", forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(actionButton)
     }
@@ -165,10 +176,10 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
-        var height: CGFloat = 36.0
+        var height: CGFloat = 25.0
         
         if section == 1 {
-            height = 45.0
+            height = 30.0
         }
         
         return height
@@ -188,6 +199,8 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             cell = createRegistrarCell(indexPath)
         }
         
+        cell.textLabel?.textColor = NRColor().domainrBlueColor()
+        
         return cell
         
     }
@@ -205,6 +218,10 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
                 let whoisURL: NSURL! = NSURL(string: info.whois_url!)
                 let whoisViewController: SVWebViewController = SVWebViewController(URL: whoisURL)
                 whoisViewController.title = "Whois Info"
+                whoisViewController.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
+                whoisViewController.navigationController?.navigationBar.shadowImage = nil
+                whoisViewController.navigationController?.navigationBar.translucent = false
+                
                 self.navigationController?.pushViewController(whoisViewController, animated: true)
                 
             } else if indexPath.row == 1 {
@@ -212,6 +229,9 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
                 let wikipediaURL: NSURL! = NSURL(string: info.tld!.valueForKey("wikipedia_url") as String)
                 let wikipediaViewController: SVWebViewController = SVWebViewController(URL: wikipediaURL)
                 wikipediaViewController.title = "TLD Wikipedia Article"
+                wikipediaViewController.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
+                wikipediaViewController.navigationController?.navigationBar.shadowImage = nil
+                wikipediaViewController.navigationController?.navigationBar.translucent = false
                 self.navigationController?.pushViewController(wikipediaViewController, animated: true)
             
             }
@@ -222,6 +242,10 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
                 
                 let newArray: NSArray = info.registrars!.objectsAtIndexes(NSIndexSet(indexesInRange: NSMakeRange(4, info.registrars!.count-8))) as NSArray
                 let registrarsViewController: NRRegistrarViewController = NRRegistrarViewController(registrars: newArray)
+                registrarsViewController.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
+                registrarsViewController.navigationController?.navigationBar.shadowImage = nil
+                registrarsViewController.navigationController?.navigationBar.translucent = false
+
                 self.navigationController?.pushViewController(registrarsViewController, animated: true)
             
             } else {
@@ -229,6 +253,10 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
                 let registrarURL: NSURL! = NSURL(string: info.registrars!.objectAtIndex(indexPath.row).valueForKey("register_url") as String)
                 let registrarViewController: SVWebViewController = SVWebViewController(URL: registrarURL)
                 registrarViewController.title = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String
+                registrarViewController.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
+                registrarViewController.navigationController?.navigationBar.shadowImage = nil
+                registrarViewController.navigationController?.navigationBar.translucent = false
+                
                 self.navigationController?.pushViewController(registrarViewController, animated: true)
                 
             }
@@ -320,12 +348,8 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
                 tableView.tableHeaderView!.frame.size.height = 64.0
                 previousScrollOffsetY = 105.0
             }
-            
+            navigationBarView.centerElements()
             tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
         }
-    }
-    
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
     }
 }
