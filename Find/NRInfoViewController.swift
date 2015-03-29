@@ -74,12 +74,12 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: "NRDefaultCell")
         tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: "NRInfoViewRegistrarCell")
         tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
-        navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 180), title: self.result.domain, subTitle: self.result.availability?.capitalizedString, labelType: availabilityType)
+        navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 160), title: self.result.domain, subTitle: self.result.availability?.capitalizedString, labelType: availabilityType)
         tableView.tableHeaderView = navigationBarView
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
         tableView.stickyHeader = true
         tableView.tableFooterView = UIView(frame: CGRectZero)
-        
+
         self.view.addSubview(tableView)
         
         let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 50.0, self.view.frame.size.width, 50.0)
@@ -168,6 +168,14 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             }
         }
         
+        if section == tableView.numberOfSections()-1 {
+            // cancel the perform request if there is another section
+            NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: "tableViewWillFinishLoading:", object: tableView)
+            
+            // create a perform request to call the didLoadRows method on the next event loop.
+            self.callSelector("tableViewWillFinishLoading:", object:tableView, delay:0)
+        }
+
         return numberOfRows
         
     }
@@ -304,6 +312,17 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         
     }
     
+    func tableViewWillFinishLoading(tableView: UITableView) {
+//        println(tableView.contentSize.height)
+//        println(UIScreen.mainScreen().bounds.height)
+//        if tableView.contentSize.height < UIScreen.mainScreen().bounds.height {
+//            tableView.scrollEnabled = false
+//        } else {
+//            tableView.scrollEnabled = true
+//        }
+        
+    }
+    
     // #pragma mark - UIScrollViewDelegate
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -341,12 +360,14 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             let velocity: CGFloat = scrollView.panGestureRecognizer.velocityInView(scrollView).y
             let offset: CGFloat = scrollView.contentOffset.y
             
-            if offset < 105.0 {
+            println(offset)
+            
+            if offset < 94.0 {
                 tableView.tableHeaderView!.frame.size.height += (previousScrollOffsetY - scrollView.contentOffset.y)
                 previousScrollOffsetY = offset
             } else {
                 tableView.tableHeaderView!.frame.size.height = 64.0
-                previousScrollOffsetY = 105.0
+                previousScrollOffsetY = 94.0
             }
             navigationBarView.centerElements()
             tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)

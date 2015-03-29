@@ -50,6 +50,7 @@ class NRInfoNavigationBarView: UIView {
         titleLabel.backgroundColor = UIColor.clearColor()
         titleLabel.layer.backgroundColor = UIColor.clearColor().CGColor
         titleLabel.frame.origin.x = round(self.frame.width/2 - (titleLabel.frame.width/2))
+        titleLabel.textAlignment = NSTextAlignment.Center
         self.addSubview(titleLabel)
         
         subTitle = NRSubtitleLabel()
@@ -79,10 +80,23 @@ class NRInfoNavigationBarView: UIView {
     
     func centerElements() {
 
+        println(self.frame.size.height)
+        
+        var fontSize: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 140.0, r2: 100.0, t1: 22.0, t2: 17.0)
+        
+        if fontSize > 22.0 {
+            fontSize = 22.0
+        } else if fontSize < 17.0 {
+            fontSize = 17.0
+        }
+        
+        titleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: fontSize)
+        titleLabel.frame.origin.x = round(self.frame.width/2 - (titleLabel.frame.width/2))
         titleLabel.frame.origin.y = round((self.frame.size.height/2 - titleLabel.frame.height/2) - 8.0)
+        
         subTitle.frame.origin.y = round(titleLabel.frame.origin.y + titleLabel.frame.size.height + 5.0)
         
-        subTitle.alpha = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 74.0, t1: 1.0, t2: 0.0)
+        subTitle.alpha = mapCGFloatRange(self.frame.size.height, r1: 140.0, r2: 100.0, t1: 1.0, t2: 0.0)
     }
     
     // http://stackoverflow.com/a/6237034/553149

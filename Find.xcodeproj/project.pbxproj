@@ -13,6 +13,7 @@
 		440A7C2B1AA41A860003F624 /* NRResultsCommunicatorDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440A7C2A1AA41A860003F624 /* NRResultsCommunicatorDelegate.swift */; };
 		440A7C2D1AA41AA30003F624 /* NRResultsManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440A7C2C1AA41AA30003F624 /* NRResultsManagerDelegate.swift */; };
 		442061511ABF7A87006B5E84 /* UITableView+StickyHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 442061501ABF7A87006B5E84 /* UITableView+StickyHeader.m */; };
+		442E471F1AC85D00006DC37F /* NSObject+CallSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442E471E1AC85D00006DC37F /* NSObject+CallSelector.swift */; };
 		442E88781AA5742A00A75B92 /* NRInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442E88771AA5742A00A75B92 /* NRInfoViewController.swift */; };
 		4432BB4B1AB54FE2004BC114 /* NRSuggestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4432BB4A1AB54FE2004BC114 /* NRSuggestionsViewController.swift */; };
 		443B1FF11AB43052007F2782 /* NRColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443B1FF01AB43052007F2782 /* NRColor.swift */; };
@@ -62,6 +63,7 @@
 		440A7C2C1AA41AA30003F624 /* NRResultsManagerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRResultsManagerDelegate.swift; sourceTree = "<group>"; };
 		4420614F1ABF7A87006B5E84 /* UITableView+StickyHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+StickyHeader.h"; sourceTree = "<group>"; };
 		442061501ABF7A87006B5E84 /* UITableView+StickyHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+StickyHeader.m"; sourceTree = "<group>"; };
+		442E471E1AC85D00006DC37F /* NSObject+CallSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+CallSelector.swift"; sourceTree = "<group>"; };
 		442E88771AA5742A00A75B92 /* NRInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRInfoViewController.swift; sourceTree = "<group>"; };
 		4432BB4A1AB54FE2004BC114 /* NRSuggestionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRSuggestionsViewController.swift; sourceTree = "<group>"; };
 		443B1FF01AB43052007F2782 /* NRColor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRColor.swift; sourceTree = "<group>"; };
@@ -254,6 +256,7 @@
 		44B0636F1AA3D4950033DEB2 /* Find */ = {
 			isa = PBXGroup;
 			children = (
+				442E471E1AC85D00006DC37F /* NSObject+CallSelector.swift */,
 				44B063721AA3D4950033DEB2 /* AppDelegate.swift */,
 				443B1FF01AB43052007F2782 /* NRColor.swift */,
 				44CF693A1AB5F02900341894 /* NRRegistrar */,
@@ -455,6 +458,7 @@
 				44AC98601AA54FCE009369EB /* NRInfoCommunicatorDelegate.swift in Sources */,
 				440A7C2D1AA41AA30003F624 /* NRResultsManagerDelegate.swift in Sources */,
 				44B063781AA3D4950033DEB2 /* NRResultsViewController.swift in Sources */,
+				442E471F1AC85D00006DC37F /* NSObject+CallSelector.swift in Sources */,
 				44F42BFE1AAD5747009C5EC5 /* NRInfoViewRegistrarCell.swift in Sources */,
 				44B0639C1AA3E8590033DEB2 /* NRModelBuilder.swift in Sources */,
 				44C820B71AA5536200DF4DD8 /* NRResultCell.swift in Sources */,
