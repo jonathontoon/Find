@@ -157,6 +157,9 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
                 if info.tld?.valueForKey("wikipedia_url") != nil {
                    numberOfRows++
                 }
+                
+                //Suggestions
+                numberOfRows++;
             }
             
             if section == 1 {
