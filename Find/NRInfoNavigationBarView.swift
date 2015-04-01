@@ -50,7 +50,9 @@ class NRInfoNavigationBarView: UIView {
         titleLabel.backgroundColor = UIColor.clearColor()
         titleLabel.layer.backgroundColor = UIColor.clearColor().CGColor
         titleLabel.frame.origin.x = round(self.frame.width/2 - (titleLabel.frame.width/2))
+        titleLabel.frame.origin.y = round((self.frame.size.height/2 - titleLabel.frame.height/2) - 8.0)
         titleLabel.textAlignment = NSTextAlignment.Center
+        titleLabel.transform = CGAffineTransformMakeScale(1.0, 1.0)
         self.addSubview(titleLabel)
         
         subTitle = NRSubtitleLabel()
@@ -80,36 +82,15 @@ class NRInfoNavigationBarView: UIView {
     
     func centerElements() {
 
-        println(self.frame.size.height)
-        
-        var titleFontSize: CGFloat = mapCGFloatRange(round(self.frame.size.height), r1: 160.0, r2: 100.0, t1: 22.0, t2: 17.0)
-        
-        if titleFontSize > 22.0 {
-            titleFontSize = 22.0
-        } else if titleFontSize < 17.0 {
-            titleFontSize = 17.0
-        }
-        
-        titleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: titleFontSize)
-        titleLabel.frame.origin.x = round(self.frame.width/2 - (titleLabel.frame.width/2))
-        
+        let scale: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.8095)
+        titleLabel.transform = CGAffineTransformMakeScale(scale, scale)
+
         if self.frame.height > 160.0 {
             titleLabel.frame.origin.y = round((self.frame.size.height/2 - titleLabel.frame.height/2) - 8.0)
         } else {
-            titleLabel.frame.origin.y = round(mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: round((80 - titleLabel.frame.height/2) - 8.0), t2: 28.0))
+            titleLabel.frame.origin.y = round(mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: round((80 - titleLabel.frame.height/2) - 8.0), t2: 29.5))
         }
-        
-        var subTitleFontSize: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 100.0, t1: 10.0, t2: 8.0)
-        
-        if subTitleFontSize > 10.0 {
-            subTitleFontSize = 10.0
-        } else if subTitleFontSize < 8.0 {
-            subTitleFontSize = 8.0
-        }
-        
-        subTitle.font = UIFont(name: "HelveticaNeue", size: subTitleFontSize)
-        
-        subTitle.sizeToFit()
+
         subTitle.frame.origin.x = round(self.frame.width/2 - (subTitle.frame.width/2))
         subTitle.frame.origin.y = round(titleLabel.frame.origin.y + titleLabel.frame.size.height + 3.0)
         

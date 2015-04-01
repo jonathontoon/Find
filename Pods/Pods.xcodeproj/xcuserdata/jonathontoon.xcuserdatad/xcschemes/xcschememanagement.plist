@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-ARLabel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-SVWebViewController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>97BB92929120485D7AB5B38C</key>
+		<key>4CC71E6038E1BBA26FCB8721</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A20E061AEDD2F23E20DD1583</key>
+		<key>83E73FAEE2264995FCD1230F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AFEEAA82254E351B5A916F5A</key>
+		<key>930F647843F2435B51C40A13</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EAA2123BEA18F79E01BA9B51</key>
 		<dict>
 			<key>primary</key>
 			<true/>

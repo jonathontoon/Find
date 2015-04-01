@@ -6,6 +6,12 @@
 // project.
 
 
+// ARLabel
+#define COCOAPODS_POD_AVAILABLE_ARLabel
+#define COCOAPODS_VERSION_MAJOR_ARLabel 0
+#define COCOAPODS_VERSION_MINOR_ARLabel 0
+#define COCOAPODS_VERSION_PATCH_ARLabel 1
+
 // SVWebViewController
 #define COCOAPODS_POD_AVAILABLE_SVWebViewController
 #define COCOAPODS_VERSION_MAJOR_SVWebViewController 1

@@ -1,0 +1,27 @@
+{
+  "name": "ARLabel",
+  "version": "0.0.1",
+  "summary": "Version of UILabel that adjusts label font size to fit its frame, specifically designed for animations.",
+  "homepage": "https://github.com/ivankovacevic/ARLabel",
+  "authors": {
+    "Ivan Kovacevic": "ivan.kovacevic@gmail.com"
+  },
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "source": {
+    "git": "https://github.com/ivankovacevic/ARLabel.git",
+    "commit": "577debd"
+  },
+  "platforms": {
+    "ios": "6.0"
+  },
+  "source_files": "ARLabel.{h,m}",
+  "frameworks": [
+    "CoreGraphics",
+    "UIKit",
+    "Foundation"
+  ],
+  "requires_arc": true
+}
