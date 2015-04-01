@@ -63,6 +63,7 @@ class NRInfoNavigationBarView: UIView {
         subTitle.textAlignment = NSTextAlignment.Center
         subTitle.layer.cornerRadius = 2.0
         subTitle.clipsToBounds = true
+        subTitle.transform = CGAffineTransformMakeScale(1.0, 1.0)
         subTitle.sizeToFit()
         
         if type == AvailabilityType.Taken {
@@ -91,7 +92,8 @@ class NRInfoNavigationBarView: UIView {
             titleLabel.frame.origin.y = round(mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: round((80 - titleLabel.frame.height/2) - 8.0), t2: 29.5))
         }
 
-        subTitle.frame.origin.x = round(self.frame.width/2 - (subTitle.frame.width/2))
+        let subScale: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.8095)
+        subTitle.transform = CGAffineTransformMakeScale(subScale, subScale)
         subTitle.frame.origin.y = round(titleLabel.frame.origin.y + titleLabel.frame.size.height + 3.0)
         
         subTitle.alpha = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.0)

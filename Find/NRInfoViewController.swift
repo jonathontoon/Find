@@ -55,7 +55,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         self.navigationController?.navigationBar.translucent = true
         self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
         
-        let cancelButtonItem: UIBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "dismissViewController")
+        let cancelButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "closeButton")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), style: UIBarButtonItemStyle.Plain, target: self, action: "dismissViewController")
         cancelButtonItem.tintColor = UIColor.whiteColor()
         self.navigationController?.navigationBar.topItem?.leftBarButtonItem = cancelButtonItem
         
@@ -90,7 +90,6 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     func presentAction() {
