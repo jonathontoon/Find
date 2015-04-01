@@ -83,7 +83,7 @@ class NRInfoNavigationBarView: UIView {
     
     func centerElements() {
 
-        let scale: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.8095)
+        let scale: CGFloat = self.frame.size.height <= 160 ? mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.8095) : 1.0
         titleLabel.transform = CGAffineTransformMakeScale(scale, scale)
 
         if self.frame.height > 160.0 {
@@ -92,7 +92,7 @@ class NRInfoNavigationBarView: UIView {
             titleLabel.frame.origin.y = round(mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: round((80 - titleLabel.frame.height/2) - 8.0), t2: 29.5))
         }
 
-        let subScale: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.8095)
+        let subScale: CGFloat = self.frame.size.height <= 160 ? mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.8095) : 1.0
         subTitle.transform = CGAffineTransformMakeScale(subScale, subScale)
         subTitle.frame.origin.y = round(titleLabel.frame.origin.y + titleLabel.frame.size.height + 3.0)
         
