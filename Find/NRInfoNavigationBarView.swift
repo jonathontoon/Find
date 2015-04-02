@@ -96,7 +96,7 @@ class NRInfoNavigationBarView: UIView {
         subTitle.transform = CGAffineTransformMakeScale(subScale, subScale)
         subTitle.frame.origin.y = round(titleLabel.frame.origin.y + titleLabel.frame.size.height + 3.0)
         
-        subTitle.alpha = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.0)
+        subTitle.alpha = mapCGFloatRange(self.frame.size.height, r1: 100.0, r2: 64.0, t1: 1.0, t2: 0.0)
     }
     
     // http://stackoverflow.com/a/6237034/553149
