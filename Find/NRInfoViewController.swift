@@ -363,13 +363,14 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             let offset: CGFloat = scrollView.contentOffset.y
             
             println(offset)
+            println(tableView.tableHeaderView!.frame.size.height)
             
             if offset < 94.0 {
                 tableView.tableHeaderView!.frame.size.height += (previousScrollOffsetY - scrollView.contentOffset.y)
                 previousScrollOffsetY = offset
             } else {
                 tableView.tableHeaderView!.frame.size.height = 64.0
-                previousScrollOffsetY = 94.0
+                previousScrollOffsetY = 96.0
             }
             navigationBarView.centerElements()
             tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)

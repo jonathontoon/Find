@@ -10,11 +10,11 @@ import UIKit
 
 class NRInfoNavigationBarView: UIView {
 
-    var containerView: UIView!
+    var patternView: NRInfoNavigationBarPatternView!
     
     var titleString: String?
     var titleLabel: UILabel!
-    
+     
     var subTitleString: String?
     var subTitle: NRSubtitleLabel!
     
@@ -42,6 +42,9 @@ class NRInfoNavigationBarView: UIView {
         self.backgroundColor = UIColor.clearColor()
         self.layer.backgroundColor = UIColor.blueColor().CGColor
         
+        patternView = NRInfoNavigationBarPatternView(frame: self.frame)
+        self.addSubview(patternView)
+        
         titleLabel = UILabel()
         titleLabel.text = titleString
         titleLabel.textColor = UIColor.whiteColor()
@@ -52,13 +55,13 @@ class NRInfoNavigationBarView: UIView {
         titleLabel.sizeToFit()
         titleLabel.frame = CGRectIntegral(titleLabel.frame)
         titleLabel.textAlignment = NSTextAlignment.Center
-        titleLabel.center = CGPointIntegral(CGPointMake(self.center.x, self.center.y - 14))
+        titleLabel.center = CGPointIntegral(CGPointMake(self.center.x, self.center.y - 12))
         self.addSubview(titleLabel)
         
         subTitle = NRSubtitleLabel()
         subTitle.text = subTitleString?.uppercaseString
         subTitle.textColor = UIColor.whiteColor()
-        subTitle.font = UIFont(name: "HelveticaNeue", size: 10.0)
+        subTitle.font = UIFont(name: "HelveticaNeue-Medium", size: 10.0)
         subTitle.backgroundColor = NRColor().domainrGreenColor()
         subTitle.layer.cornerRadius = 2.0
         subTitle.clipsToBounds = true
@@ -76,24 +79,37 @@ class NRInfoNavigationBarView: UIView {
         subTitle.sizeToFit()
         subTitle.frame = CGRectIntegral(subTitle.frame)
         subTitle.textAlignment = NSTextAlignment.Center
-        subTitle.center = CGPointIntegral(CGPointMake(self.center.x, self.center.y + 14))
+        subTitle.center = CGPointIntegral(CGPointMake(self.center.x, (self.bounds.size.height/2) + 17.0))
+        
+        println(titleLabel.center.y + 28.0)
+        println(self.frame.size.height)
+        
         self.addSubview(subTitle)
 
     }
     
     func centerElements() {
 
-        titleLabel.center = CGPointIntegral(CGPointMake(self.center.x, self.center.y - 14))
+        let centerYOffset: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 12.0, t2: -6.5)
+        titleLabel.center = CGPointIntegral(CGPointMake(self.bounds.size.width/2, (self.bounds.size.height/2) - centerYOffset))
         
-        let scale: CGFloat = self.frame.size.height < 160 ? mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.8095) : 1.0
+        var scale: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.8095)
+        scale = scale < 1.0 ? scale : 1.0
         titleLabel.transform = CGAffineTransformMakeScale(scale, scale)
 
-        subTitle.center = CGPointIntegral(CGPointMake(self.center.x, self.center.y + 14.0))
+        subTitle.center = CGPointIntegral(CGPointMake(self.bounds.size.width/2, (self.bounds.size.height/2) + 17.0))
         
-        let subScale: CGFloat = self.frame.size.height < 160 ? mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.8095) : 1.0
+        var subScale: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.5)
+        subScale = subScale < 1.0 ? subScale : 1.0
         subTitle.transform = CGAffineTransformMakeScale(subScale, subScale)
 
-        subTitle.alpha = mapCGFloatRange(self.frame.size.height, r1: 100.0, r2: 64.0, t1: 1.0, t2: 0.0)
+        var subRadius: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 2.0, t2: 0.2)
+        subRadius = subRadius < 2.0 ? subRadius : 2.0
+        subTitle.layer.cornerRadius = subRadius
+        
+        subTitle.alpha = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 72.0, t1: 1.0, t2: 0.0)
+        
+        println(self.frame.size.height)
     }
     
     // http://stackoverflow.com/a/6237034/553149
