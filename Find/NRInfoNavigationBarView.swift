@@ -46,13 +46,13 @@ class NRInfoNavigationBarView: UIView {
         titleLabel.text = titleString
         titleLabel.textColor = UIColor.whiteColor()
         titleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 22.0)
-        titleLabel.sizeToFit()
         titleLabel.backgroundColor = UIColor.clearColor()
         titleLabel.layer.backgroundColor = UIColor.clearColor().CGColor
-        titleLabel.frame.origin.x = round(self.frame.width/2 - (titleLabel.frame.width/2))
-        titleLabel.frame.origin.y = round((self.frame.size.height/2 - titleLabel.frame.height/2) - 8.0)
-        titleLabel.textAlignment = NSTextAlignment.Center
         titleLabel.transform = CGAffineTransformMakeScale(1.0, 1.0)
+        titleLabel.sizeToFit()
+        titleLabel.frame = CGRectIntegral(titleLabel.frame)
+        titleLabel.textAlignment = NSTextAlignment.Center
+        titleLabel.center = CGPointIntegral(CGPointMake(self.center.x, self.center.y - 14))
         self.addSubview(titleLabel)
         
         subTitle = NRSubtitleLabel()
@@ -60,11 +60,9 @@ class NRInfoNavigationBarView: UIView {
         subTitle.textColor = UIColor.whiteColor()
         subTitle.font = UIFont(name: "HelveticaNeue", size: 10.0)
         subTitle.backgroundColor = NRColor().domainrGreenColor()
-        subTitle.textAlignment = NSTextAlignment.Center
         subTitle.layer.cornerRadius = 2.0
         subTitle.clipsToBounds = true
         subTitle.transform = CGAffineTransformMakeScale(1.0, 1.0)
-        subTitle.sizeToFit()
         
         if type == AvailabilityType.Taken {
             subTitle.backgroundColor = NRColor().domainrBlueColor()
@@ -75,27 +73,26 @@ class NRInfoNavigationBarView: UIView {
         }
         
         subTitle.layer.backgroundColor = UIColor.clearColor().CGColor
-        subTitle.frame.origin.x = round(self.frame.width/2 - (subTitle.frame.width/2))
+        subTitle.sizeToFit()
+        subTitle.frame = CGRectIntegral(subTitle.frame)
+        subTitle.textAlignment = NSTextAlignment.Center
+        subTitle.center = CGPointIntegral(CGPointMake(self.center.x, self.center.y + 14))
         self.addSubview(subTitle)
-        
-        centerElements()
+
     }
     
     func centerElements() {
 
-        let scale: CGFloat = self.frame.size.height <= 160 ? mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.8095) : 1.0
+        titleLabel.center = CGPointIntegral(CGPointMake(self.center.x, self.center.y - 14))
+        
+        let scale: CGFloat = self.frame.size.height < 160 ? mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.8095) : 1.0
         titleLabel.transform = CGAffineTransformMakeScale(scale, scale)
 
-        if self.frame.height > 160.0 {
-            titleLabel.frame.origin.y = round((self.frame.size.height/2 - titleLabel.frame.height/2) - 8.0)
-        } else {
-            titleLabel.frame.origin.y = round(mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: round((80 - titleLabel.frame.height/2) - 8.0), t2: 29.5))
-        }
-
-        let subScale: CGFloat = self.frame.size.height <= 160 ? mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.8095) : 1.0
-        subTitle.transform = CGAffineTransformMakeScale(subScale, subScale)
-        subTitle.frame.origin.y = round(titleLabel.frame.origin.y + titleLabel.frame.size.height + 3.0)
+        subTitle.center = CGPointIntegral(CGPointMake(self.center.x, self.center.y + 14.0))
         
+        let subScale: CGFloat = self.frame.size.height < 160 ? mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.8095) : 1.0
+        subTitle.transform = CGAffineTransformMakeScale(subScale, subScale)
+
         subTitle.alpha = mapCGFloatRange(self.frame.size.height, r1: 100.0, r2: 64.0, t1: 1.0, t2: 0.0)
     }
     

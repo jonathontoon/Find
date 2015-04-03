@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Pods-ARLabel.xcscheme</key>
+		<key>Pods-CGPointIntegral.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -27,22 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>4CC71E6038E1BBA26FCB8721</key>
+		<key>582E803F9AFC0B28E4B639A7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>83E73FAEE2264995FCD1230F</key>
+		<key>594407C88970F903FBBB9835</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>930F647843F2435B51C40A13</key>
+		<key>C4550CF7CCEB28797A498034</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EAA2123BEA18F79E01BA9B51</key>
+		<key>DDE575E76A4E791076792B03</key>
 		<dict>
 			<key>primary</key>
 			<true/>

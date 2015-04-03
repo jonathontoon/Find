@@ -1,5 +1,5 @@
 PODS:
-  - ARLabel (0.0.1)
+  - CGPointIntegral (0.0.1)
   - SVWebViewController (1.0)
   - UIColor+Hex (1.0.1):
     - UIColor+Hex/NSColor (= 1.0.1)
@@ -7,22 +7,22 @@ PODS:
   - UIColor+Hex/UIColor (1.0.1)
 
 DEPENDENCIES:
-  - ARLabel (from `https://github.com/ivankovacevic/ARLabel.git`)
+  - CGPointIntegral (from `https://github.com/jonathontoon/CGPointIntegral.git`)
   - SVWebViewController (from `https://github.com/jonathontoon/SVWebViewController.git`)
   - UIColor+Hex (from `https://github.com/Inferis/UIColor-Hex.git`)
 
 EXTERNAL SOURCES:
-  ARLabel:
-    :git: https://github.com/ivankovacevic/ARLabel.git
+  CGPointIntegral:
+    :git: https://github.com/jonathontoon/CGPointIntegral.git
   SVWebViewController:
     :git: https://github.com/jonathontoon/SVWebViewController.git
   UIColor+Hex:
     :git: https://github.com/Inferis/UIColor-Hex.git
 
 CHECKOUT OPTIONS:
-  ARLabel:
-    :commit: 3f8ed0df0a7e117f2ffa27a542b8b569f548322c
-    :git: https://github.com/ivankovacevic/ARLabel.git
+  CGPointIntegral:
+    :commit: 89da0fb94c9007ea8f5be9a4258bc970d69b8ba7
+    :git: https://github.com/jonathontoon/CGPointIntegral.git
   SVWebViewController:
     :commit: 5375f927659ef5492464741aea63ad6089e670f0
     :git: https://github.com/jonathontoon/SVWebViewController.git
@@ -31,7 +31,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/Inferis/UIColor-Hex.git
 
 SPEC CHECKSUMS:
-  ARLabel: 244aecc5576263b833644169089644b620a10350
+  CGPointIntegral: f6282ed89f108d5ec21ad1259a4e8de15c5a9be5
   SVWebViewController: aa2e18a41ff5f45be7aeec8e92ca5bcc50b5ebb1
   UIColor+Hex: 5ca7532528968af382128af7bfe73afe0839ba1e
 

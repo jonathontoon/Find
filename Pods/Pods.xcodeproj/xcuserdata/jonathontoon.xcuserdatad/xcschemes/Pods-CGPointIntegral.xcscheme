@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "83E73FAEE2264995FCD1230F"
-               BuildableName = "libPods-ARLabel.a"
-               BlueprintName = "Pods-ARLabel"
+               BlueprintIdentifier = "594407C88970F903FBBB9835"
+               BuildableName = "libPods-CGPointIntegral.a"
+               BlueprintName = "Pods-CGPointIntegral"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

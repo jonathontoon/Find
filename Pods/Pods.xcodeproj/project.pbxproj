@@ -7,418 +7,380 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1CA18ED59A71174F78C50B38 /* SVWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 007CF425B00C941026031B3F /* SVWebViewController.h */; };
-		2898012AF026645305CD5297 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17AB4C01492BBAF69E146F0 /* Foundation.framework */; };
-		2F268FBCD105DCFB3F942A02 /* UIColor+Hex.h in Headers */ = {isa = PBXBuildFile; fileRef = 32268C9051DCAA68907E93CD /* UIColor+Hex.h */; };
-		30515A3ADB5EF4501A73E2EF /* SVWebViewControllerActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = D11F73D8C5CAB80AC3599ADE /* SVWebViewControllerActivity.h */; };
-		4067E616642CA7F944F9D054 /* SVWebViewControllerActivityChrome.h in Headers */ = {isa = PBXBuildFile; fileRef = 20EC30513ACE75E68843B6F5 /* SVWebViewControllerActivityChrome.h */; };
-		4897BD917777427C370E83C1 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2F9EAB57E3290475BD7D4772 /* UIKit.framework */; };
-		537A07D47896532C75F25B75 /* SVModalWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D04CDCE0172AF95C35A33DB /* SVModalWebViewController.h */; };
-		5CF9011CF4598505836D5D0E /* SVWebViewControllerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 452F8A6CA0E197318A8F2086 /* SVWebViewControllerActivity.m */; };
-		644C62322BB9A858317CC3D0 /* SVWebViewControllerActivitySafari.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF947598C8BA16DD970A565 /* SVWebViewControllerActivitySafari.h */; };
-		661B4AA6B0175C44D9D76A63 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17AB4C01492BBAF69E146F0 /* Foundation.framework */; };
-		6EDCACA9DF1B0A73010CD84D /* Pods-SVWebViewController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CAD6D3BF168BBCA9ED461423 /* Pods-SVWebViewController-dummy.m */; };
-		718CD070E9F0C171E215A9D1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17AB4C01492BBAF69E146F0 /* Foundation.framework */; };
-		7F9D74176CC4572259839BFB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F17AB4C01492BBAF69E146F0 /* Foundation.framework */; };
-		995EDB4E993EE62B99C6FCA1 /* Pods-UIColor+Hex-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C72782F80014D7459D8B74CC /* Pods-UIColor+Hex-dummy.m */; };
-		99FAE94C862A43BB69108E2C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5598FEEDA78716C540043737 /* CoreGraphics.framework */; };
-		A2A92C01D0AB9370CC8D5A38 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 716E4737AA85B93F17CF42AC /* UIColor+Hex.m */; };
-		A6269AF9F5884CE97AD6D51E /* SVWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FA42912F98740F7167992539 /* SVWebViewController.m */; };
-		AD8B3568289926CB9C784BF5 /* SVModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 82FBA126E81328471A8EA388 /* SVModalWebViewController.m */; };
-		BDD2438B9E54F5D91B797B06 /* SVWebViewControllerActivityChrome.m in Sources */ = {isa = PBXBuildFile; fileRef = 3B381BC8BFE84CCC7FE8DE73 /* SVWebViewControllerActivityChrome.m */; };
-		C2B5E8D89528B3BB992F5BC7 /* Pods-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F71FB2D8E4BA7314615FF8FE /* Pods-dummy.m */; };
-		CE5B312C7D61E0CA4A741CA8 /* ARLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = 82EF0F2E36A6891836DAB446 /* ARLabel.h */; };
-		E7081240372A191378E70D46 /* SVWebViewControllerActivitySafari.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CA82E7E68226FD84FA5547B /* SVWebViewControllerActivitySafari.m */; };
-		EF87D02F73ADDC116EF096CF /* ARLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = FFE70D22E776B82587130D39 /* ARLabel.m */; };
-		FF0EEB8D50B7F3E9CA81D773 /* Pods-ARLabel-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BF432B6F0342088D26692F3 /* Pods-ARLabel-dummy.m */; };
+		03066FA5A7BFDABFD0FB7DF1 /* Pods-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 164B0F26C4C6C01F12E169BC /* Pods-dummy.m */; };
+		0C0146566E8C3E4DCC0524AB /* CGPointIntegral.h in Headers */ = {isa = PBXBuildFile; fileRef = 95657B377E1B3E21A4A465B4 /* CGPointIntegral.h */; };
+		0DC85E3517B3D85939B224E6 /* SVWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = C8344BF2CAEB21A2008EE8AB /* SVWebViewController.h */; };
+		168AA21726DAC77ECB1E7C05 /* SVModalWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 768218797369622F5A2D6FDC /* SVModalWebViewController.m */; };
+		1B3881F5AB48C0BD57910B66 /* SVWebViewControllerActivityChrome.h in Headers */ = {isa = PBXBuildFile; fileRef = 1E625582280BA9C8A893C75A /* SVWebViewControllerActivityChrome.h */; };
+		2137DD8242F61865C5F5713F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5F93AF73332FDA2E002E80F /* Foundation.framework */; };
+		262C1372D24BCF54548C8D1C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5F93AF73332FDA2E002E80F /* Foundation.framework */; };
+		2EC2E9840D586D4B0178B9F7 /* Pods-UIColor+Hex-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B8D81DAC66A37A4026720478 /* Pods-UIColor+Hex-dummy.m */; };
+		355AA3B61FF1E3AA17DB9FDC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AC9315F41B09221E77405209 /* UIKit.framework */; };
+		38B25B780BBF4ECFB5D2C47B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5F93AF73332FDA2E002E80F /* Foundation.framework */; };
+		3D82D6308DC73D836127EE84 /* UIColor+Hex.h in Headers */ = {isa = PBXBuildFile; fileRef = 90BE152196C3D809CA477698 /* UIColor+Hex.h */; };
+		4492A456CF8C050AF6128DEB /* SVWebViewControllerActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AECC2BA739AAAC1FE3A1A42 /* SVWebViewControllerActivity.m */; };
+		64790607DCA2B3DEB90E76D2 /* CGPointIntegral.m in Sources */ = {isa = PBXBuildFile; fileRef = CD4AA4ABA765C2734401B463 /* CGPointIntegral.m */; };
+		723CBFF4D710A1D0D56CB3B4 /* SVWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 81F6AE886C525578C82FA183 /* SVWebViewController.m */; };
+		883635AA6BA9C6B60BACBA9E /* SVWebViewControllerActivitySafari.h in Headers */ = {isa = PBXBuildFile; fileRef = 728CF0BB846006140543AEC3 /* SVWebViewControllerActivitySafari.h */; };
+		90EECBE9A7DC8BDC9CE5982C /* SVWebViewControllerActivitySafari.m in Sources */ = {isa = PBXBuildFile; fileRef = AA4A07B8BDA868728450953F /* SVWebViewControllerActivitySafari.m */; };
+		92787DF12B5BEE875DE7BB5F /* SVModalWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = DAFD99CE94A203385483DBC5 /* SVModalWebViewController.h */; };
+		98D2387A25820C76A5CEAA85 /* SVWebViewControllerActivityChrome.m in Sources */ = {isa = PBXBuildFile; fileRef = D0BC2E386790CD54F11DAFAE /* SVWebViewControllerActivityChrome.m */; };
+		9F17396DEF2EB8881BDE76D6 /* SVWebViewControllerActivity.h in Headers */ = {isa = PBXBuildFile; fileRef = F5912E3CCA1D2AC131CB89D1 /* SVWebViewControllerActivity.h */; };
+		BAC3538E323BA808A4FC1E66 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E5F93AF73332FDA2E002E80F /* Foundation.framework */; };
+		F1B9EC59D8FCA25FFF1742F8 /* UIColor+Hex.m in Sources */ = {isa = PBXBuildFile; fileRef = 1B3CE7E91DF29A7A14ECFA34 /* UIColor+Hex.m */; };
+		F7D30102DC62C9A1D89C71B5 /* Pods-CGPointIntegral-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = A4EB4A893C20677DA991FC6E /* Pods-CGPointIntegral-dummy.m */; };
+		F88742850E6947AF66B508FB /* Pods-SVWebViewController-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 3204A1FA57CF787A76827CD1 /* Pods-SVWebViewController-dummy.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		07DEFE155D99CF1A60C5E481 /* PBXContainerItemProxy */ = {
+		8AF6E7A9289FA66990A6016A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F21AACEC7C73EA909A433A1B /* Project object */;
+			containerPortal = 0785AC869719F6B974AB5DAC /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 4CC71E6038E1BBA26FCB8721;
+			remoteGlobalIDString = C4550CF7CCEB28797A498034;
 			remoteInfo = "Pods-SVWebViewController";
 		};
-		18E25F964EBE5338A277A083 /* PBXContainerItemProxy */ = {
+		A86AD2851099651C249BAE56 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F21AACEC7C73EA909A433A1B /* Project object */;
+			containerPortal = 0785AC869719F6B974AB5DAC /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 930F647843F2435B51C40A13;
+			remoteGlobalIDString = 582E803F9AFC0B28E4B639A7;
 			remoteInfo = "Pods-UIColor+Hex";
 		};
-		F7972E0577295620A6296AB4 /* PBXContainerItemProxy */ = {
+		CAF700E9FA7CC7D537F3DE1B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = F21AACEC7C73EA909A433A1B /* Project object */;
+			containerPortal = 0785AC869719F6B974AB5DAC /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 83E73FAEE2264995FCD1230F;
-			remoteInfo = "Pods-ARLabel";
+			remoteGlobalIDString = 594407C88970F903FBBB9835;
+			remoteInfo = "Pods-CGPointIntegral";
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		007CF425B00C941026031B3F /* SVWebViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVWebViewController.h; path = SVWebViewController/SVWebViewController.h; sourceTree = "<group>"; };
-		0307E92DE9992410DF4368F6 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.debug.xcconfig; sourceTree = "<group>"; };
-		07E83DFD03FA9468B13C7175 /* libPods-UIColor+Hex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UIColor+Hex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		0BF432B6F0342088D26692F3 /* Pods-ARLabel-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ARLabel-dummy.m"; sourceTree = "<group>"; };
-		0CA82E7E68226FD84FA5547B /* SVWebViewControllerActivitySafari.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVWebViewControllerActivitySafari.m; path = SVWebViewController/UIActivities/Safari/SVWebViewControllerActivitySafari.m; sourceTree = "<group>"; };
-		137C058899E8372EB3CF391B /* SVWebViewControllerActivityChrome-iPad@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "SVWebViewControllerActivityChrome-iPad@2x.png"; path = "SVWebViewController/UIActivities/Chrome/SVWebViewControllerActivityChrome-iPad@2x.png"; sourceTree = "<group>"; };
-		1A4177AB4877F9210DB1D23E /* Pods-UIColor+Hex.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-UIColor+Hex.xcconfig"; sourceTree = "<group>"; };
-		1FC25EB2BC097520FBD77ABA /* SVWebViewControllerActivityChrome@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "SVWebViewControllerActivityChrome@2x.png"; path = "SVWebViewController/UIActivities/Chrome/SVWebViewControllerActivityChrome@2x.png"; sourceTree = "<group>"; };
-		20EC30513ACE75E68843B6F5 /* SVWebViewControllerActivityChrome.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVWebViewControllerActivityChrome.h; path = SVWebViewController/UIActivities/Chrome/SVWebViewControllerActivityChrome.h; sourceTree = "<group>"; };
-		281F53A5112A0D5EC208BE32 /* Pods-ARLabel.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ARLabel.xcconfig"; sourceTree = "<group>"; };
-		2F9EAB57E3290475BD7D4772 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
-		300D3468DBEA86277138B9E7 /* libPods-SVWebViewController.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SVWebViewController.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		32268C9051DCAA68907E93CD /* UIColor+Hex.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIColor+Hex.h"; path = "UIColor/UIColor+Hex.h"; sourceTree = "<group>"; };
-		331F3C28F6CB965148983D93 /* SVWebViewControllerNext@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "SVWebViewControllerNext@2x.png"; path = "SVWebViewController/SVWebViewController.bundle/SVWebViewControllerNext@2x.png"; sourceTree = "<group>"; };
-		33704F18BF77ADFADB7016FA /* de.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = de.lproj; path = SVWebViewController/de.lproj; sourceTree = "<group>"; };
-		394EA69940FA1556E98C0D19 /* SVWebViewControllerActivitySafari-iPad@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "SVWebViewControllerActivitySafari-iPad@2x.png"; path = "SVWebViewController/UIActivities/Safari/SVWebViewControllerActivitySafari-iPad@2x.png"; sourceTree = "<group>"; };
-		3B381BC8BFE84CCC7FE8DE73 /* SVWebViewControllerActivityChrome.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVWebViewControllerActivityChrome.m; path = SVWebViewController/UIActivities/Chrome/SVWebViewControllerActivityChrome.m; sourceTree = "<group>"; };
-		3F40796E81FCCD7140EB0B0A /* Pods-ARLabel-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ARLabel-prefix.pch"; sourceTree = "<group>"; };
-		421B908DE21BD43EE5032A6A /* Pods-ARLabel-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ARLabel-Private.xcconfig"; sourceTree = "<group>"; };
-		4344FE8623E1299A211D9149 /* da.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = da.lproj; path = SVWebViewController/da.lproj; sourceTree = "<group>"; };
-		452F8A6CA0E197318A8F2086 /* SVWebViewControllerActivity.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVWebViewControllerActivity.m; path = SVWebViewController/UIActivities/SVWebViewControllerActivity.m; sourceTree = "<group>"; };
-		45AEF4347E8B05CC5DDDF56E /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		47EAA7E68E7398DAAFA07ABA /* SVWebViewControllerNext.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = SVWebViewControllerNext.png; path = SVWebViewController/SVWebViewController.bundle/SVWebViewControllerNext.png; sourceTree = "<group>"; };
-		4D04CDCE0172AF95C35A33DB /* SVModalWebViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVModalWebViewController.h; path = SVWebViewController/SVModalWebViewController.h; sourceTree = "<group>"; };
-		4D04F08F85B75B00FD5D11DF /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		52B5BC8A3BC3B9F259776995 /* SVWebViewControllerActivitySafari-iPad.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "SVWebViewControllerActivitySafari-iPad.png"; path = "SVWebViewController/UIActivities/Safari/SVWebViewControllerActivitySafari-iPad.png"; sourceTree = "<group>"; };
-		5598FEEDA78716C540043737 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
-		5BF1A6FBE4C30027994F019D /* Pods-UIColor+Hex-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-UIColor+Hex-prefix.pch"; sourceTree = "<group>"; };
-		5FBB7C6348CEFE4261464FA3 /* Pods-SVWebViewController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SVWebViewController-prefix.pch"; sourceTree = "<group>"; };
-		6647530BBC1876F212B46F92 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = en.lproj; path = SVWebViewController/en.lproj; sourceTree = "<group>"; };
-		716E4737AA85B93F17CF42AC /* UIColor+Hex.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Hex.m"; path = "UIColor/UIColor+Hex.m"; sourceTree = "<group>"; };
-		73F9B4223AE354E871D866EC /* Pods-SVWebViewController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SVWebViewController.xcconfig"; sourceTree = "<group>"; };
-		7531A3C72C292938C68BDA29 /* libPods-ARLabel.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-ARLabel.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		796EA3AC898822F4B5431460 /* fr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = fr.lproj; path = SVWebViewController/fr.lproj; sourceTree = "<group>"; };
-		82EF0F2E36A6891836DAB446 /* ARLabel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = ARLabel.h; sourceTree = "<group>"; };
-		82FBA126E81328471A8EA388 /* SVModalWebViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVModalWebViewController.m; path = SVWebViewController/SVModalWebViewController.m; sourceTree = "<group>"; };
-		8E778A4585DE9C6B99019DCE /* zh-Hans.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = "zh-Hans.lproj"; path = "SVWebViewController/zh-Hans.lproj"; sourceTree = "<group>"; };
-		9286D592F722FFC28E5D2DCD /* ja.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = ja.lproj; path = SVWebViewController/ja.lproj; sourceTree = "<group>"; };
-		982F150F194CAF80E6BD02D6 /* SVWebViewControllerActivitySafari@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "SVWebViewControllerActivitySafari@2x.png"; path = "SVWebViewController/UIActivities/Safari/SVWebViewControllerActivitySafari@2x.png"; sourceTree = "<group>"; };
-		9C2C7FC806D3F3CC42ECB192 /* Pods-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-acknowledgements.plist"; sourceTree = "<group>"; };
-		9D664FA7B41EB0E307E55D71 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.release.xcconfig; sourceTree = "<group>"; };
-		A17624F68847A2C32ADD2B5A /* zh-Hant.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = "zh-Hant.lproj"; path = "SVWebViewController/zh-Hant.lproj"; sourceTree = "<group>"; };
-		A464128B72C83E86F26D8348 /* Pods-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-acknowledgements.markdown"; sourceTree = "<group>"; };
-		A4CB31798F6333F9A101FCD5 /* Pods-UIColor+Hex-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-UIColor+Hex-Private.xcconfig"; sourceTree = "<group>"; };
-		A71F107B7D2812B97C0C014C /* SVWebViewControllerActivityChrome-iPad.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "SVWebViewControllerActivityChrome-iPad.png"; path = "SVWebViewController/UIActivities/Chrome/SVWebViewControllerActivityChrome-iPad.png"; sourceTree = "<group>"; };
-		BA979AACD4BBB7FAF69D8C41 /* pt.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = pt.lproj; path = SVWebViewController/pt.lproj; sourceTree = "<group>"; };
-		BAF947598C8BA16DD970A565 /* SVWebViewControllerActivitySafari.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVWebViewControllerActivitySafari.h; path = SVWebViewController/UIActivities/Safari/SVWebViewControllerActivitySafari.h; sourceTree = "<group>"; };
-		BDEBEF3C90A48E7BD1739381 /* es.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = es.lproj; path = SVWebViewController/es.lproj; sourceTree = "<group>"; };
-		C72782F80014D7459D8B74CC /* Pods-UIColor+Hex-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-UIColor+Hex-dummy.m"; sourceTree = "<group>"; };
-		CAD6D3BF168BBCA9ED461423 /* Pods-SVWebViewController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SVWebViewController-dummy.m"; sourceTree = "<group>"; };
-		CD439808692BDFB7A50738A0 /* SVWebViewControllerBack.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = SVWebViewControllerBack.png; path = SVWebViewController/SVWebViewController.bundle/SVWebViewControllerBack.png; sourceTree = "<group>"; };
-		CE1B0597BAAF6FDE9725F198 /* es-ES.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = "es-ES.lproj"; path = "SVWebViewController/es-ES.lproj"; sourceTree = "<group>"; };
-		CEE8DFEE991FC401D49B99AF /* SVWebViewControllerBack@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "SVWebViewControllerBack@2x.png"; path = "SVWebViewController/SVWebViewController.bundle/SVWebViewControllerBack@2x.png"; sourceTree = "<group>"; };
-		D11F73D8C5CAB80AC3599ADE /* SVWebViewControllerActivity.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVWebViewControllerActivity.h; path = SVWebViewController/UIActivities/SVWebViewControllerActivity.h; sourceTree = "<group>"; };
-		D3A5617C50EADCF26BC82352 /* SVWebViewController.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = SVWebViewController.bundle; path = SVWebViewController/SVWebViewController.bundle; sourceTree = "<group>"; };
-		D7547BA07DE24B318725140E /* Pods-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-resources.sh"; sourceTree = "<group>"; };
-		E8CE0AF2589CCC4D66CF2E88 /* Pods-environment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-environment.h"; sourceTree = "<group>"; };
-		F0C24EB4E3495BF146523F17 /* Pods-SVWebViewController-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SVWebViewController-Private.xcconfig"; sourceTree = "<group>"; };
-		F17AB4C01492BBAF69E146F0 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		F71FB2D8E4BA7314615FF8FE /* Pods-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-dummy.m"; sourceTree = "<group>"; };
-		FA42912F98740F7167992539 /* SVWebViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVWebViewController.m; path = SVWebViewController/SVWebViewController.m; sourceTree = "<group>"; };
-		FFE70D22E776B82587130D39 /* ARLabel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = ARLabel.m; sourceTree = "<group>"; };
+		072116C3CE053245942A526D /* SVWebViewControllerNext@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "SVWebViewControllerNext@2x.png"; path = "SVWebViewController/SVWebViewController.bundle/SVWebViewControllerNext@2x.png"; sourceTree = "<group>"; };
+		0CB4935CFA18AC2ACB202F74 /* SVWebViewControllerActivityChrome-iPad@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "SVWebViewControllerActivityChrome-iPad@2x.png"; path = "SVWebViewController/UIActivities/Chrome/SVWebViewControllerActivityChrome-iPad@2x.png"; sourceTree = "<group>"; };
+		164B0F26C4C6C01F12E169BC /* Pods-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-dummy.m"; sourceTree = "<group>"; };
+		1B3CE7E91DF29A7A14ECFA34 /* UIColor+Hex.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIColor+Hex.m"; path = "UIColor/UIColor+Hex.m"; sourceTree = "<group>"; };
+		1E625582280BA9C8A893C75A /* SVWebViewControllerActivityChrome.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVWebViewControllerActivityChrome.h; path = SVWebViewController/UIActivities/Chrome/SVWebViewControllerActivityChrome.h; sourceTree = "<group>"; };
+		23E338C8E1845B1542CCD7AE /* de.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = de.lproj; path = SVWebViewController/de.lproj; sourceTree = "<group>"; };
+		290255CB0CF8A2C05444D124 /* SVWebViewControllerActivityChrome-iPad.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "SVWebViewControllerActivityChrome-iPad.png"; path = "SVWebViewController/UIActivities/Chrome/SVWebViewControllerActivityChrome-iPad.png"; sourceTree = "<group>"; };
+		3165F006F85A5D2A505517E9 /* es-ES.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = "es-ES.lproj"; path = "SVWebViewController/es-ES.lproj"; sourceTree = "<group>"; };
+		31C2F8100845374680BD93B5 /* libPods-UIColor+Hex.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UIColor+Hex.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3204A1FA57CF787A76827CD1 /* Pods-SVWebViewController-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SVWebViewController-dummy.m"; sourceTree = "<group>"; };
+		3B948C23C0F13A7A68345E10 /* es.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = es.lproj; path = SVWebViewController/es.lproj; sourceTree = "<group>"; };
+		4812DCB4ABF8C73E1466B34A /* SVWebViewControllerActivitySafari-iPad@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "SVWebViewControllerActivitySafari-iPad@2x.png"; path = "SVWebViewController/UIActivities/Safari/SVWebViewControllerActivitySafari-iPad@2x.png"; sourceTree = "<group>"; };
+		4F08728B6917E3202DC347F8 /* Pods-CGPointIntegral-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CGPointIntegral-Private.xcconfig"; sourceTree = "<group>"; };
+		54859297AE467B1EA82D8D6B /* Pods-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-resources.sh"; sourceTree = "<group>"; };
+		6007B5ABC1F81C7B360207F2 /* SVWebViewControllerBack.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = SVWebViewControllerBack.png; path = SVWebViewController/SVWebViewController.bundle/SVWebViewControllerBack.png; sourceTree = "<group>"; };
+		68956A1F983883E454E6CD8F /* libPods-CGPointIntegral.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CGPointIntegral.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6B10DDFE0C38A2D239EA26C0 /* Podfile */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		6B64852EA78F0B695693654B /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.debug.xcconfig; sourceTree = "<group>"; };
+		728CF0BB846006140543AEC3 /* SVWebViewControllerActivitySafari.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVWebViewControllerActivitySafari.h; path = SVWebViewController/UIActivities/Safari/SVWebViewControllerActivitySafari.h; sourceTree = "<group>"; };
+		768218797369622F5A2D6FDC /* SVModalWebViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVModalWebViewController.m; path = SVWebViewController/SVModalWebViewController.m; sourceTree = "<group>"; };
+		78121C65DCFB157982AC368E /* Pods-SVWebViewController-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-SVWebViewController-prefix.pch"; sourceTree = "<group>"; };
+		78818AAE2F0F64DFF489022B /* Pods-UIColor+Hex.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-UIColor+Hex.xcconfig"; sourceTree = "<group>"; };
+		7E21F5A6EACA302B4B1EB952 /* zh-Hant.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = "zh-Hant.lproj"; path = "SVWebViewController/zh-Hant.lproj"; sourceTree = "<group>"; };
+		7F670D45EFAAF0B94E3DED95 /* Pods-SVWebViewController.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SVWebViewController.xcconfig"; sourceTree = "<group>"; };
+		81F6AE886C525578C82FA183 /* SVWebViewController.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVWebViewController.m; path = SVWebViewController/SVWebViewController.m; sourceTree = "<group>"; };
+		86C6015B3E57A6BA367025B2 /* Pods-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-acknowledgements.markdown"; sourceTree = "<group>"; };
+		8AECC2BA739AAAC1FE3A1A42 /* SVWebViewControllerActivity.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVWebViewControllerActivity.m; path = SVWebViewController/UIActivities/SVWebViewControllerActivity.m; sourceTree = "<group>"; };
+		90BE152196C3D809CA477698 /* UIColor+Hex.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIColor+Hex.h"; path = "UIColor/UIColor+Hex.h"; sourceTree = "<group>"; };
+		92454ABE3CFCA8E2C1671B1F /* Pods-UIColor+Hex-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-UIColor+Hex-Private.xcconfig"; sourceTree = "<group>"; };
+		95657B377E1B3E21A4A465B4 /* CGPointIntegral.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = CGPointIntegral.h; sourceTree = "<group>"; };
+		9AA2547941B4C3C21F926E27 /* pt.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = pt.lproj; path = SVWebViewController/pt.lproj; sourceTree = "<group>"; };
+		9AED420B68A37E6C1B97A25C /* ja.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = ja.lproj; path = SVWebViewController/ja.lproj; sourceTree = "<group>"; };
+		9F2786C0CAA17C84E42A99BF /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		9F5F847AEE0046D524C421FD /* Pods-SVWebViewController-Private.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-SVWebViewController-Private.xcconfig"; sourceTree = "<group>"; };
+		A0BA6070FEB775A221C8481C /* fr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = fr.lproj; path = SVWebViewController/fr.lproj; sourceTree = "<group>"; };
+		A21D2FF672F65B9C8FC106C4 /* Pods-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-acknowledgements.plist"; sourceTree = "<group>"; };
+		A24D25C760B640B763E3A0B0 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Pods.release.xcconfig; sourceTree = "<group>"; };
+		A49E6A59483241ED4D240B01 /* zh-Hans.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = "zh-Hans.lproj"; path = "SVWebViewController/zh-Hans.lproj"; sourceTree = "<group>"; };
+		A4EB4A893C20677DA991FC6E /* Pods-CGPointIntegral-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-CGPointIntegral-dummy.m"; sourceTree = "<group>"; };
+		AA4A07B8BDA868728450953F /* SVWebViewControllerActivitySafari.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVWebViewControllerActivitySafari.m; path = SVWebViewController/UIActivities/Safari/SVWebViewControllerActivitySafari.m; sourceTree = "<group>"; };
+		AC9315F41B09221E77405209 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		B36FBAFC18B6B212613071D8 /* libPods-SVWebViewController.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SVWebViewController.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B8D81DAC66A37A4026720478 /* Pods-UIColor+Hex-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-UIColor+Hex-dummy.m"; sourceTree = "<group>"; };
+		BA747AE864749D6A31874340 /* SVWebViewControllerNext.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = SVWebViewControllerNext.png; path = SVWebViewController/SVWebViewController.bundle/SVWebViewControllerNext.png; sourceTree = "<group>"; };
+		BC9DFB469F44D1941310EC35 /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = en.lproj; path = SVWebViewController/en.lproj; sourceTree = "<group>"; };
+		C8344BF2CAEB21A2008EE8AB /* SVWebViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVWebViewController.h; path = SVWebViewController/SVWebViewController.h; sourceTree = "<group>"; };
+		C98F5FBEDABD0E83D2303DB6 /* SVWebViewControllerActivitySafari@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "SVWebViewControllerActivitySafari@2x.png"; path = "SVWebViewController/UIActivities/Safari/SVWebViewControllerActivitySafari@2x.png"; sourceTree = "<group>"; };
+		C9B1CA0371735539C246F536 /* SVWebViewControllerActivityChrome@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "SVWebViewControllerActivityChrome@2x.png"; path = "SVWebViewController/UIActivities/Chrome/SVWebViewControllerActivityChrome@2x.png"; sourceTree = "<group>"; };
+		CC014F5412BC2D64D0E1FBD0 /* Pods-UIColor+Hex-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-UIColor+Hex-prefix.pch"; sourceTree = "<group>"; };
+		CD4AA4ABA765C2734401B463 /* CGPointIntegral.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = CGPointIntegral.m; sourceTree = "<group>"; };
+		D07F238891FC2881D1238C4A /* Pods-CGPointIntegral.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-CGPointIntegral.xcconfig"; sourceTree = "<group>"; };
+		D0BC2E386790CD54F11DAFAE /* SVWebViewControllerActivityChrome.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SVWebViewControllerActivityChrome.m; path = SVWebViewController/UIActivities/Chrome/SVWebViewControllerActivityChrome.m; sourceTree = "<group>"; };
+		DAFD99CE94A203385483DBC5 /* SVModalWebViewController.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVModalWebViewController.h; path = SVWebViewController/SVModalWebViewController.h; sourceTree = "<group>"; };
+		E2D357D3F2A015F1B4FF8DF8 /* Pods-environment.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-environment.h"; sourceTree = "<group>"; };
+		E5F93AF73332FDA2E002E80F /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS7.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		E6F737FE74F0E4806C895511 /* da.lproj */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = folder; name = da.lproj; path = SVWebViewController/da.lproj; sourceTree = "<group>"; };
+		E9470B15F3C00C63EC543CE6 /* SVWebViewControllerActivitySafari-iPad.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "SVWebViewControllerActivitySafari-iPad.png"; path = "SVWebViewController/UIActivities/Safari/SVWebViewControllerActivitySafari-iPad.png"; sourceTree = "<group>"; };
+		EB55ADA237A8DEE9914B400D /* SVWebViewController.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = SVWebViewController.bundle; path = SVWebViewController/SVWebViewController.bundle; sourceTree = "<group>"; };
+		F5912E3CCA1D2AC131CB89D1 /* SVWebViewControllerActivity.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SVWebViewControllerActivity.h; path = SVWebViewController/UIActivities/SVWebViewControllerActivity.h; sourceTree = "<group>"; };
+		F8393BA256C40F2F2D8A7FCC /* Pods-CGPointIntegral-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-CGPointIntegral-prefix.pch"; sourceTree = "<group>"; };
+		FE8E24B6919E6CCF1EBF6486 /* SVWebViewControllerBack@2x.png */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = image.png; name = "SVWebViewControllerBack@2x.png"; path = "SVWebViewController/SVWebViewController.bundle/SVWebViewControllerBack@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		280FC32B4B7A4464C0477781 /* Frameworks */ = {
+		15451CB16B8374DCF023D7EC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				718CD070E9F0C171E215A9D1 /* Foundation.framework in Frameworks */,
+				BAC3538E323BA808A4FC1E66 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		28E18449328B6DB7C3F8D860 /* Frameworks */ = {
+		2A7C6CCC93EEBAF5928F7A89 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7F9D74176CC4572259839BFB /* Foundation.framework in Frameworks */,
+				262C1372D24BCF54548C8D1C /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		8324FFBE6676F1D3A855314A /* Frameworks */ = {
+		81C8E905052CEA364893B040 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				99FAE94C862A43BB69108E2C /* CoreGraphics.framework in Frameworks */,
-				661B4AA6B0175C44D9D76A63 /* Foundation.framework in Frameworks */,
-				4897BD917777427C370E83C1 /* UIKit.framework in Frameworks */,
+				38B25B780BBF4ECFB5D2C47B /* Foundation.framework in Frameworks */,
+				355AA3B61FF1E3AA17DB9FDC /* UIKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E4BE1FC44D70DF7938E28F1E /* Frameworks */ = {
+		8D90689181AEB3D665344232 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2898012AF026645305CD5297 /* Foundation.framework in Frameworks */,
+				2137DD8242F61865C5F5713F /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		185169925E4B17C92148E3DA /* Resources */ = {
+		020E9D5F5FDB99A627A3222A /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				D3A5617C50EADCF26BC82352 /* SVWebViewController.bundle */,
-				A71F107B7D2812B97C0C014C /* SVWebViewControllerActivityChrome-iPad.png */,
-				137C058899E8372EB3CF391B /* SVWebViewControllerActivityChrome-iPad@2x.png */,
-				1FC25EB2BC097520FBD77ABA /* SVWebViewControllerActivityChrome@2x.png */,
-				52B5BC8A3BC3B9F259776995 /* SVWebViewControllerActivitySafari-iPad.png */,
-				394EA69940FA1556E98C0D19 /* SVWebViewControllerActivitySafari-iPad@2x.png */,
-				982F150F194CAF80E6BD02D6 /* SVWebViewControllerActivitySafari@2x.png */,
-				CD439808692BDFB7A50738A0 /* SVWebViewControllerBack.png */,
-				CEE8DFEE991FC401D49B99AF /* SVWebViewControllerBack@2x.png */,
-				47EAA7E68E7398DAAFA07ABA /* SVWebViewControllerNext.png */,
-				331F3C28F6CB965148983D93 /* SVWebViewControllerNext@2x.png */,
-				4344FE8623E1299A211D9149 /* da.lproj */,
-				33704F18BF77ADFADB7016FA /* de.lproj */,
-				6647530BBC1876F212B46F92 /* en.lproj */,
-				BDEBEF3C90A48E7BD1739381 /* es.lproj */,
-				CE1B0597BAAF6FDE9725F198 /* es-ES.lproj */,
-				796EA3AC898822F4B5431460 /* fr.lproj */,
-				9286D592F722FFC28E5D2DCD /* ja.lproj */,
-				BA979AACD4BBB7FAF69D8C41 /* pt.lproj */,
-				8E778A4585DE9C6B99019DCE /* zh-Hans.lproj */,
-				A17624F68847A2C32ADD2B5A /* zh-Hant.lproj */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		3ABC3F91341A1EC4C402D7CB /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				73F9B4223AE354E871D866EC /* Pods-SVWebViewController.xcconfig */,
-				F0C24EB4E3495BF146523F17 /* Pods-SVWebViewController-Private.xcconfig */,
-				CAD6D3BF168BBCA9ED461423 /* Pods-SVWebViewController-dummy.m */,
-				5FBB7C6348CEFE4261464FA3 /* Pods-SVWebViewController-prefix.pch */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/Pods-SVWebViewController";
-			sourceTree = "<group>";
-		};
-		471943FDC335590A549A0719 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				AF4B3BC46068BA6F0D47BEB4 /* iOS */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		5193A6AE682D819298B4636D = {
-			isa = PBXGroup;
-			children = (
-				4D04F08F85B75B00FD5D11DF /* Podfile */,
-				471943FDC335590A549A0719 /* Frameworks */,
-				BE3F71F96479F74F9E2F1DEB /* Pods */,
-				F532717C1317FC4C95757745 /* Products */,
-				C69E87183315BF9CC589D5BE /* Targets Support Files */,
-			);
-			sourceTree = "<group>";
-		};
-		5814FE62882CF60C2C590387 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				A464128B72C83E86F26D8348 /* Pods-acknowledgements.markdown */,
-				9C2C7FC806D3F3CC42ECB192 /* Pods-acknowledgements.plist */,
-				F71FB2D8E4BA7314615FF8FE /* Pods-dummy.m */,
-				E8CE0AF2589CCC4D66CF2E88 /* Pods-environment.h */,
-				D7547BA07DE24B318725140E /* Pods-resources.sh */,
-				0307E92DE9992410DF4368F6 /* Pods.debug.xcconfig */,
-				9D664FA7B41EB0E307E55D71 /* Pods.release.xcconfig */,
+				86C6015B3E57A6BA367025B2 /* Pods-acknowledgements.markdown */,
+				A21D2FF672F65B9C8FC106C4 /* Pods-acknowledgements.plist */,
+				164B0F26C4C6C01F12E169BC /* Pods-dummy.m */,
+				E2D357D3F2A015F1B4FF8DF8 /* Pods-environment.h */,
+				54859297AE467B1EA82D8D6B /* Pods-resources.sh */,
+				6B64852EA78F0B695693654B /* Pods.debug.xcconfig */,
+				A24D25C760B640B763E3A0B0 /* Pods.release.xcconfig */,
 			);
 			name = Pods;
 			path = "Target Support Files/Pods";
 			sourceTree = "<group>";
 		};
-		8CAB078EA3E584C0F2F4938E /* Support Files */ = {
+		0C37331393EDF37D21232035 /* UIColor */ = {
 			isa = PBXGroup;
 			children = (
-				281F53A5112A0D5EC208BE32 /* Pods-ARLabel.xcconfig */,
-				421B908DE21BD43EE5032A6A /* Pods-ARLabel-Private.xcconfig */,
-				0BF432B6F0342088D26692F3 /* Pods-ARLabel-dummy.m */,
-				3F40796E81FCCD7140EB0B0A /* Pods-ARLabel-prefix.pch */,
+				90BE152196C3D809CA477698 /* UIColor+Hex.h */,
+				1B3CE7E91DF29A7A14ECFA34 /* UIColor+Hex.m */,
 			);
-			name = "Support Files";
-			path = "../Target Support Files/Pods-ARLabel";
+			name = UIColor;
 			sourceTree = "<group>";
 		};
-		A5E6385CF28E65E35ADDB4F0 /* SVWebViewController */ = {
+		1E10181E6DA0168F3268E608 /* UIColor+Hex */ = {
 			isa = PBXGroup;
 			children = (
-				4D04CDCE0172AF95C35A33DB /* SVModalWebViewController.h */,
-				82FBA126E81328471A8EA388 /* SVModalWebViewController.m */,
-				007CF425B00C941026031B3F /* SVWebViewController.h */,
-				FA42912F98740F7167992539 /* SVWebViewController.m */,
-				D11F73D8C5CAB80AC3599ADE /* SVWebViewControllerActivity.h */,
-				452F8A6CA0E197318A8F2086 /* SVWebViewControllerActivity.m */,
-				20EC30513ACE75E68843B6F5 /* SVWebViewControllerActivityChrome.h */,
-				3B381BC8BFE84CCC7FE8DE73 /* SVWebViewControllerActivityChrome.m */,
-				BAF947598C8BA16DD970A565 /* SVWebViewControllerActivitySafari.h */,
-				0CA82E7E68226FD84FA5547B /* SVWebViewControllerActivitySafari.m */,
-				185169925E4B17C92148E3DA /* Resources */,
-				3ABC3F91341A1EC4C402D7CB /* Support Files */,
-			);
-			path = SVWebViewController;
-			sourceTree = "<group>";
-		};
-		A6A529D99AC32947D6922F76 /* UIColor+Hex */ = {
-			isa = PBXGroup;
-			children = (
-				DCCF8434FDB3DD9CBF347AE6 /* Support Files */,
-				ED2618E13C01D9A7822EE082 /* UIColor */,
+				AB8257ADFB33443E1F20CF8A /* Support Files */,
+				0C37331393EDF37D21232035 /* UIColor */,
 			);
 			path = "UIColor+Hex";
 			sourceTree = "<group>";
 		};
-		AF4B3BC46068BA6F0D47BEB4 /* iOS */ = {
+		26A4731F91F2D1AC5F925D78 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				5598FEEDA78716C540043737 /* CoreGraphics.framework */,
-				F17AB4C01492BBAF69E146F0 /* Foundation.framework */,
-				2F9EAB57E3290475BD7D4772 /* UIKit.framework */,
+				4F8CD6A91C9D9D961DAF8EC8 /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3F16C61CDCC75088C7047DFE /* CGPointIntegral */ = {
+			isa = PBXGroup;
+			children = (
+				95657B377E1B3E21A4A465B4 /* CGPointIntegral.h */,
+				CD4AA4ABA765C2734401B463 /* CGPointIntegral.m */,
+				5F02BF1BB005127DE1FF5D55 /* Support Files */,
+			);
+			path = CGPointIntegral;
+			sourceTree = "<group>";
+		};
+		44EF560EB4C3735458D28511 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EB55ADA237A8DEE9914B400D /* SVWebViewController.bundle */,
+				290255CB0CF8A2C05444D124 /* SVWebViewControllerActivityChrome-iPad.png */,
+				0CB4935CFA18AC2ACB202F74 /* SVWebViewControllerActivityChrome-iPad@2x.png */,
+				C9B1CA0371735539C246F536 /* SVWebViewControllerActivityChrome@2x.png */,
+				E9470B15F3C00C63EC543CE6 /* SVWebViewControllerActivitySafari-iPad.png */,
+				4812DCB4ABF8C73E1466B34A /* SVWebViewControllerActivitySafari-iPad@2x.png */,
+				C98F5FBEDABD0E83D2303DB6 /* SVWebViewControllerActivitySafari@2x.png */,
+				6007B5ABC1F81C7B360207F2 /* SVWebViewControllerBack.png */,
+				FE8E24B6919E6CCF1EBF6486 /* SVWebViewControllerBack@2x.png */,
+				BA747AE864749D6A31874340 /* SVWebViewControllerNext.png */,
+				072116C3CE053245942A526D /* SVWebViewControllerNext@2x.png */,
+				E6F737FE74F0E4806C895511 /* da.lproj */,
+				23E338C8E1845B1542CCD7AE /* de.lproj */,
+				BC9DFB469F44D1941310EC35 /* en.lproj */,
+				3B948C23C0F13A7A68345E10 /* es.lproj */,
+				3165F006F85A5D2A505517E9 /* es-ES.lproj */,
+				A0BA6070FEB775A221C8481C /* fr.lproj */,
+				9AED420B68A37E6C1B97A25C /* ja.lproj */,
+				9AA2547941B4C3C21F926E27 /* pt.lproj */,
+				A49E6A59483241ED4D240B01 /* zh-Hans.lproj */,
+				7E21F5A6EACA302B4B1EB952 /* zh-Hant.lproj */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		4F8CD6A91C9D9D961DAF8EC8 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				E5F93AF73332FDA2E002E80F /* Foundation.framework */,
+				AC9315F41B09221E77405209 /* UIKit.framework */,
 			);
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		BE3F71F96479F74F9E2F1DEB /* Pods */ = {
+		5F02BF1BB005127DE1FF5D55 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				CE3799F9D6DD08F920CC10CC /* ARLabel */,
-				A5E6385CF28E65E35ADDB4F0 /* SVWebViewController */,
-				A6A529D99AC32947D6922F76 /* UIColor+Hex */,
+				D07F238891FC2881D1238C4A /* Pods-CGPointIntegral.xcconfig */,
+				4F08728B6917E3202DC347F8 /* Pods-CGPointIntegral-Private.xcconfig */,
+				A4EB4A893C20677DA991FC6E /* Pods-CGPointIntegral-dummy.m */,
+				F8393BA256C40F2F2D8A7FCC /* Pods-CGPointIntegral-prefix.pch */,
 			);
-			name = Pods;
+			name = "Support Files";
+			path = "../Target Support Files/Pods-CGPointIntegral";
 			sourceTree = "<group>";
 		};
-		C69E87183315BF9CC589D5BE /* Targets Support Files */ = {
+		7516C2AC2B3984322839B955 /* SVWebViewController */ = {
 			isa = PBXGroup;
 			children = (
-				5814FE62882CF60C2C590387 /* Pods */,
+				DAFD99CE94A203385483DBC5 /* SVModalWebViewController.h */,
+				768218797369622F5A2D6FDC /* SVModalWebViewController.m */,
+				C8344BF2CAEB21A2008EE8AB /* SVWebViewController.h */,
+				81F6AE886C525578C82FA183 /* SVWebViewController.m */,
+				F5912E3CCA1D2AC131CB89D1 /* SVWebViewControllerActivity.h */,
+				8AECC2BA739AAAC1FE3A1A42 /* SVWebViewControllerActivity.m */,
+				1E625582280BA9C8A893C75A /* SVWebViewControllerActivityChrome.h */,
+				D0BC2E386790CD54F11DAFAE /* SVWebViewControllerActivityChrome.m */,
+				728CF0BB846006140543AEC3 /* SVWebViewControllerActivitySafari.h */,
+				AA4A07B8BDA868728450953F /* SVWebViewControllerActivitySafari.m */,
+				44EF560EB4C3735458D28511 /* Resources */,
+				84325032C6E0B17A4C305F49 /* Support Files */,
 			);
-			name = "Targets Support Files";
+			path = SVWebViewController;
 			sourceTree = "<group>";
 		};
-		CE3799F9D6DD08F920CC10CC /* ARLabel */ = {
+		84325032C6E0B17A4C305F49 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				82EF0F2E36A6891836DAB446 /* ARLabel.h */,
-				FFE70D22E776B82587130D39 /* ARLabel.m */,
-				8CAB078EA3E584C0F2F4938E /* Support Files */,
+				7F670D45EFAAF0B94E3DED95 /* Pods-SVWebViewController.xcconfig */,
+				9F5F847AEE0046D524C421FD /* Pods-SVWebViewController-Private.xcconfig */,
+				3204A1FA57CF787A76827CD1 /* Pods-SVWebViewController-dummy.m */,
+				78121C65DCFB157982AC368E /* Pods-SVWebViewController-prefix.pch */,
 			);
-			path = ARLabel;
+			name = "Support Files";
+			path = "../Target Support Files/Pods-SVWebViewController";
 			sourceTree = "<group>";
 		};
-		DCCF8434FDB3DD9CBF347AE6 /* Support Files */ = {
+		AB8257ADFB33443E1F20CF8A /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				1A4177AB4877F9210DB1D23E /* Pods-UIColor+Hex.xcconfig */,
-				A4CB31798F6333F9A101FCD5 /* Pods-UIColor+Hex-Private.xcconfig */,
-				C72782F80014D7459D8B74CC /* Pods-UIColor+Hex-dummy.m */,
-				5BF1A6FBE4C30027994F019D /* Pods-UIColor+Hex-prefix.pch */,
+				78818AAE2F0F64DFF489022B /* Pods-UIColor+Hex.xcconfig */,
+				92454ABE3CFCA8E2C1671B1F /* Pods-UIColor+Hex-Private.xcconfig */,
+				B8D81DAC66A37A4026720478 /* Pods-UIColor+Hex-dummy.m */,
+				CC014F5412BC2D64D0E1FBD0 /* Pods-UIColor+Hex-prefix.pch */,
 			);
 			name = "Support Files";
 			path = "../Target Support Files/Pods-UIColor+Hex";
 			sourceTree = "<group>";
 		};
-		ED2618E13C01D9A7822EE082 /* UIColor */ = {
+		BF1F316AF1B08FE39FFA21B1 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				32268C9051DCAA68907E93CD /* UIColor+Hex.h */,
-				716E4737AA85B93F17CF42AC /* UIColor+Hex.m */,
+				3F16C61CDCC75088C7047DFE /* CGPointIntegral */,
+				7516C2AC2B3984322839B955 /* SVWebViewController */,
+				1E10181E6DA0168F3268E608 /* UIColor+Hex */,
 			);
-			name = UIColor;
+			name = Pods;
 			sourceTree = "<group>";
 		};
-		F532717C1317FC4C95757745 /* Products */ = {
+		D098343DD638A1B51CDD199A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				45AEF4347E8B05CC5DDDF56E /* libPods.a */,
-				7531A3C72C292938C68BDA29 /* libPods-ARLabel.a */,
-				300D3468DBEA86277138B9E7 /* libPods-SVWebViewController.a */,
-				07E83DFD03FA9468B13C7175 /* libPods-UIColor+Hex.a */,
+				9F2786C0CAA17C84E42A99BF /* libPods.a */,
+				68956A1F983883E454E6CD8F /* libPods-CGPointIntegral.a */,
+				B36FBAFC18B6B212613071D8 /* libPods-SVWebViewController.a */,
+				31C2F8100845374680BD93B5 /* libPods-UIColor+Hex.a */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		EF074B16BC5E1BF10F3B9CB6 = {
+			isa = PBXGroup;
+			children = (
+				6B10DDFE0C38A2D239EA26C0 /* Podfile */,
+				26A4731F91F2D1AC5F925D78 /* Frameworks */,
+				BF1F316AF1B08FE39FFA21B1 /* Pods */,
+				D098343DD638A1B51CDD199A /* Products */,
+				F57FA83EA5DB11CCB5FC1574 /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		F57FA83EA5DB11CCB5FC1574 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				020E9D5F5FDB99A627A3222A /* Pods */,
+			);
+			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
-		554AC5CF08071D3EC975A140 /* Headers */ = {
+		1ED286694D855DE5B386552B /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2F268FBCD105DCFB3F942A02 /* UIColor+Hex.h in Headers */,
+				92787DF12B5BEE875DE7BB5F /* SVModalWebViewController.h in Headers */,
+				0DC85E3517B3D85939B224E6 /* SVWebViewController.h in Headers */,
+				9F17396DEF2EB8881BDE76D6 /* SVWebViewControllerActivity.h in Headers */,
+				1B3881F5AB48C0BD57910B66 /* SVWebViewControllerActivityChrome.h in Headers */,
+				883635AA6BA9C6B60BACBA9E /* SVWebViewControllerActivitySafari.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DA8D3CA793F0240450D707B2 /* Headers */ = {
+		36244BAFF2BFD2AABF36382F /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				537A07D47896532C75F25B75 /* SVModalWebViewController.h in Headers */,
-				1CA18ED59A71174F78C50B38 /* SVWebViewController.h in Headers */,
-				30515A3ADB5EF4501A73E2EF /* SVWebViewControllerActivity.h in Headers */,
-				4067E616642CA7F944F9D054 /* SVWebViewControllerActivityChrome.h in Headers */,
-				644C62322BB9A858317CC3D0 /* SVWebViewControllerActivitySafari.h in Headers */,
+				3D82D6308DC73D836127EE84 /* UIColor+Hex.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		DB95A6D65E82B38B49BCA6E4 /* Headers */ = {
+		BF473C4CD8AEA7578FC730FB /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE5B312C7D61E0CA4A741CA8 /* ARLabel.h in Headers */,
+				0C0146566E8C3E4DCC0524AB /* CGPointIntegral.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		4CC71E6038E1BBA26FCB8721 /* Pods-SVWebViewController */ = {
+		582E803F9AFC0B28E4B639A7 /* Pods-UIColor+Hex */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = C71B863AF3182D7F36C82DDA /* Build configuration list for PBXNativeTarget "Pods-SVWebViewController" */;
+			buildConfigurationList = 85E9B122EBCFAC5EE56AE5F8 /* Build configuration list for PBXNativeTarget "Pods-UIColor+Hex" */;
 			buildPhases = (
-				5ADBA468284C4B65914D7931 /* Sources */,
-				28E18449328B6DB7C3F8D860 /* Frameworks */,
-				DA8D3CA793F0240450D707B2 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Pods-SVWebViewController";
-			productName = "Pods-SVWebViewController";
-			productReference = 300D3468DBEA86277138B9E7 /* libPods-SVWebViewController.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		83E73FAEE2264995FCD1230F /* Pods-ARLabel */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 0A730E0009EC28330F79D724 /* Build configuration list for PBXNativeTarget "Pods-ARLabel" */;
-			buildPhases = (
-				1B88A294E637DC011019B32C /* Sources */,
-				8324FFBE6676F1D3A855314A /* Frameworks */,
-				DB95A6D65E82B38B49BCA6E4 /* Headers */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Pods-ARLabel";
-			productName = "Pods-ARLabel";
-			productReference = 7531A3C72C292938C68BDA29 /* libPods-ARLabel.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		930F647843F2435B51C40A13 /* Pods-UIColor+Hex */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B530CB8DA44247F8939F5952 /* Build configuration list for PBXNativeTarget "Pods-UIColor+Hex" */;
-			buildPhases = (
-				554E8121E75063301B09896C /* Sources */,
-				E4BE1FC44D70DF7938E28F1E /* Frameworks */,
-				554AC5CF08071D3EC975A140 /* Headers */,
+				EA1207185B0794B5AC48F48F /* Sources */,
+				15451CB16B8374DCF023D7EC /* Frameworks */,
+				36244BAFF2BFD2AABF36382F /* Headers */,
 			);
 			buildRules = (
 			);
@@ -426,126 +388,160 @@
 			);
 			name = "Pods-UIColor+Hex";
 			productName = "Pods-UIColor+Hex";
-			productReference = 07E83DFD03FA9468B13C7175 /* libPods-UIColor+Hex.a */;
+			productReference = 31C2F8100845374680BD93B5 /* libPods-UIColor+Hex.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		EAA2123BEA18F79E01BA9B51 /* Pods */ = {
+		594407C88970F903FBBB9835 /* Pods-CGPointIntegral */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 549066D062417285E1DAD399 /* Build configuration list for PBXNativeTarget "Pods" */;
+			buildConfigurationList = DCE111044F9779BFD5E23D95 /* Build configuration list for PBXNativeTarget "Pods-CGPointIntegral" */;
 			buildPhases = (
-				7E57A984699477C3C6521262 /* Sources */,
-				280FC32B4B7A4464C0477781 /* Frameworks */,
+				E36C59E9894591F395B324C3 /* Sources */,
+				81C8E905052CEA364893B040 /* Frameworks */,
+				BF473C4CD8AEA7578FC730FB /* Headers */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				8B7B8C3FF83964F10AAF400F /* PBXTargetDependency */,
-				2A9250B4DE8D7957D9816350 /* PBXTargetDependency */,
-				680C73F32C8B1CAA39F4C5C1 /* PBXTargetDependency */,
+			);
+			name = "Pods-CGPointIntegral";
+			productName = "Pods-CGPointIntegral";
+			productReference = 68956A1F983883E454E6CD8F /* libPods-CGPointIntegral.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		C4550CF7CCEB28797A498034 /* Pods-SVWebViewController */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = ACCDABBDDA640B6C474ADA5D /* Build configuration list for PBXNativeTarget "Pods-SVWebViewController" */;
+			buildPhases = (
+				DDD8707660412E6C31AFBF9F /* Sources */,
+				2A7C6CCC93EEBAF5928F7A89 /* Frameworks */,
+				1ED286694D855DE5B386552B /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Pods-SVWebViewController";
+			productName = "Pods-SVWebViewController";
+			productReference = B36FBAFC18B6B212613071D8 /* libPods-SVWebViewController.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		DDE575E76A4E791076792B03 /* Pods */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F9B3AA615BF25F3F267659A1 /* Build configuration list for PBXNativeTarget "Pods" */;
+			buildPhases = (
+				64B1F4294562B85884025D6D /* Sources */,
+				8D90689181AEB3D665344232 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				654148AF981A11179C745A53 /* PBXTargetDependency */,
+				3B252067D18ED48A5864E0CF /* PBXTargetDependency */,
+				6B43DE7A4A694C0D6E1EA7CF /* PBXTargetDependency */,
 			);
 			name = Pods;
 			productName = Pods;
-			productReference = 45AEF4347E8B05CC5DDDF56E /* libPods.a */;
+			productReference = 9F2786C0CAA17C84E42A99BF /* libPods.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		F21AACEC7C73EA909A433A1B /* Project object */ = {
+		0785AC869719F6B974AB5DAC /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0510;
 			};
-			buildConfigurationList = EF2246953F89A4283D15CFA0 /* Build configuration list for PBXProject "Pods" */;
+			buildConfigurationList = 75FE71E0F23CA3135251B59A /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
 			);
-			mainGroup = 5193A6AE682D819298B4636D;
-			productRefGroup = F532717C1317FC4C95757745 /* Products */;
+			mainGroup = EF074B16BC5E1BF10F3B9CB6;
+			productRefGroup = D098343DD638A1B51CDD199A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				EAA2123BEA18F79E01BA9B51 /* Pods */,
-				83E73FAEE2264995FCD1230F /* Pods-ARLabel */,
-				4CC71E6038E1BBA26FCB8721 /* Pods-SVWebViewController */,
-				930F647843F2435B51C40A13 /* Pods-UIColor+Hex */,
+				DDE575E76A4E791076792B03 /* Pods */,
+				594407C88970F903FBBB9835 /* Pods-CGPointIntegral */,
+				C4550CF7CCEB28797A498034 /* Pods-SVWebViewController */,
+				582E803F9AFC0B28E4B639A7 /* Pods-UIColor+Hex */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
-		1B88A294E637DC011019B32C /* Sources */ = {
+		64B1F4294562B85884025D6D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EF87D02F73ADDC116EF096CF /* ARLabel.m in Sources */,
-				FF0EEB8D50B7F3E9CA81D773 /* Pods-ARLabel-dummy.m in Sources */,
+				03066FA5A7BFDABFD0FB7DF1 /* Pods-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		554E8121E75063301B09896C /* Sources */ = {
+		DDD8707660412E6C31AFBF9F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				995EDB4E993EE62B99C6FCA1 /* Pods-UIColor+Hex-dummy.m in Sources */,
-				A2A92C01D0AB9370CC8D5A38 /* UIColor+Hex.m in Sources */,
+				F88742850E6947AF66B508FB /* Pods-SVWebViewController-dummy.m in Sources */,
+				168AA21726DAC77ECB1E7C05 /* SVModalWebViewController.m in Sources */,
+				723CBFF4D710A1D0D56CB3B4 /* SVWebViewController.m in Sources */,
+				4492A456CF8C050AF6128DEB /* SVWebViewControllerActivity.m in Sources */,
+				98D2387A25820C76A5CEAA85 /* SVWebViewControllerActivityChrome.m in Sources */,
+				90EECBE9A7DC8BDC9CE5982C /* SVWebViewControllerActivitySafari.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		5ADBA468284C4B65914D7931 /* Sources */ = {
+		E36C59E9894591F395B324C3 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6EDCACA9DF1B0A73010CD84D /* Pods-SVWebViewController-dummy.m in Sources */,
-				AD8B3568289926CB9C784BF5 /* SVModalWebViewController.m in Sources */,
-				A6269AF9F5884CE97AD6D51E /* SVWebViewController.m in Sources */,
-				5CF9011CF4598505836D5D0E /* SVWebViewControllerActivity.m in Sources */,
-				BDD2438B9E54F5D91B797B06 /* SVWebViewControllerActivityChrome.m in Sources */,
-				E7081240372A191378E70D46 /* SVWebViewControllerActivitySafari.m in Sources */,
+				64790607DCA2B3DEB90E76D2 /* CGPointIntegral.m in Sources */,
+				F7D30102DC62C9A1D89C71B5 /* Pods-CGPointIntegral-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		7E57A984699477C3C6521262 /* Sources */ = {
+		EA1207185B0794B5AC48F48F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C2B5E8D89528B3BB992F5BC7 /* Pods-dummy.m in Sources */,
+				2EC2E9840D586D4B0178B9F7 /* Pods-UIColor+Hex-dummy.m in Sources */,
+				F1B9EC59D8FCA25FFF1742F8 /* UIColor+Hex.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		2A9250B4DE8D7957D9816350 /* PBXTargetDependency */ = {
+		3B252067D18ED48A5864E0CF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Pods-SVWebViewController";
-			target = 4CC71E6038E1BBA26FCB8721 /* Pods-SVWebViewController */;
-			targetProxy = 07DEFE155D99CF1A60C5E481 /* PBXContainerItemProxy */;
+			target = C4550CF7CCEB28797A498034 /* Pods-SVWebViewController */;
+			targetProxy = 8AF6E7A9289FA66990A6016A /* PBXContainerItemProxy */;
 		};
-		680C73F32C8B1CAA39F4C5C1 /* PBXTargetDependency */ = {
+		654148AF981A11179C745A53 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-CGPointIntegral";
+			target = 594407C88970F903FBBB9835 /* Pods-CGPointIntegral */;
+			targetProxy = CAF700E9FA7CC7D537F3DE1B /* PBXContainerItemProxy */;
+		};
+		6B43DE7A4A694C0D6E1EA7CF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Pods-UIColor+Hex";
-			target = 930F647843F2435B51C40A13 /* Pods-UIColor+Hex */;
-			targetProxy = 18E25F964EBE5338A277A083 /* PBXContainerItemProxy */;
-		};
-		8B7B8C3FF83964F10AAF400F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Pods-ARLabel";
-			target = 83E73FAEE2264995FCD1230F /* Pods-ARLabel */;
-			targetProxy = F7972E0577295620A6296AB4 /* PBXContainerItemProxy */;
+			target = 582E803F9AFC0B28E4B639A7 /* Pods-UIColor+Hex */;
+			targetProxy = A86AD2851099651C249BAE56 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		1A31F4F0C09478613B30CB56 /* Release */ = {
+		02D6A482B09422C369450EC0 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 421B908DE21BD43EE5032A6A /* Pods-ARLabel-Private.xcconfig */;
+			baseConfigurationReference = 92454ABE3CFCA8E2C1671B1F /* Pods-UIColor+Hex-Private.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/Pods-ARLabel/Pods-ARLabel-prefix.pch";
+				GCC_PREFIX_HEADER = "Target Support Files/Pods-UIColor+Hex/Pods-UIColor+Hex-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
@@ -556,89 +552,7 @@
 			};
 			name = Release;
 		};
-		4F8F6427A61F60150364BBA8 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				COPY_PHASE_STRIP = YES;
-				ENABLE_NS_ASSERTIONS = NO;
-				GCC_C_LANGUAGE_STANDARD = gnu99;
-				GCC_PREPROCESSOR_DEFINITIONS = "RELEASE=1";
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				STRIP_INSTALLED_PRODUCT = NO;
-				SYMROOT = "${SRCROOT}/../build";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		55748B952B81F89B47D08F9B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 421B908DE21BD43EE5032A6A /* Pods-ARLabel-Private.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/Pods-ARLabel/Pods-ARLabel-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		5C97DE5BA5B7A926103C696D /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = F0C24EB4E3495BF146523F17 /* Pods-SVWebViewController-Private.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/Pods-SVWebViewController/Pods-SVWebViewController-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Release;
-		};
-		5FE184E2D2F0E0ABB12100FD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = F0C24EB4E3495BF146523F17 /* Pods-SVWebViewController-Private.xcconfig */;
-			buildSettings = {
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/Pods-SVWebViewController/Pods-SVWebViewController-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
-		D084EDDA307B6565E4D970CC /* Debug */ = {
+		3BF8348C6308F64A8E4DC1F6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -677,25 +591,41 @@
 			};
 			name = Debug;
 		};
-		DB7AC68EA9D52490951565F7 /* Release */ = {
+		4904E5593F6A0D359106ACA5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9D664FA7B41EB0E307E55D71 /* Pods.release.xcconfig */;
+			baseConfigurationReference = 4F08728B6917E3202DC347F8 /* Pods-CGPointIntegral-Private.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Pods-CGPointIntegral/Pods-CGPointIntegral-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		7BC475F9E66F4F28FD0A7F72 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F5F847AEE0046D524C421FD /* Pods-SVWebViewController-Private.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Pods-SVWebViewController/Pods-SVWebViewController-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 			};
 			name = Release;
 		};
-		E1A7BED1C24BD6FC1F0EB137 /* Debug */ = {
+		87F34F375AAF0AD37442F9A6 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0307E92DE9992410DF4368F6 /* Pods.debug.xcconfig */;
+			baseConfigurationReference = 6B64852EA78F0B695693654B /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -709,12 +639,12 @@
 			};
 			name = Debug;
 		};
-		E209650FED77D6D78BF98F5F /* Release */ = {
+		A4FF1DA342EEA89F82C14E7C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A4CB31798F6333F9A101FCD5 /* Pods-UIColor+Hex-Private.xcconfig */;
+			baseConfigurationReference = 4F08728B6917E3202DC347F8 /* Pods-CGPointIntegral-Private.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/Pods-UIColor+Hex/Pods-UIColor+Hex-prefix.pch";
+				GCC_PREFIX_HEADER = "Target Support Files/Pods-CGPointIntegral/Pods-CGPointIntegral-prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
@@ -725,9 +655,9 @@
 			};
 			name = Release;
 		};
-		F08AF33988845D2811624F13 /* Debug */ = {
+		A7577B0C40D11720DB2B1A51 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A4CB31798F6333F9A101FCD5 /* Pods-UIColor+Hex-Private.xcconfig */;
+			baseConfigurationReference = 92454ABE3CFCA8E2C1671B1F /* Pods-UIColor+Hex-Private.xcconfig */;
 			buildSettings = {
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/Pods-UIColor+Hex/Pods-UIColor+Hex-prefix.pch";
@@ -740,56 +670,122 @@
 				SKIP_INSTALL = YES;
 			};
 			name = Debug;
+		};
+		BE7C78835CE61C45DA3E9D98 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9F5F847AEE0046D524C421FD /* Pods-SVWebViewController-Private.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/Pods-SVWebViewController/Pods-SVWebViewController-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		DDB6AFF0B5DE8FFE0A8EEDE6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A24D25C760B640B763E3A0B0 /* Pods.release.xcconfig */;
+			buildSettings = {
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		F55AE52FB0E37B71B113F5ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "RELEASE=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0A730E0009EC28330F79D724 /* Build configuration list for PBXNativeTarget "Pods-ARLabel" */ = {
+		75FE71E0F23CA3135251B59A /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				55748B952B81F89B47D08F9B /* Debug */,
-				1A31F4F0C09478613B30CB56 /* Release */,
+				3BF8348C6308F64A8E4DC1F6 /* Debug */,
+				F55AE52FB0E37B71B113F5ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		549066D062417285E1DAD399 /* Build configuration list for PBXNativeTarget "Pods" */ = {
+		85E9B122EBCFAC5EE56AE5F8 /* Build configuration list for PBXNativeTarget "Pods-UIColor+Hex" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				E1A7BED1C24BD6FC1F0EB137 /* Debug */,
-				DB7AC68EA9D52490951565F7 /* Release */,
+				A7577B0C40D11720DB2B1A51 /* Debug */,
+				02D6A482B09422C369450EC0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		B530CB8DA44247F8939F5952 /* Build configuration list for PBXNativeTarget "Pods-UIColor+Hex" */ = {
+		ACCDABBDDA640B6C474ADA5D /* Build configuration list for PBXNativeTarget "Pods-SVWebViewController" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F08AF33988845D2811624F13 /* Debug */,
-				E209650FED77D6D78BF98F5F /* Release */,
+				BE7C78835CE61C45DA3E9D98 /* Debug */,
+				7BC475F9E66F4F28FD0A7F72 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C71B863AF3182D7F36C82DDA /* Build configuration list for PBXNativeTarget "Pods-SVWebViewController" */ = {
+		DCE111044F9779BFD5E23D95 /* Build configuration list for PBXNativeTarget "Pods-CGPointIntegral" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				5FE184E2D2F0E0ABB12100FD /* Debug */,
-				5C97DE5BA5B7A926103C696D /* Release */,
+				4904E5593F6A0D359106ACA5 /* Debug */,
+				A4FF1DA342EEA89F82C14E7C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		EF2246953F89A4283D15CFA0 /* Build configuration list for PBXProject "Pods" */ = {
+		F9B3AA615BF25F3F267659A1 /* Build configuration list for PBXNativeTarget "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D084EDDA307B6565E4D970CC /* Debug */,
-				4F8F6427A61F60150364BBA8 /* Release */,
+				87F34F375AAF0AD37442F9A6 /* Debug */,
+				DDB6AFF0B5DE8FFE0A8EEDE6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = F21AACEC7C73EA909A433A1B /* Project object */;
+	rootObject = 0785AC869719F6B974AB5DAC /* Project object */;
 }

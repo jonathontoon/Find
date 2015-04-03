@@ -1,6 +1,6 @@
 #include "Pods-UIColor+Hex.xcconfig"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/UIColor+Hex" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/ARLabel" "${PODS_ROOT}/Headers/Public/SVWebViewController" "${PODS_ROOT}/Headers/Public/UIColor+Hex"
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/Headers/Private" "${PODS_ROOT}/Headers/Private/UIColor+Hex" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/CGPointIntegral" "${PODS_ROOT}/Headers/Public/SVWebViewController" "${PODS_ROOT}/Headers/Public/UIColor+Hex"
 OTHER_LDFLAGS = -ObjC
 PODS_ROOT = ${SRCROOT}
 SKIP_INSTALL = YES
