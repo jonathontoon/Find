@@ -18,6 +18,7 @@
 		442E88781AA5742A00A75B92 /* NRInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442E88771AA5742A00A75B92 /* NRInfoViewController.swift */; };
 		4432BB4B1AB54FE2004BC114 /* NRSuggestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4432BB4A1AB54FE2004BC114 /* NRSuggestionsViewController.swift */; };
 		443B1FF11AB43052007F2782 /* NRColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 443B1FF01AB43052007F2782 /* NRColor.swift */; };
+		443D8BA11AD1DB8100AEDAA9 /* RockoUltraFLF.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 441CE9EB1ACE6663005014B5 /* RockoUltraFLF.ttf */; };
 		44509D0F1AACF4B900F84601 /* NRInfoNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44509D0E1AACF4B900F84601 /* NRInfoNavigationBarView.swift */; };
 		44730E7E1AC512F300B76874 /* NRSubtitleLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44730E7D1AC512F300B76874 /* NRSubtitleLabel.swift */; };
 		44AC985A1AA54E45009369EB /* NRInfoCommunicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44AC98591AA54E45009369EB /* NRInfoCommunicator.swift */; };
@@ -405,6 +406,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				443D8BA11AD1DB8100AEDAA9 /* RockoUltraFLF.ttf in Resources */,
 				44B0637B1AA3D4950033DEB2 /* Main.storyboard in Resources */,
 				44B063801AA3D4950033DEB2 /* LaunchScreen.xib in Resources */,
 				44099AF71AB2B5CD009FAA30 /* Podfile in Resources */,

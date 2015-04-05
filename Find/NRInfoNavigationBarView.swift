@@ -14,9 +14,11 @@ class NRInfoNavigationBarView: UIView {
     
     var titleString: String?
     var titleLabel: UILabel!
-     
+    
     var subTitleString: String?
     var subTitle: NRSubtitleLabel!
+    
+    var tldString: String?
     
     var type: AvailabilityType!
     
@@ -24,7 +26,7 @@ class NRInfoNavigationBarView: UIView {
         super.init(frame: frame)
     }
     
-    init(frame:CGRect, title:String!, subTitle:String!, labelType: AvailabilityType!) {
+    init(frame:CGRect, title:String!, subTitle:String!, labelType: AvailabilityType!, tld: String!) {
         super.init(frame: frame)
         
         self.backgroundColor = NRColor().domainrBackgroundBlackColor()
@@ -32,6 +34,7 @@ class NRInfoNavigationBarView: UIView {
         titleString = title
         subTitleString = subTitle
         type = labelType
+        tldString = tld
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -42,7 +45,7 @@ class NRInfoNavigationBarView: UIView {
         self.backgroundColor = UIColor.clearColor()
         self.layer.backgroundColor = UIColor.blueColor().CGColor
         
-        patternView = NRInfoNavigationBarPatternView(frame: self.frame)
+        patternView = NRInfoNavigationBarPatternView(frame: CGRectMake(0, 0, self.frame.size.width, UIScreen.mainScreen().bounds.height), topLevelDomain: tldString)
         self.addSubview(patternView)
         
         titleLabel = UILabel()

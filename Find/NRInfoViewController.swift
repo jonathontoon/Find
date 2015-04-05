@@ -74,7 +74,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: "NRDefaultCell")
         tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: "NRInfoViewRegistrarCell")
         tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
-        navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 160), title: self.result.domain, subTitle: self.result.availability?.capitalizedString, labelType: availabilityType)
+        navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 160), title: self.result.domain, subTitle: self.result.availability?.capitalizedString, labelType: availabilityType, tld: ".com")
         tableView.tableHeaderView = navigationBarView
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
         tableView.stickyHeader = true
