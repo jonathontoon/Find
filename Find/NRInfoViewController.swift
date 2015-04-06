@@ -360,13 +360,19 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         if scrollView.isEqual(tableView) {
             
             let velocity: CGFloat = scrollView.panGestureRecognizer.velocityInView(scrollView).y
-            let offset: CGFloat = scrollView.contentOffset.y
+            var offset: CGFloat! = scrollView.contentOffset.y
             
             println(offset)
             println(tableView.tableHeaderView!.frame.size.height)
             
             if offset < 94.0 {
-                tableView.tableHeaderView!.frame.size.height += (previousScrollOffsetY - scrollView.contentOffset.y)
+                
+                if offset < 0 {
+                    tableView.tableHeaderView!.frame.size.height = 160.0
+                } else {
+                    tableView.tableHeaderView!.frame.size.height += (previousScrollOffsetY - scrollView.contentOffset.y)
+                }
+                
                 previousScrollOffsetY = offset
             } else {
                 tableView.tableHeaderView!.frame.size.height = 64.0
