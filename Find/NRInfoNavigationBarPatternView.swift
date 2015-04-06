@@ -20,14 +20,15 @@ class NRInfoNavigationBarPatternView: UIView {
         let amount: Int = Int(round(self.frame.size.height/38.0))+1
         for i in 0..<amount {
             
-            var yPosition: CGFloat = 0.0
+            var yCenter: CGFloat = -70.0
             
             if i > 0 {
+                let previousLabelCenter: CGPoint = ((self.subviews as NSArray).objectAtIndex(i-1) as UIView).center
                 let previousLabelFrame: CGRect = ((self.subviews as NSArray).objectAtIndex(i-1) as UIView).frame
-                yPosition = (previousLabelFrame.origin.y + previousLabelFrame.size.height) + 14.0
+                yCenter = previousLabelCenter.y + 40.0
             }
             
-            self.addSubview(generateLabelLine(yPosition))
+            self.addSubview(generateLabelLine(yCenter))
         }
         
     }
@@ -36,9 +37,9 @@ class NRInfoNavigationBarPatternView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func generateLabelLine(yPosition: CGFloat) -> UIView {
+    func generateLabelLine(yCenter: CGFloat) -> UIView {
         
-        let labelParentView: UIView = UIView(frame: CGRectMake(0, yPosition, 800.0, 18.0))
+        let labelParentView: UIView = UIView(frame: CGRectMake(0, 0, 800.0, 16.0))
         
         var tldLabel: UILabel!
 
@@ -47,9 +48,9 @@ class NRInfoNavigationBarPatternView: UIView {
            
             tldLabel = UILabel()
             tldLabel.text = self.tldString
-            tldLabel.font = UIFont(name: "RockoUltraFLF", size: 18.0)
+            tldLabel.font = UIFont(name: "RockoUltraFLF", size: 16.0)
             tldLabel.textColor = UIColor.whiteColor()
-            tldLabel.alpha = 0.05
+            tldLabel.alpha = 0.03
             tldLabel.sizeToFit()
             
             if i > 0 {
@@ -60,7 +61,9 @@ class NRInfoNavigationBarPatternView: UIView {
             labelParentView.addSubview(tldLabel)
         }
         
-        labelParentView.center = CGPointIntegral(CGPointMake(self.center.x, labelParentView.center.y))
+        labelParentView.sizeToFit()
+        labelParentView.layer.transform = CATransform3DMakeRotation(CGFloat(( -30.0 * M_PI ) / 180.0), 0, 0, 1);
+        labelParentView.center = CGPointIntegral(CGPointMake(self.center.x, yCenter))
         
         return labelParentView
     }

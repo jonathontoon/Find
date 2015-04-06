@@ -74,7 +74,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: "NRDefaultCell")
         tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: "NRInfoViewRegistrarCell")
         tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
-        navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 160), title: self.result.domain, subTitle: self.result.availability?.capitalizedString, labelType: availabilityType, tld: ".com")
+        navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 160), title: self.result.domain, subTitle: self.result.availability?.capitalizedString, labelType: availabilityType, tld: ".properties")
         tableView.tableHeaderView = navigationBarView
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
         tableView.stickyHeader = true
@@ -162,10 +162,10 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             }
             
             if section == 1 {
-                if info.registrars?.count < 5 {
+                if info.registrars?.count < 7 {
                     numberOfRows = info.registrars!.count
                 } else {
-                    numberOfRows = 5
+                    numberOfRows = 7
                 }
             }
         }
@@ -302,11 +302,11 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             cell = NRInfoViewRegistrarCell(style: .Default, reuseIdentifier: "NRInfoViewRegistrarCell")
         }
         
-        cell?.textLabel?.text = NSString(format: "View %d ", info.registrars!.count - 4) + "Others"
+        cell?.textLabel?.text = NSString(format: "View %d ", info.registrars!.count - 6) + "Others"
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         
         
-        if indexPath.row < 4 {
+        if indexPath.row < 6 {
             cell?.textLabel?.text = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as NSString
         }
         

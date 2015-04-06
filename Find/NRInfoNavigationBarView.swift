@@ -42,8 +42,6 @@ class NRInfoNavigationBarView: UIView {
     }
     
     override func drawRect(rect: CGRect) {
-        self.backgroundColor = UIColor.clearColor()
-        self.layer.backgroundColor = UIColor.blueColor().CGColor
         
         patternView = NRInfoNavigationBarPatternView(frame: CGRectMake(0, 0, self.frame.size.width, UIScreen.mainScreen().bounds.height), topLevelDomain: tldString)
         self.addSubview(patternView)
