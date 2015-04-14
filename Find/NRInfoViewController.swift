@@ -71,10 +71,10 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         tableView = UITableView(frame: CGRectMake(0, 0, self.view.frame.size.width, (self.view.frame.size.height - 50)), style: UITableViewStyle.Grouped)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: "NRDefaultCell")
+        tableView.registerClass(NRInfoViewGenericCell.self, forCellReuseIdentifier: "NRInfoViewGenericCell")
         tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: "NRInfoViewRegistrarCell")
         tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
-        navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 160), title: self.result.domain, subTitle: self.result.availability?.capitalizedString, labelType: availabilityType, tld: ".properties")
+        navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 175.0), title: self.result.domain, subTitle: self.result.availability?.capitalizedString, labelType: availabilityType, tld: ".org")
         tableView.tableHeaderView = navigationBarView
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
         tableView.stickyHeader = true
@@ -209,7 +209,8 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             cell = createRegistrarCell(indexPath)
         }
         
-        cell.textLabel?.textColor = NRColor().domainrBlueColor()
+        cell.accessoryView = UIImageView(image: UIImage(named: "accessoryArrow")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
+        cell.accessoryView!.tintColor = NRColor().domainrAccessoryViewColor()
         
         return cell
         
@@ -275,19 +276,24 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         
     }
     
-    func createDefaultCell(indexPath: NSIndexPath!) -> NRDefaultCell {
+    func createDefaultCell(indexPath: NSIndexPath!) -> NRInfoViewGenericCell {
         
-        var cell: NRDefaultCell? = tableView.dequeueReusableCellWithIdentifier("NRDefaultCell", forIndexPath: indexPath) as? NRDefaultCell
-        
-        if cell == nil {
-            cell = NRDefaultCell(style: .Default, reuseIdentifier: "NRDefaultCell")
-        }
-
-        cell?.textLabel?.text = "Whois Info"
-        cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        var titleString: String! = "Whois Info"
         
         if indexPath.row == 1 {
-            cell?.textLabel?.text = "TLD Wikipedia Article"
+           titleString = "TLD Wikipedia Article"
+        }
+        
+        if indexPath.row == 2 {
+            titleString = "Alternative Domains"
+        }
+        
+        var cell: NRInfoViewGenericCell? = tableView.dequeueReusableCellWithIdentifier("NRInfoViewGenericCell", forIndexPath: indexPath) as? NRInfoViewGenericCell
+        
+        if cell == nil {
+            cell = NRInfoViewGenericCell(title: titleString)
+        } else {
+            cell?.addViews(titleString)
         }
 
         return cell!
@@ -303,7 +309,6 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         }
         
         cell?.textLabel?.text = NSString(format: "View %d ", info.registrars!.count - 6) + "Others"
-        cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
         
         
         if indexPath.row < 6 {
@@ -368,7 +373,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             if offset < 94.0 {
                 
                 if offset < 0 {
-                    tableView.tableHeaderView!.frame.size.height = 160.0
+                    tableView.tableHeaderView!.frame.size.height = 175.0
                 } else {
                     tableView.tableHeaderView!.frame.size.height += (previousScrollOffsetY - scrollView.contentOffset.y)
                 }

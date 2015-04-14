@@ -49,7 +49,7 @@ class NRInfoNavigationBarView: UIView {
         titleLabel = UILabel()
         titleLabel.text = titleString
         titleLabel.textColor = UIColor.whiteColor()
-        titleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 22.0)
+        titleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 25.0)
         titleLabel.backgroundColor = UIColor.clearColor()
         titleLabel.layer.backgroundColor = UIColor.clearColor().CGColor
         titleLabel.transform = CGAffineTransformMakeScale(1.0, 1.0)
@@ -91,24 +91,24 @@ class NRInfoNavigationBarView: UIView {
     
     func centerElements() {
 
-        let centerYOffset: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 12.0, t2: -6.5)
+        let centerYOffset: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 175.0, r2: 64.0, t1: 12.0, t2: -6.5)
         titleLabel.center = CGPointIntegral(CGPointMake(self.bounds.size.width/2, (self.bounds.size.height/2) - centerYOffset))
         
-        var scale: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.8095)
+        var scale: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 175.0, r2: 64.0, t1: 1.0, t2: 0.68)
         scale = scale < 1.0 ? scale : 1.0
         titleLabel.transform = CGAffineTransformMakeScale(scale, scale)
 
         subTitle.center = CGPointIntegral(CGPointMake(self.bounds.size.width/2, (self.bounds.size.height/2) + 17.0))
         
-        var subScale: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.5)
+        var subScale: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 175.0, r2: 64.0, t1: 1.0, t2: 0.5)
         subScale = subScale < 1.0 ? subScale : 1.0
         subTitle.transform = CGAffineTransformMakeScale(subScale, subScale)
 
-        var subRadius: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 2.0, t2: 0.2)
+        var subRadius: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 175.0, r2: 64.0, t1: 2.0, t2: 0.2)
         subRadius = subRadius < 2.0 ? subRadius : 2.0
         subTitle.layer.cornerRadius = subRadius
         
-        subTitle.alpha = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 72.0, t1: 1.0, t2: 0.0)
+        subTitle.alpha = mapCGFloatRange(self.frame.size.height, r1: 175.0, r2: 72.0, t1: 1.0, t2: 0.0)
         
         println(self.frame.size.height)
     }

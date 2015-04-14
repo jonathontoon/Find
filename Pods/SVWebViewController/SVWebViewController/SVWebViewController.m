@@ -216,7 +216,7 @@
     }
     
     UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""     
-    style:UIBarButtonItemStyleBordered target:nil action:nil];
+    style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationController.navigationBar.topItem.backBarButtonItem = backButtonItem;
 }
 

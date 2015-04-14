@@ -44,6 +44,7 @@
 		44C8129F1AAFCDC90098A68A /* NRActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C8129E1AAFCDC90098A68A /* NRActionButton.swift */; };
 		44C820B71AA5536200DF4DD8 /* NRResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C820B61AA5536200DF4DD8 /* NRResultCell.swift */; };
 		44CF69391AB5F02600341894 /* NRRegistrarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44CF69381AB5F02600341894 /* NRRegistrarViewController.swift */; };
+		44E477D31ADCDF80008CF1E3 /* NRInfoViewGenericCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44E477D21ADCDF80008CF1E3 /* NRInfoViewGenericCell.swift */; };
 		44F42BFC1AAD5684009C5EC5 /* NRDefaultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F42BFB1AAD5684009C5EC5 /* NRDefaultCell.swift */; };
 		44F42BFE1AAD5747009C5EC5 /* NRInfoViewRegistrarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44F42BFD1AAD5747009C5EC5 /* NRInfoViewRegistrarCell.swift */; };
 /* End PBXBuildFile section */
@@ -101,6 +102,7 @@
 		44C8129E1AAFCDC90098A68A /* NRActionButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRActionButton.swift; sourceTree = "<group>"; };
 		44C820B61AA5536200DF4DD8 /* NRResultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRResultCell.swift; sourceTree = "<group>"; };
 		44CF69381AB5F02600341894 /* NRRegistrarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRRegistrarViewController.swift; sourceTree = "<group>"; };
+		44E477D21ADCDF80008CF1E3 /* NRInfoViewGenericCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRInfoViewGenericCell.swift; sourceTree = "<group>"; };
 		44F42BFB1AAD5684009C5EC5 /* NRDefaultCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRDefaultCell.swift; sourceTree = "<group>"; };
 		44F42BFD1AAD5747009C5EC5 /* NRInfoViewRegistrarCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRInfoViewRegistrarCell.swift; sourceTree = "<group>"; };
 		5A3E0785701369F9135B46D4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				442E88771AA5742A00A75B92 /* NRInfoViewController.swift */,
 				44C8129E1AAFCDC90098A68A /* NRActionButton.swift */,
 				44F42BFD1AAD5747009C5EC5 /* NRInfoViewRegistrarCell.swift */,
+				44E477D21ADCDF80008CF1E3 /* NRInfoViewGenericCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -464,6 +467,7 @@
 				44730E7E1AC512F300B76874 /* NRSubtitleLabel.swift in Sources */,
 				44AC98601AA54FCE009369EB /* NRInfoCommunicatorDelegate.swift in Sources */,
 				440A7C2D1AA41AA30003F624 /* NRResultsManagerDelegate.swift in Sources */,
+				44E477D31ADCDF80008CF1E3 /* NRInfoViewGenericCell.swift in Sources */,
 				44B063781AA3D4950033DEB2 /* NRResultsViewController.swift in Sources */,
 				442E471F1AC85D00006DC37F /* NSObject+CallSelector.swift in Sources */,
 				44F42BFE1AAD5747009C5EC5 /* NRInfoViewRegistrarCell.swift in Sources */,

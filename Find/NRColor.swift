@@ -15,7 +15,7 @@ class NRColor: UIColor {
     }
     
     func domainrBackgroundBlackColor() -> UIColor {
-        return UIColor(CSS: "1C2228")
+        return UIColor(CSS: "1D2326")
     }
     
     func domainrRegularDarkGreyColor() -> UIColor {
@@ -28,6 +28,10 @@ class NRColor: UIColor {
     
     func domainrListIconGreyColor() -> UIColor {
         return UIColor(CSS: "E0E6DF")
+    }
+    
+    func domainrAccessoryViewColor() -> UIColor {
+        return UIColor(CSS: "949693")
     }
     
     func domainrBlueColor() -> UIColor {

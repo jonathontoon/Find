@@ -48,7 +48,7 @@ class NRInfoNavigationBarPatternView: UIView {
            
             tldLabel = UILabel()
             tldLabel.text = self.tldString
-            tldLabel.font = UIFont(name: "RockoUltraFLF", size: 16.0)
+            tldLabel.font = UIFont(name: "AvenirNext-Bold", size: 15.0)
             tldLabel.textColor = UIColor.whiteColor()
             tldLabel.alpha = 0.03
             tldLabel.sizeToFit()
