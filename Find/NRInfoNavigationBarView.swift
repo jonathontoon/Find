@@ -82,9 +82,6 @@ class NRInfoNavigationBarView: UIView {
         subTitle.textAlignment = NSTextAlignment.Center
         subTitle.center = CGPointIntegral(CGPointMake(self.center.x, (self.bounds.size.height/2) + 17.0))
         
-        println(titleLabel.center.y + 28.0)
-        println(self.frame.size.height)
-        
         self.addSubview(subTitle)
 
     }
@@ -109,8 +106,7 @@ class NRInfoNavigationBarView: UIView {
         subTitle.layer.cornerRadius = subRadius
         
         subTitle.alpha = mapCGFloatRange(self.frame.size.height, r1: 175.0, r2: 72.0, t1: 1.0, t2: 0.0)
-        
-        println(self.frame.size.height)
+
     }
     
     // http://stackoverflow.com/a/6237034/553149

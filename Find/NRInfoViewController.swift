@@ -203,10 +203,10 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             headerTitle.font = UIFont(name: "HelveticaNeue", size: 12.0)
             headerTitle.textColor = NRColor().domainrSubtextGreyColor()
             headerTitle.sizeToFit()
-            headerTitle.frame = CGRectMake(35.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
+            headerTitle.frame = CGRectMake(33.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
             headerView.addSubview(headerTitle)
             
-            let idnLabel: UILabel! = UILabel(frame: CGRectMake(tableView.frame.size.width - (29.0 + 15.0), 21.0, 29.0, 16.0))
+            let idnLabel: UILabel! = UILabel(frame: CGRectMake(tableView.frame.size.width - (29.0 + 15.0), 22.0, 29.0, 16.0))
             idnLabel.text = "IDN"
             idnLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 10.0)
             idnLabel.textColor = UIColor.whiteColor()
@@ -403,10 +403,10 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             let velocity: CGFloat = scrollView.panGestureRecognizer.velocityInView(scrollView).y
             var offset: CGFloat! = scrollView.contentOffset.y
             
-            println(offset)
-            println(tableView.tableHeaderView!.frame.size.height)
+            NSLog("offset %f", offset)
+            NSLog("height %f", tableView.tableHeaderView!.frame.size.height)
             
-            if offset < 94.0 {
+            if offset < 111.0 {
                 
                 if offset < 0 {
                     tableView.tableHeaderView!.frame.size.height = 175.0
@@ -417,7 +417,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
                 previousScrollOffsetY = offset
             } else {
                 tableView.tableHeaderView!.frame.size.height = 64.0
-                previousScrollOffsetY = 96.0
+                previousScrollOffsetY = 111.0
             }
             navigationBarView.centerElements()
             tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)

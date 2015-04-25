@@ -49,4 +49,11 @@ class NRInfoViewGenericCell: NRDefaultCell {
         self.contentView.addSubview(icon)
     }
     
+    override func prepareForReuse() {
+        icon.removeFromSuperview()
+        cellTitle.removeFromSuperview()
+        icon = nil
+        cellTitle = nil
+    }
+    
 }
