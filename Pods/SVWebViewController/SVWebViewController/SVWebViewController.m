@@ -84,6 +84,8 @@
     
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         [self.navigationController setToolbarHidden:NO animated:animated];
+        [self styleNavigationBar];
+        
     }
     else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         [self.navigationController setToolbarHidden:YES animated:animated];
@@ -110,6 +112,31 @@
     return toInterfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
 }
 
+
+- (void)styleNavigationBar {
+    [self.navigationController setNavigationBarHidden:YES animated: NO];
+    
+    UINavigationBar *newNavigationBar = [[UINavigationBar alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 64.0)];
+    newNavigationBar.barTintColor = self.navigationController.navigationBar.barTintColor;
+    newNavigationBar.tintColor = self.navigationController.navigationBar.tintColor;
+    
+    UINavigationItem *titleItem = [[UINavigationItem alloc] init];
+    titleItem.title = self.title;
+    
+    UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"closeButton"] style:UIBarButtonItemStylePlain target:self action:@selector(dismissviewController)];
+    titleItem.leftBarButtonItem = closeButtonItem;
+    
+    [newNavigationBar setItems:[NSArray arrayWithObjects:titleItem, nil]];
+    [[self view] addSubview:newNavigationBar];
+    
+    self.navigationController.toolbar.barTintColor = self.navigationController.navigationBar.barTintColor;
+    self.navigationController.toolbar.translucent = YES;
+}
+
+- (void)dismissviewController {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - Getters
 
 - (UIWebView*)webView {
@@ -117,6 +144,10 @@
         _webView = [[UIWebView alloc] initWithFrame:[UIScreen mainScreen].bounds];
         _webView.delegate = self;
         _webView.scalesPageToFit = YES;
+        
+        [_webView.scrollView setContentInset:UIEdgeInsetsMake(44, 0, 0, 0)];
+        [_webView.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(44, 0, 0, 0)];
+        [_webView.scrollView scrollRectToVisible:CGRectMake(0, 0, 1, 1) animated:NO];
     }
     return _webView;
 }
@@ -215,8 +246,8 @@
         self.toolbarItems = items;
     }
     
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""     
-    style:UIBarButtonItemStylePlain target:nil action:nil];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithTitle:@""
+                                                                       style:UIBarButtonItemStylePlain target:nil action:nil];
     self.navigationController.navigationBar.topItem.backBarButtonItem = backButtonItem;
 }
 

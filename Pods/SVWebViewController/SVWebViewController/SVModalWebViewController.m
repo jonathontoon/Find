@@ -41,7 +41,6 @@
         UIBarButtonItem *doneButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemDone
                                                                                     target:self.webViewController
                                                                                     action:@selector(doneButtonTapped:)];
-        
         if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
             self.webViewController.navigationItem.leftBarButtonItem = doneButton;
         else
@@ -51,8 +50,9 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:NO];
+    [super viewWillAppear:animated];
     
+    [self setNavigationBarHidden:NO animated:YES];
     self.webViewController.title = self.title;
     self.navigationBar.tintColor = self.barsTintColor;
 }
