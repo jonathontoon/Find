@@ -95,7 +95,7 @@ class NRSuggestionsViewController: UITableViewController, NRSuggestionsManagerDe
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell: NRSearchSuggestionCell! = tableView.dequeueReusableCellWithIdentifier(suggestionsTableViewCellIdentifier) as NRSearchSuggestionCell
+        var cell: NRSearchSuggestionCell! = tableView.dequeueReusableCellWithIdentifier(suggestionsTableViewCellIdentifier) as! NRSearchSuggestionCell
         
         if cell == nil {
             cell = NRSearchSuggestionCell(style: .Default, reuseIdentifier: suggestionsTableViewCellIdentifier)

@@ -33,6 +33,10 @@ class NRColor: UIColor {
     func domainrAccessoryViewColor() -> UIColor {
         return UIColor(CSS: "949693")
     }
+        
+    func domairTableViewSeparatorBorder() -> UIColor {
+        return UIColor(CSS: "E6E7E6")
+    }
     
     func domainrBlueColor() -> UIColor {
         return UIColor(CSS: "2870B0")

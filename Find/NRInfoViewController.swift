@@ -78,6 +78,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         tableView.tableHeaderView = navigationBarView
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
         tableView.stickyHeader = true
+        tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
         tableView.tableFooterView = UIView(frame: CGRectZero)
 
         self.view.addSubview(tableView)
@@ -184,19 +185,54 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     
     // #pragma mark - UITableViewDelegate
     
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        let headerView: UIView! = UIView()
+        
+        if section == 1 {
+            headerView.frame = CGRectMake(0, 0, tableView.frame.size.width, 28.0)
+            
+            let headerImage: UIImageView! = UIImageView(image: UIImage(named: "shoppingCart")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
+            headerImage.frame = CGRectMake(15.0, 24.0, 12.0, 11.0)
+            headerImage.tintColor = NRColor().domainrSubtextGreyColor()
+            headerImage.contentMode = UIViewContentMode.ScaleAspectFit
+            headerView.addSubview(headerImage)
+            
+            let headerTitle: UILabel! = UILabel()
+            headerTitle.text = "PURCHASE OPTIONS"
+            headerTitle.font = UIFont(name: "HelveticaNeue", size: 12.0)
+            headerTitle.textColor = NRColor().domainrSubtextGreyColor()
+            headerTitle.sizeToFit()
+            headerTitle.frame = CGRectMake(35.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
+            headerView.addSubview(headerTitle)
+            
+            let idnLabel: UILabel! = UILabel(frame: CGRectMake(tableView.frame.size.width - (29.0 + 15.0), 21.0, 29.0, 16.0))
+            idnLabel.text = "IDN"
+            idnLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 10.0)
+            idnLabel.textColor = UIColor.whiteColor()
+            idnLabel.backgroundColor = NRColor().domainrOrangeColor()
+            idnLabel.textAlignment = NSTextAlignment.Center
+            idnLabel.layer.cornerRadius = 2.0
+            idnLabel.clipsToBounds = true
+            headerView.addSubview(idnLabel)
+        }
+        
+        return headerView
+    }
+    
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         var height: CGFloat = 25.0
         
         if section == 1 {
-            height = 28.0
+            height = 45.0
         }
         
         return height
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0.0
+        return 0.1
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -237,7 +273,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
                 
             } else if indexPath.row == 1 {
                 
-                let wikipediaURL: NSURL! = NSURL(string: info.tld!.valueForKey("wikipedia_url") as String)
+                let wikipediaURL: NSURL! = NSURL(string: info.tld!.valueForKey("wikipedia_url") as! String)
                 let wikipediaViewController: SVWebViewController = SVWebViewController(URL: wikipediaURL)
                 wikipediaViewController.title = "TLD Wikipedia Article"
                 wikipediaViewController.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
@@ -261,7 +297,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             
             } else {
                 
-                let registrarURL: NSURL! = NSURL(string: info.registrars!.objectAtIndex(indexPath.row).valueForKey("register_url") as String)
+                let registrarURL: NSURL! = NSURL(string: info.registrars!.objectAtIndex(indexPath.row).valueForKey("register_url") as! String)
                 let registrarViewController: SVWebViewController = SVWebViewController(URL: registrarURL)
                 registrarViewController.title = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String
                 registrarViewController.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
@@ -308,11 +344,11 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             cell = NRInfoViewRegistrarCell(style: .Default, reuseIdentifier: "NRInfoViewRegistrarCell")
         }
         
-        cell?.textLabel?.text = NSString(format: "View %d ", info.registrars!.count - 6) + "Others"
+        cell?.textLabel?.text = (NSString(format: "View %d ", info.registrars!.count - 6) as String) + "Others"
         
         
         if indexPath.row < 6 {
-            cell?.textLabel?.text = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as NSString
+            cell?.textLabel?.text = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String
         }
         
         return cell!

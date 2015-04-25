@@ -48,7 +48,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         }
         
         // Rough code to change the UISearchBar style
-        (resultsSearchController.searchBar.subviews[0].subviews[1] as UITextField).borderStyle = .None
+        (resultsSearchController.searchBar.subviews[0].subviews[1] as! UITextField).borderStyle = .None
         
         resultsSearchController.definesPresentationContext = true
         resultsSearchController.hidesNavigationBarDuringPresentation = false
@@ -132,14 +132,14 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
             
             if self.results?.count > 0 {
                 
-                cell = tableView.dequeueReusableCellWithIdentifier(resultsTableViewCellIdentifier) as NRResultCell
+                cell = tableView.dequeueReusableCellWithIdentifier(resultsTableViewCellIdentifier) as! NRResultCell
             
                 if cell == nil {
                     cell = NRResultCell(style: .Default, reuseIdentifier: resultsTableViewCellIdentifier)
                 }
                 
                 cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-                cell.textLabel?.text = (results!.objectAtIndex(indexPath.row) as NRResult).domain! + " " + (results!.objectAtIndex(indexPath.row) as NRResult).availability!
+                cell.textLabel?.text = (results!.objectAtIndex(indexPath.row) as! NRResult).domain! + " " + (results!.objectAtIndex(indexPath.row) as! NRResult).availability!
             }
         
         } else if isSearching == true && resultsSearchController.searchBar.text != nil {
@@ -148,7 +148,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
             
             println(resultsSearchController.searchBar.text)
             
-            cell = tableView.dequeueReusableCellWithIdentifier(suggestionOptionCellIdentifier) as NRDefaultCell
+            cell = tableView.dequeueReusableCellWithIdentifier(suggestionOptionCellIdentifier) as! NRDefaultCell
             
             if cell == nil {
                 cell = NRDefaultCell(style: .Default, reuseIdentifier: suggestionOptionCellIdentifier)
@@ -173,7 +173,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         
         if isSearching == false && self.results?.count > 0 {
             
-            let result: NRResult = results!.objectAtIndex(indexPath.row) as NRResult
+            let result: NRResult = results!.objectAtIndex(indexPath.row) as! NRResult
             viewControllerForPush = NRInfoViewController(result: result)
            
         } else if isSearching == true {

@@ -31,7 +31,8 @@ class NRInfoViewGenericCell: NRDefaultCell {
         cellTitle.text = title
         cellTitle.textColor = NRColor().domainrRegularDarkGreyColor()
         cellTitle.sizeToFit()
-        cellTitle.frame = CGRectMake(35.0, 0, cellTitle.frame.size.width, cellTitle.frame.size.height)
+        cellTitle.frame = CGRectMake(50.0, 0, cellTitle.frame.size.width, cellTitle.frame.size.height)
+        cellTitle.center.y = self.contentView.center.y
         self.contentView.addSubview(cellTitle)
         
         icon = UIImageView(frame: CGRectMake(15.0, 0, 20.0, 20.0))
@@ -44,6 +45,7 @@ class NRInfoViewGenericCell: NRDefaultCell {
         }
         icon.tintColor = NRColor().domainrBlueColor()
         icon.contentMode = UIViewContentMode.ScaleAspectFit
+        icon.center.y = round(self.contentView.center.y)
         self.contentView.addSubview(icon)
     }
     

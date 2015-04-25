@@ -18,15 +18,15 @@ class NRModelBuilder: NSObject {
         
         if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
 
-            let pulledResults: NSArray = parsedObject.valueForKey("results") as NSArray
+            let pulledResults: NSArray = parsedObject.valueForKey("results") as! NSArray
             
-            for resultDic in pulledResults as [NSDictionary] {
+            for resultDic in pulledResults as! [NSDictionary] {
                 let result: NRResult = NRResult()
                 
                 for object in resultDic {
                     
-                    if result.respondsToSelector(NSSelectorFromString(object.key as String)) {
-                        result.setValue(object.value, forKey:object.key as String)
+                    if result.respondsToSelector(NSSelectorFromString(object.key as! String)) {
+                        result.setValue(object.value, forKey:object.key as! String)
                     }
                 }
                 
@@ -48,8 +48,8 @@ class NRModelBuilder: NSObject {
         if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
             
             for object in parsedObject {
-                if info.respondsToSelector(NSSelectorFromString(object.key as String)) {
-                    info.setValue(object.value, forKey:object.key as String)
+                if info.respondsToSelector(NSSelectorFromString(object.key as! String)) {
+                    info.setValue(object.value, forKey:object.key as! String)
                 }
             }
             
@@ -70,7 +70,7 @@ class NRModelBuilder: NSObject {
         if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
             
             println(parsedObject)
-            suggestions = parsedObject.objectForKey("results") as NSArray
+            suggestions = parsedObject.objectForKey("results") as! NSArray
             
         } else {
             println("Could not parse JSON: \(error!)")

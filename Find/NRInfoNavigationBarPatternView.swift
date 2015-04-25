@@ -23,8 +23,8 @@ class NRInfoNavigationBarPatternView: UIView {
             var yCenter: CGFloat = -70.0
             
             if i > 0 {
-                let previousLabelCenter: CGPoint = ((self.subviews as NSArray).objectAtIndex(i-1) as UIView).center
-                let previousLabelFrame: CGRect = ((self.subviews as NSArray).objectAtIndex(i-1) as UIView).frame
+                let previousLabelCenter: CGPoint = ((self.subviews as NSArray).objectAtIndex(i-1) as! UIView).center
+                let previousLabelFrame: CGRect = ((self.subviews as NSArray).objectAtIndex(i-1) as! UIView).frame
                 yCenter = previousLabelCenter.y + 40.0
             }
             
@@ -47,14 +47,14 @@ class NRInfoNavigationBarPatternView: UIView {
         {
            
             tldLabel = UILabel()
-            tldLabel.text = self.tldString
+            tldLabel.text = self.tldString as String
             tldLabel.font = UIFont(name: "AvenirNext-Bold", size: 15.0)
             tldLabel.textColor = UIColor.whiteColor()
             tldLabel.alpha = 0.03
             tldLabel.sizeToFit()
             
             if i > 0 {
-                let previousLabelFrame: CGRect = ((labelParentView.subviews as NSArray).objectAtIndex(i-1) as UILabel).frame
+                let previousLabelFrame: CGRect = ((labelParentView.subviews as NSArray).objectAtIndex(i-1) as! UILabel).frame
                 tldLabel.frame = CGRectMake((previousLabelFrame.origin.x + previousLabelFrame.size.width) + 20.0, 0, tldLabel.frame.size.width, tldLabel.frame.size.height)
             }
             

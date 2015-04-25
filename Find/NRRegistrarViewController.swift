@@ -72,7 +72,7 @@ class NRRegistrarViewController: UITableViewController {
         }
         
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-        cell?.textLabel?.text = registrars!.objectAtIndex(indexPath.row).valueForKey("name") as NSString
+        cell?.textLabel?.text = registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String
         
         return cell
         
