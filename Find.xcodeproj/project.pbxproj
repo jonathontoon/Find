@@ -14,6 +14,7 @@
 		440A7C2D1AA41AA30003F624 /* NRResultsManagerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440A7C2C1AA41AA30003F624 /* NRResultsManagerDelegate.swift */; };
 		441CE9ED1ACE670F005014B5 /* NRInfoNavigationBarPatternView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441CE9EC1ACE670F005014B5 /* NRInfoNavigationBarPatternView.swift */; };
 		442061511ABF7A87006B5E84 /* UITableView+StickyHeader.m in Sources */ = {isa = PBXBuildFile; fileRef = 442061501ABF7A87006B5E84 /* UITableView+StickyHeader.m */; };
+		442CA8441AEC1F3000EBA9B1 /* IDN.json in Resources */ = {isa = PBXBuildFile; fileRef = 442CA8431AEC1F3000EBA9B1 /* IDN.json */; };
 		442E471F1AC85D00006DC37F /* NSObject+CallSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442E471E1AC85D00006DC37F /* NSObject+CallSelector.swift */; };
 		442E88781AA5742A00A75B92 /* NRInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 442E88771AA5742A00A75B92 /* NRInfoViewController.swift */; };
 		4432BB4B1AB54FE2004BC114 /* NRSuggestionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4432BB4A1AB54FE2004BC114 /* NRSuggestionsViewController.swift */; };
@@ -68,6 +69,7 @@
 		441CE9EC1ACE670F005014B5 /* NRInfoNavigationBarPatternView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRInfoNavigationBarPatternView.swift; sourceTree = "<group>"; };
 		4420614F1ABF7A87006B5E84 /* UITableView+StickyHeader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITableView+StickyHeader.h"; sourceTree = "<group>"; };
 		442061501ABF7A87006B5E84 /* UITableView+StickyHeader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITableView+StickyHeader.m"; sourceTree = "<group>"; };
+		442CA8431AEC1F3000EBA9B1 /* IDN.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = IDN.json; sourceTree = "<group>"; };
 		442E471E1AC85D00006DC37F /* NSObject+CallSelector.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSObject+CallSelector.swift"; sourceTree = "<group>"; };
 		442E88771AA5742A00A75B92 /* NRInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRInfoViewController.swift; sourceTree = "<group>"; };
 		4432BB4A1AB54FE2004BC114 /* NRSuggestionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NRSuggestionsViewController.swift; sourceTree = "<group>"; };
@@ -154,6 +156,18 @@
 				4432BB4F1AB55090004BC114 /* View */,
 			);
 			name = NRInfoView;
+			sourceTree = "<group>";
+		};
+		442CA8421AEC1F1B00EBA9B1 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				442061521ABF7A8A006B5E84 /* UITableView+StickyHeader */,
+				442CA8431AEC1F3000EBA9B1 /* IDN.json */,
+				442E471E1AC85D00006DC37F /* NSObject+CallSelector.swift */,
+				443B1FF01AB43052007F2782 /* NRColor.swift */,
+				44B0637C1AA3D4950033DEB2 /* Images.xcassets */,
+			);
+			name = Resources;
 			sourceTree = "<group>";
 		};
 		4432BB481AB54184004BC114 /* NRResults */ = {
@@ -264,18 +278,15 @@
 		44B0636F1AA3D4950033DEB2 /* Find */ = {
 			isa = PBXGroup;
 			children = (
-				442E471E1AC85D00006DC37F /* NSObject+CallSelector.swift */,
+				442CA8421AEC1F1B00EBA9B1 /* Resources */,
 				44B063721AA3D4950033DEB2 /* AppDelegate.swift */,
-				443B1FF01AB43052007F2782 /* NRColor.swift */,
 				44CF693A1AB5F02900341894 /* NRRegistrar */,
 				4432BB491AB548D1004BC114 /* NRSuggestions */,
 				4432BB481AB54184004BC114 /* NRResults */,
 				442A97C51AAE8F0500AAD346 /* NRInfoView */,
 				44F42BFB1AAD5684009C5EC5 /* NRDefaultCell.swift */,
 				44B0639B1AA3E8590033DEB2 /* NRModelBuilder.swift */,
-				442061521ABF7A8A006B5E84 /* UITableView+StickyHeader */,
 				44B063791AA3D4950033DEB2 /* Main.storyboard */,
-				44B0637C1AA3D4950033DEB2 /* Images.xcassets */,
 				44B0637E1AA3D4950033DEB2 /* LaunchScreen.xib */,
 				44B063741AA3D4950033DEB2 /* Find.xcdatamodeld */,
 				44B063701AA3D4950033DEB2 /* Supporting Files */,
@@ -412,6 +423,7 @@
 				443D8BA11AD1DB8100AEDAA9 /* RockoUltraFLF.ttf in Resources */,
 				44B0637B1AA3D4950033DEB2 /* Main.storyboard in Resources */,
 				44B063801AA3D4950033DEB2 /* LaunchScreen.xib in Resources */,
+				442CA8441AEC1F3000EBA9B1 /* IDN.json in Resources */,
 				44099AF71AB2B5CD009FAA30 /* Podfile in Resources */,
 				44B0637D1AA3D4950033DEB2 /* Images.xcassets in Resources */,
 			);
@@ -573,7 +585,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -612,7 +624,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_INSTALL_OBJC_HEADER = NO;

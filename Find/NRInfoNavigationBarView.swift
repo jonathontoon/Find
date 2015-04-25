@@ -70,9 +70,7 @@ class NRInfoNavigationBarView: UIView {
         
         if type == AvailabilityType.Taken {
             subTitle.backgroundColor = NRColor().domainrBlueColor()
-        }
-        
-        if type == AvailabilityType.Unavailable {
+        } else if type == AvailabilityType.Unavailable {
             subTitle.backgroundColor = NRColor().domainrRedColor()
         }
         

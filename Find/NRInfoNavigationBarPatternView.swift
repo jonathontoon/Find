@@ -43,7 +43,7 @@ class NRInfoNavigationBarPatternView: UIView {
         
         var tldLabel: UILabel!
 
-        for i in 0..<12
+        for i in 0..<20
         {
            
             tldLabel = UILabel()

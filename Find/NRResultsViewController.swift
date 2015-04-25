@@ -155,6 +155,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
             }
             
             cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.textLabel?.text = "Suggestions for \"" + resultsSearchController.searchBar.text.stringByReplacingOccurrencesOfString(" ", withString: "") + "\""
             
         }
@@ -174,6 +175,11 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         if isSearching == false && self.results?.count > 0 {
             
             let result: NRResult = results!.objectAtIndex(indexPath.row) as! NRResult
+            result.tld = (split(result.domain!, maxSplit: 1, allowEmptySlices: false, isSeparator: { $0 == "."}) as NSArray).objectAtIndex(1) as? String
+            if result.availability == "maybe" {
+                result.availability = "Coming Soon"
+            }
+            
             viewControllerForPush = NRInfoViewController(result: result)
            
         } else if isSearching == true {
@@ -193,6 +199,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         if viewControllerForPush.isKindOfClass(NRInfoViewController) {
             
             var navigationController: UINavigationController = UINavigationController(rootViewController: viewControllerForPush)
+            navigationController.navigationBar.barStyle = UIBarStyle.Black
             self.presentViewController(navigationController, animated: true, completion: nil)
             
         } else {

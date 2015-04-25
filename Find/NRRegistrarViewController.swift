@@ -8,9 +8,10 @@
 
 import UIKit
 
-class NRRegistrarViewController: UITableViewController {
+class NRRegistrarViewController: UIViewController, UIGestureRecognizerDelegate, UITableViewDelegate, UITableViewDataSource {
 
     var registrars: NSArray!
+    var tableView: UITableView!
     
     let registrarsTableViewCellIdentifier: String = "NRInfoViewRegistrarCell"
     
@@ -24,29 +25,61 @@ class NRRegistrarViewController: UITableViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        styleNavigationBar()
+        self.navigationController!.interactivePopGestureRecognizer.delegate = self
+    }
+    
     override func viewDidLoad() {
         
         self.title = "More Registrars"
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
         
-        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        tableView = UITableView(frame: self.view.frame, style: UITableViewStyle.Grouped)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: registrarsTableViewCellIdentifier)
+        tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 06.0, 0)
+        tableView.scrollIndicatorInsets = UIEdgeInsetsMake(44, 0, 0, 0)
+        tableView.scrollRectToVisible(CGRectMake(0, 0, 1, 1), animated: false)
+        tableView.tableFooterView = UIView(frame: CGRectZero)
+        self.view.addSubview(tableView)
         
-        let backButtonItem: UIBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButtonItem
+    }
+    
+    func styleNavigationBar() {
         
-        self.tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: registrarsTableViewCellIdentifier)
-        self.tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 36.0, 0)
-        self.tableView.tableFooterView = UIView(frame: CGRectZero)
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
         
+        let newNavigationBar: UINavigationBar! = UINavigationBar(frame: CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 64.0))
+        newNavigationBar.barTintColor = self.navigationController?.navigationBar.barTintColor
+        newNavigationBar.translucent = true
+        newNavigationBar.tintColor = NRColor().domainrBlueColor()
+        newNavigationBar.titleTextAttributes = [NSForegroundColorAttributeName: NRColor().domainrRegularDarkGreyColor()]
+        
+        let titleItem = UINavigationItem()
+        titleItem.title = self.title
+        
+        let backButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "backButton")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), style: UIBarButtonItemStyle.Plain, target: self, action: "popViewController")
+        titleItem.leftBarButtonItem = backButtonItem
+        
+        newNavigationBar.setItems([titleItem], animated: false)
+        self.view.addSubview(newNavigationBar)
+    }
+    
+    func popViewController() {
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     // #pragma mark - UITableViewDataSource
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if registrars != nil {
             self.tableView.separatorStyle = .SingleLine
@@ -59,11 +92,11 @@ class NRRegistrarViewController: UITableViewController {
     
     // #pragma mark - UITableViewDelegate
     
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.0
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell: NRInfoViewRegistrarCell! = tableView.dequeueReusableCellWithIdentifier("NRInfoViewRegistrarCell", forIndexPath: indexPath) as? NRInfoViewRegistrarCell
         
@@ -78,11 +111,23 @@ class NRRegistrarViewController: UITableViewController {
         
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 45.0
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        
+        var navController: UINavigationController! = UINavigationController()
+        navController.navigationBar.barTintColor = UIColor.whiteColor()
+        navController.navigationBar.tintColor = NRColor().domainrBlueColor()
+        navController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: NRColor().domainrRegularDarkGreyColor()]
+        
+        let registrarURL: NSURL! = NSURL(string: registrars!.objectAtIndex(indexPath.row).valueForKey("register_url") as! String)
+        let registrarViewController: SVWebViewController = SVWebViewController(URL: registrarURL)
+        registrarViewController.title = registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String
+        
+        navController!.viewControllers = [registrarViewController]
+        self.presentViewController(navController, animated: true, completion: nil)
         
     }
 

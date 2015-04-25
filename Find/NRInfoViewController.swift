@@ -47,24 +47,21 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        styleNavigationBar()
+        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.translucent = true
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
-        
-        let cancelButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "closeButton")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), style: UIBarButtonItemStyle.Plain, target: self, action: "dismissViewController")
-        cancelButtonItem.tintColor = UIColor.whiteColor()
-        self.navigationController?.navigationBar.topItem?.leftBarButtonItem = cancelButtonItem
         
         self.automaticallyAdjustsScrollViewInsets = false
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
         
         if result.availability == "taken" {
             availabilityType = AvailabilityType.Taken
-        } else if result.availability == "maybe" {
+        } else if result.availability == "Coming Soon" {
             availabilityType = AvailabilityType.ComingSoon
         }
         
@@ -74,13 +71,14 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         tableView.registerClass(NRInfoViewGenericCell.self, forCellReuseIdentifier: "NRInfoViewGenericCell")
         tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: "NRInfoViewRegistrarCell")
         tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
-        navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 175.0), title: self.result.domain, subTitle: self.result.availability?.capitalizedString, labelType: availabilityType, tld: ".org")
+        navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 175.0), title: self.result.domain, subTitle: self.result.availability?.capitalizedString, labelType: availabilityType, tld: result.tld)
         tableView.tableHeaderView = navigationBarView
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
         tableView.stickyHeader = true
         tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
         tableView.tableFooterView = UIView(frame: CGRectZero)
-
+        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 45.0, 0.0)
+        
         self.view.addSubview(tableView)
         
         let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 50.0, self.view.frame.size.width, 50.0)
@@ -89,8 +87,34 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         self.view.addSubview(actionButton)
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
+        
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
+    }
+    
+    func styleNavigationBar() {
+        
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        let newNavigationBar: UINavigationBar! = UINavigationBar(frame: CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 64.0))
+        newNavigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        newNavigationBar.shadowImage = UIImage()
+        newNavigationBar.translucent = true
+        newNavigationBar.tintColor = UIColor.whiteColor()
+        
+        let titleItem = UINavigationItem()
+        
+        let cancelButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "closeButton")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), style: UIBarButtonItemStyle.Plain, target: self, action: "dismissViewController")
+        titleItem.leftBarButtonItem = cancelButtonItem
+        
+        newNavigationBar.setItems([titleItem], animated: false)
+        self.view.addSubview(newNavigationBar)
     }
     
     func presentAction() {
@@ -206,7 +230,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             headerTitle.frame = CGRectMake(33.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
             headerView.addSubview(headerTitle)
             
-            let idnLabel: UILabel! = UILabel(frame: CGRectMake(tableView.frame.size.width - (29.0 + 15.0), 22.0, 29.0, 16.0))
+            let idnLabel: UILabel! = UILabel(frame: CGRectMake(tableView.frame.size.width - (27.0 + 15.0), 20.0, 27.0, 17.0))
             idnLabel.text = "IDN"
             idnLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 10.0)
             idnLabel.textColor = UIColor.whiteColor()
@@ -215,6 +239,14 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             idnLabel.layer.cornerRadius = 2.0
             idnLabel.clipsToBounds = true
             headerView.addSubview(idnLabel)
+            
+            let tldLabel: UILabel! = UILabel()
+            tldLabel.text = "."+result.tld!.uppercaseString
+            tldLabel.font = headerTitle.font
+            tldLabel.textColor = headerTitle.textColor
+            tldLabel.sizeToFit()
+            tldLabel.frame = CGRectMake(idnLabel.frame.origin.x - (tldLabel.frame.size.width + 5.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
+            headerView.addSubview(tldLabel)
         }
         
         return headerView
@@ -247,6 +279,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         
         cell.accessoryView = UIImageView(image: UIImage(named: "accessoryArrow")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
         cell.accessoryView!.tintColor = NRColor().domainrAccessoryViewColor()
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
         
         return cell
         
@@ -258,58 +291,57 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        if indexPath.section == 0 {
-            
-            if indexPath.row == 0 {
-                
-                let whoisURL: NSURL! = NSURL(string: info.whois_url!)
-                let whoisViewController: SVWebViewController = SVWebViewController(URL: whoisURL)
-                whoisViewController.title = "Whois Info"
-                whoisViewController.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
-                whoisViewController.navigationController?.navigationBar.shadowImage = nil
-                whoisViewController.navigationController?.navigationBar.translucent = false
-                
-                self.navigationController?.pushViewController(whoisViewController, animated: true)
-                
-            } else if indexPath.row == 1 {
-                
-                let wikipediaURL: NSURL! = NSURL(string: info.tld!.valueForKey("wikipedia_url") as! String)
-                let wikipediaViewController: SVWebViewController = SVWebViewController(URL: wikipediaURL)
-                wikipediaViewController.title = "TLD Wikipedia Article"
-                wikipediaViewController.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
-                wikipediaViewController.navigationController?.navigationBar.shadowImage = nil
-                wikipediaViewController.navigationController?.navigationBar.translucent = false
-                self.navigationController?.pushViewController(wikipediaViewController, animated: true)
-            
-            }
+        dispatch_async(dispatch_get_main_queue(), {
         
-        } else if indexPath.section == 1 {
+            var navController: UINavigationController! = UINavigationController()
+            navController.navigationBar.barTintColor = UIColor.whiteColor()
+            navController.navigationBar.tintColor = NRColor().domainrBlueColor()
+            navController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: NRColor().domainrRegularDarkGreyColor()]
             
-            if indexPath.row >= 4 {
+            if indexPath.section == 0 {
                 
-                let newArray: NSArray = info.registrars!.objectsAtIndexes(NSIndexSet(indexesInRange: NSMakeRange(4, info.registrars!.count-8))) as NSArray
-                let registrarsViewController: NRRegistrarViewController = NRRegistrarViewController(registrars: newArray)
-                registrarsViewController.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
-                registrarsViewController.navigationController?.navigationBar.shadowImage = nil
-                registrarsViewController.navigationController?.navigationBar.translucent = false
+                if indexPath.row == 0 {
+                    
+                    let whoisURL: NSURL! = NSURL(string: self.info.whois_url!)
+                    let whoisViewController: SVWebViewController = SVWebViewController(URL: whoisURL)
+                    whoisViewController.title = "Whois Info"
+                    
+                    navController!.viewControllers = [whoisViewController]
+                    self.presentViewController(navController, animated: true, completion: nil)
+                    
+                } else if indexPath.row == 1 {
+                    
+                    let wikipediaURL: NSURL! = NSURL(string: self.info.tld!.valueForKey("wikipedia_url") as! String)
+                    let wikipediaViewController: SVWebViewController = SVWebViewController(URL: wikipediaURL)
+                    wikipediaViewController.title = "TLD Wikipedia Article"
 
-                self.navigationController?.pushViewController(registrarsViewController, animated: true)
+                    navController!.viewControllers = [wikipediaViewController]
+                    self.presentViewController(navController, animated: true, completion: nil)
+                
+                }
             
-            } else {
+            } else if indexPath.section == 1 {
                 
-                let registrarURL: NSURL! = NSURL(string: info.registrars!.objectAtIndex(indexPath.row).valueForKey("register_url") as! String)
-                let registrarViewController: SVWebViewController = SVWebViewController(URL: registrarURL)
-                registrarViewController.title = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String
-                registrarViewController.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
-                registrarViewController.navigationController?.navigationBar.shadowImage = nil
-                registrarViewController.navigationController?.navigationBar.translucent = false
+                if indexPath.row >= 4 {
+                    
+                    let newArray: NSArray = self.info.registrars!.objectsAtIndexes(NSIndexSet(indexesInRange: NSMakeRange(4, self.info.registrars!.count-8))) as NSArray
+                    let registrarsViewController: NRRegistrarViewController = NRRegistrarViewController(registrars: newArray)
+                    
+                    self.navigationController?.pushViewController(registrarsViewController, animated: true)
                 
-                self.navigationController?.pushViewController(registrarViewController, animated: true)
+                } else {
+                    
+                    let registrarURL: NSURL! = NSURL(string: self.info.registrars!.objectAtIndex(indexPath.row).valueForKey("register_url") as! String)
+                    let registrarViewController: SVWebViewController = SVWebViewController(URL: registrarURL)
+                    registrarViewController.title = self.info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String
+                    
+                    navController!.viewControllers = [registrarViewController]
+                    self.presentViewController(navController, animated: true, completion: nil)
+                    
+                }
                 
             }
-            
-        }
-        
+        });
     }
     
     func createDefaultCell(indexPath: NSIndexPath!) -> NRInfoViewGenericCell {
