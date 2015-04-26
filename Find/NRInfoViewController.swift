@@ -77,7 +77,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         tableView.stickyHeader = true
         tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
         tableView.tableFooterView = UIView(frame: CGRectZero)
-        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 45.0, 0.0)
+        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 25.0, 0.0)
         
         self.view.addSubview(tableView)
         
@@ -230,7 +230,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             headerTitle.frame = CGRectMake(33.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
             headerView.addSubview(headerTitle)
             
-            let idnLabel: UILabel! = UILabel(frame: CGRectMake(tableView.frame.size.width - (27.0 + 15.0), 20.0, 27.0, 17.0))
+            let idnLabel: UILabel! = UILabel(frame: CGRectMake(tableView.frame.size.width - (27.0 + 15.0), 21.0, 27.0, 16.0))
             idnLabel.text = "IDN"
             idnLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 10.0)
             idnLabel.textColor = UIColor.whiteColor()

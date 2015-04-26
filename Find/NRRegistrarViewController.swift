@@ -41,10 +41,13 @@ class NRRegistrarViewController: UIViewController, UIGestureRecognizerDelegate, 
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: registrarsTableViewCellIdentifier)
-        tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 06.0, 0)
+        tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
+        tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
+        tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 0.0, 0)
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(44, 0, 0, 0)
         tableView.scrollRectToVisible(CGRectMake(0, 0, 1, 1), animated: false)
-        tableView.tableFooterView = UIView(frame: CGRectZero)
+        tableView.tableHeaderView?.backgroundColor = NRColor().domairTableViewSeparatorBorder()
+        tableView.tableFooterView?.backgroundColor = NRColor().domairTableViewSeparatorBorder()
         self.view.addSubview(tableView)
         
     }
