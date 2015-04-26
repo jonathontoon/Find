@@ -60,22 +60,41 @@ class NRModelBuilder: NSObject {
         return info
     }
     
-    func getSuggestionsFromJSON(objectNotation: NSData!, error: NSError?) -> NSArray? {
+    func getSearchSuggestionsFromJSON(objectNotation: NSData!, error: NSError?) -> NSArray? {
         
         println(objectNotation)
         
-        var suggestions: NSArray!
+        var searchSuggestions: NSArray!
         var error: NSError? = nil
         
         if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
             
             println(parsedObject)
-            suggestions = parsedObject.objectForKey("results") as! NSArray
+            searchSuggestions = parsedObject.objectForKey("results") as! NSArray
             
         } else {
             println("Could not parse JSON: \(error!)")
         }
         
-        return suggestions
+        return searchSuggestions
+    }
+    
+    func getAdditionalInfoFromJSON(objectNotation: NSData!, error: NSError?) -> NSArray? {
+        
+        println(objectNotation)
+        
+        var searchSuggestions: NSArray!
+        var error: NSError? = nil
+        
+        if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
+            
+            println(parsedObject)
+            searchSuggestions = parsedObject.objectForKey("results") as! NSArray
+            
+        } else {
+            println("Could not parse JSON: \(error!)")
+        }
+        
+        return searchSuggestions
     }
 }

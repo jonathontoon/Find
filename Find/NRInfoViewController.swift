@@ -21,6 +21,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     
     var manager: NRInfoManager!
     var info: NRInfo!
+    //var domainSuggestions: NRAdditionalInfo!
     
     var availabilityType: AvailabilityType! = AvailabilityType.Available
     
@@ -61,8 +62,10 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         
         if result.availability == "taken" {
             availabilityType = AvailabilityType.Taken
-        } else if result.availability == "Coming Soon" {
+        } else if result.availability == "coming soon" {
             availabilityType = AvailabilityType.ComingSoon
+        } else if result.availability == "unavailable" {
+            availabilityType = AvailabilityType.Unavailable
         }
         
         tableView = UITableView(frame: CGRectMake(0, 0, self.view.frame.size.width, (self.view.frame.size.height - 50)), style: UITableViewStyle.Grouped)
@@ -77,14 +80,17 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         tableView.stickyHeader = true
         tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
         tableView.tableFooterView = UIView(frame: CGRectZero)
-        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 25.0, 0.0)
+        
+        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, availabilityType == AvailabilityType.Unavailable ? 0.0 : 25.0, 0.0)
         
         self.view.addSubview(tableView)
         
-        let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 50.0, self.view.frame.size.width, 50.0)
-        actionButton = NRActionButton(frame: buttonFrame, buttonType: availabilityType)
-        actionButton.addTarget(self, action: "presentAction", forControlEvents: UIControlEvents.TouchUpInside)
-        self.view.addSubview(actionButton)
+        if availabilityType != AvailabilityType.Unavailable {
+            let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 50.0, self.view.frame.size.width, 50.0)
+            actionButton = NRActionButton(frame: buttonFrame, buttonType: availabilityType)
+            actionButton.addTarget(self, action: "presentAction", forControlEvents: UIControlEvents.TouchUpInside)
+            self.view.addSubview(actionButton)
+        }
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -212,41 +218,49 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let headerView: UIView! = UIView()
+        let isDomainAnIDN: Bool = nr_domainIsIDN(("."+result.tld!).uppercaseString)
         
         if section == 1 {
             headerView.frame = CGRectMake(0, 0, tableView.frame.size.width, 28.0)
             
             let headerImage: UIImageView! = UIImageView(image: UIImage(named: "shoppingCart")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
-            headerImage.frame = CGRectMake(15.0, 24.0, 12.0, 11.0)
-            headerImage.tintColor = NRColor().domainrSubtextGreyColor()
-            headerImage.contentMode = UIViewContentMode.ScaleAspectFit
-            headerView.addSubview(headerImage)
+                headerImage.frame = CGRectMake(15.0, 24.0, 12.0, 11.0)
+                headerImage.tintColor = NRColor().domainrSubtextGreyColor()
+                headerImage.contentMode = UIViewContentMode.ScaleAspectFit
+                headerView.addSubview(headerImage)
             
             let headerTitle: UILabel! = UILabel()
-            headerTitle.text = "PURCHASE OPTIONS"
-            headerTitle.font = UIFont(name: "HelveticaNeue", size: 12.0)
-            headerTitle.textColor = NRColor().domainrSubtextGreyColor()
-            headerTitle.sizeToFit()
-            headerTitle.frame = CGRectMake(33.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
-            headerView.addSubview(headerTitle)
+                headerTitle.text = "PURCHASE OPTIONS"
+                headerTitle.font = UIFont(name: "HelveticaNeue", size: 12.0)
+                headerTitle.textColor = NRColor().domainrSubtextGreyColor()
+                headerTitle.sizeToFit()
+                headerTitle.frame = CGRectMake(33.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
+                headerView.addSubview(headerTitle)
             
             let idnLabel: UILabel! = UILabel(frame: CGRectMake(tableView.frame.size.width - (27.0 + 15.0), 21.0, 27.0, 16.0))
-            idnLabel.text = "IDN"
-            idnLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 10.0)
-            idnLabel.textColor = UIColor.whiteColor()
-            idnLabel.backgroundColor = NRColor().domainrOrangeColor()
-            idnLabel.textAlignment = NSTextAlignment.Center
-            idnLabel.layer.cornerRadius = 2.0
-            idnLabel.clipsToBounds = true
-            headerView.addSubview(idnLabel)
-            
+                idnLabel.text = "IDN"
+                idnLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 10.0)
+                idnLabel.textColor = UIColor.whiteColor()
+                idnLabel.backgroundColor = NRColor().domainrOrangeColor()
+                idnLabel.textAlignment = NSTextAlignment.Center
+                idnLabel.layer.cornerRadius = 2.0
+                idnLabel.clipsToBounds = true
+
             let tldLabel: UILabel! = UILabel()
-            tldLabel.text = "."+result.tld!.uppercaseString
-            tldLabel.font = headerTitle.font
-            tldLabel.textColor = headerTitle.textColor
-            tldLabel.sizeToFit()
-            tldLabel.frame = CGRectMake(idnLabel.frame.origin.x - (tldLabel.frame.size.width + 5.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
-            headerView.addSubview(tldLabel)
+                tldLabel.text = "."+result.tld!.uppercaseString
+                tldLabel.font = headerTitle.font
+                tldLabel.textColor = headerTitle.textColor
+                tldLabel.sizeToFit()
+            
+            
+            if isDomainAnIDN {
+                headerView.addSubview(idnLabel)
+                tldLabel.frame = CGRectMake(idnLabel.frame.origin.x - (tldLabel.frame.size.width + 5.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
+            } else {
+                 tldLabel.frame = CGRectMake(self.view.frame.size.width - (tldLabel.frame.size.width + 15.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
+            }
+            
+                headerView.addSubview(tldLabel)
         }
         
         return headerView
@@ -401,30 +415,30 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     // #pragma mark - UIScrollViewDelegate
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        resizeHeaderView(scrollView)
+        nr_resizeHeaderView(scrollView)
     }
     
     func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
-        resizeHeaderView(scrollView)
+        nr_resizeHeaderView(scrollView)
     }
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        resizeHeaderView(scrollView)
+        nr_resizeHeaderView(scrollView)
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        resizeHeaderView(scrollView)
+        nr_resizeHeaderView(scrollView)
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        resizeHeaderView(scrollView)
+        nr_resizeHeaderView(scrollView)
     }
     
     func dismissViewController() {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func resizeHeaderView(scrollView: UIScrollView) {
+    func nr_resizeHeaderView(scrollView: UIScrollView) {
         
         if previousScrollOffsetY == nil {
             previousScrollOffsetY = scrollView.contentOffset.y
@@ -454,5 +468,23 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             navigationBarView.centerElements()
             tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
         }
+    }
+    
+    func nr_domainIsIDN(domain: String) -> Bool {
+        
+        let filePath = NSBundle.mainBundle().pathForResource("IDN", ofType:"json")
+        var readError:NSError?
+
+        if let data: NSData = NSData(contentsOfFile:filePath!, options:NSDataReadingOptions.DataReadingUncached, error:&readError) {
+            let jsonArray: NSArray = NSJSONSerialization.JSONObjectWithData(data, options:nil, error:&readError) as! NSArray
+
+            for domainIDN in jsonArray {
+                if domainIDN.valueForKey("domainIDNS")!.isEqualToString(domain) {
+                    return true
+                }
+            }
+        }
+        
+        return false
     }
 }

@@ -1,5 +1,5 @@
 //
-//  NRSuggestionsCommunicator.swift
+//  NRSearchSuggestionsCommunicator.swift
 //  Find
 //
 //  Created by Jonathon Toon on 3/1/15.
@@ -8,11 +8,11 @@
 
 import Foundation
 
-class NRSuggestionsCommunicator: NSObject {
+class NRSearchSuggestionsCommunicator: NSObject {
     
-    var delegate: NRSuggestionsCommunicatorDelegate!
+    var delegate: NRSearchSuggestionsCommunicatorDelegate!
     
-    func getSuggestionsForDomain(query: String!) {
+    func getSearchSuggestionsForDomain(query: String!) {
         
         let urlAsString: String = String(format: "https://www.kimonolabs.com/api/ondemand/5kzxkxfy?apikey=e64b763681f140bec8391a4e8547d9dd&kimmodify=1&domain-name=%@", query.stringByReplacingOccurrencesOfString(" ", withString: ""))
        
@@ -22,9 +22,9 @@ class NRSuggestionsCommunicator: NSObject {
             (response: NSURLResponse!, data: NSData!, error: NSError?)  -> Void in
             
             if error != nil {
-                self.delegate.domainSuggestionsJSONFailedWithError(error!)
+                self.delegate.searchSuggestionsJSONFailedWithError(error!)
             } else {
-                self.delegate.receivedDomainSuggestionsJSON(data)
+                self.delegate.receivedSearchSuggestionsJSON(data)
             }
             
         })

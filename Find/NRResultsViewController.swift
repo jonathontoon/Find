@@ -188,7 +188,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
                 
                 println("did execute?")
                 
-                viewControllerForPush = NRSuggestionsViewController(query: resultsSearchController.searchBar.text)
+                viewControllerForPush = NRSearchSuggestionsViewController(query: resultsSearchController.searchBar.text)
             } else {
                 // Search Using History
             }
