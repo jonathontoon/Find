@@ -13,7 +13,7 @@ class NRAdditionalInfoManager: NSObject, NRAdditionalInfoCommunicatorDelegate {
     var communicator: NRAdditionalInfoCommunicator!
     var delegate: NRAdditionalInfoManagerDelegate!
     
-    func fetchDomainSuggestionsForDomain(query: String!) {
+    func fetchAdditionalInfoForDomain(query: String!) {
         communicator.getAdditionalInfoForDomain(query!)
     }
     

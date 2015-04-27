@@ -21,7 +21,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     
     var manager: NRInfoManager!
     var info: NRInfo!
-    //var domainSuggestions: NRAdditionalInfo!
+    var domainSuggestions: NRAdditionalInfo!
     
     var availabilityType: AvailabilityType! = AvailabilityType.Available
     
