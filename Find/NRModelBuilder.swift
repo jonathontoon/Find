@@ -87,7 +87,6 @@ class NRModelBuilder: NSObject {
         if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
 
             for object in parsedObject {
-                
                 if additionalInfo.respondsToSelector(NSSelectorFromString(object.key as! String)) {
                     additionalInfo.setValue(object.value, forKey:object.key as! String)
                 }
