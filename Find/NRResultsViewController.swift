@@ -175,6 +175,8 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         if isSearching == false && self.results?.count > 0 {
             
             let result: NRResult = results!.objectAtIndex(indexPath.row) as! NRResult
+            result.searchedString = resultsSearchController.searchBar.text
+            
             result.tld = (split(result.domain!, maxSplit: 1, allowEmptySlices: false, isSeparator: { $0 == "."}) as NSArray).objectAtIndex(1) as? String
             if result.availability == "maybe" {
                 result.availability = "Coming Soon"

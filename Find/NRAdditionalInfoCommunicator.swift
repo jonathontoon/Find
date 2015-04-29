@@ -12,9 +12,9 @@ class NRAdditionalInfoCommunicator: NSObject {
     
     var delegate: NRAdditionalInfoCommunicatorDelegate!
     
-    func getAdditionalInfoForDomain(query: String!) {
+    func getAdditionalInfoForDomain(domain: String!, searchedString: String!) {
         
-        let urlAsString: String = String(format: "https://www.kimonolabs.com/api/ondemand/2mp3abs4?apikey=e64b763681f140bec8391a4e8547d9dd&kimpath1=%@&q=%@", query.stringByReplacingOccurrencesOfString(" ", withString: ""))
+        let urlAsString: String = String(format: "https://www.kimonolabs.com/api/ondemand/2mp3abs4?apikey=e64b763681f140bec8391a4e8547d9dd&kimmodify=1&kimpath1=%@&q=%@", domain, searchedString.stringByReplacingOccurrencesOfString(" ", withString: ""))
         
         let url: NSURL = NSURL(string: urlAsString)!
         

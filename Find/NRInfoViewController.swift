@@ -15,13 +15,15 @@ enum AvailabilityType {
     case Unavailable
 }
 
-class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
+class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditionalInfoManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
 
     var result: NRResult!
     
-    var manager: NRInfoManager!
+    var infoManager: NRInfoManager!
     var info: NRInfo!
-    var domainSuggestions: NRAdditionalInfo!
+    
+    var additionalInfoManager: NRAdditionalInfoManager!
+    var additionalInfo: NRAdditionalInfo!
     
     var availabilityType: AvailabilityType! = AvailabilityType.Available
     
@@ -36,10 +38,15 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         
         self.result = result
         
-        manager = NRInfoManager()
-        manager.communicator = NRInfoCommunicator()
-        manager.communicator.delegate = manager
-        manager.delegate = self
+        infoManager = NRInfoManager()
+        infoManager.communicator = NRInfoCommunicator()
+        infoManager.communicator.delegate = infoManager
+        infoManager.delegate = self
+        
+        additionalInfoManager = NRAdditionalInfoManager()
+        additionalInfoManager.communicator = NRAdditionalInfoCommunicator()
+        additionalInfoManager.communicator.delegate = additionalInfoManager
+        additionalInfoManager.delegate = self
         
         startFetchingInfo()
     }
@@ -72,10 +79,12 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(NRInfoViewGenericCell.self, forCellReuseIdentifier: "NRInfoViewGenericCell")
-        tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: "NRInfoViewRegistrarCell")
+        tableView.registerClass(NRRegistrarCell.self, forCellReuseIdentifier: "NRRegistrarCell")
+        tableView.registerClass(NRDomainCell.self, forCellReuseIdentifier: "NRDomainCell")
         tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
         navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 175.0), title: self.result.domain, subTitle: self.result.availability?.capitalizedString, labelType: availabilityType, tld: result.tld)
         tableView.tableHeaderView = navigationBarView
+        tableView.tableHeaderView?.layer.zPosition = 100
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
         tableView.stickyHeader = true
         tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
@@ -95,9 +104,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
-        
     }
     
     override func didReceiveMemoryWarning() {
@@ -139,15 +146,26 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     
     func startFetchingInfo() {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        manager.fetchInfoForDomain(result.domain)
+        infoManager.fetchInfoForDomain(result.domain)
+        additionalInfoManager.fetchAdditionalInfoForDomain(result.domain, searchedString: result.searchedString)
     }
     
-    // #pragma mark - NRResultsManagerDelegate
+    // #pragma mark - NRInfoManagerDelegate
     
     func didReceiveInfo(info: NRInfo!) {
         self.info = info
+    }
+    
+    func fetchingInfoFailedWithError(error: NSError!) {
+        NSLog("Error %@; %@", error, error.localizedDescription)
+    }
+
+    // #pragma mark - NRAdditionalInfoManagerDelegate
+    
+    func didReceiveAdditionalInfo(additionalInfo: NRAdditionalInfo!) {
+        self.additionalInfo = additionalInfo
         
-        println(self.info)
+        println(self.additionalInfo)
         
         dispatch_async(dispatch_get_main_queue(), {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -155,10 +173,10 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         });
     }
     
-    func fetchingInfoFailedWithError(error: NSError!) {
+    func fetchingAdditionalInfoFailedWithError(error: NSError!) {
         NSLog("Error %@; %@", error, error.localizedDescription)
     }
-
+    
     // #pragma mark - UITableViewDataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -168,6 +186,12 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         if info != nil {
             if info.registrars != nil {
                 sectionTotal++
+            }
+        }
+        
+        if additionalInfo != nil {
+            if additionalInfo.domainAlternatives != nil {
+                sectionTotal++;
             }
         }
         
@@ -187,16 +211,22 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
                 if info.tld?.valueForKey("wikipedia_url") != nil {
                    numberOfRows++
                 }
-                
-                //Suggestions
-                numberOfRows++;
+
             }
             
             if section == 1 {
-                if info.registrars?.count < 7 {
+                if info.registrars?.count < 4 {
                     numberOfRows = info.registrars!.count
                 } else {
-                    numberOfRows = 7
+                    numberOfRows = 4
+                }
+            }
+            
+            if section == 2 {
+                if additionalInfo.domainAlternatives?.count < 4 {
+                    numberOfRows = additionalInfo.domainAlternatives!.count
+                } else {
+                    numberOfRows = 4
                 }
             }
         }
@@ -218,9 +248,13 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
         let headerView: UIView! = UIView()
-        let isDomainAnIDN: Bool = nr_domainIsIDN(("."+result.tld!).uppercaseString)
         
         if section == 1 {
+            
+            println("RUN ##########")
+            
+            
+            
             headerView.frame = CGRectMake(0, 0, tableView.frame.size.width, 28.0)
             
             let headerImage: UIImageView! = UIImageView(image: UIImage(named: "shoppingCart")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
@@ -247,13 +281,12 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
                 idnLabel.clipsToBounds = true
 
             let tldLabel: UILabel! = UILabel()
-                tldLabel.text = "."+result.tld!.uppercaseString
+                tldLabel.text = (additionalInfo.domain != nil ? additionalInfo.domain.uppercaseString  : "")
                 tldLabel.font = headerTitle.font
                 tldLabel.textColor = headerTitle.textColor
                 tldLabel.sizeToFit()
             
-            
-            if isDomainAnIDN {
+            if additionalInfo.isIDN != nil {
                 headerView.addSubview(idnLabel)
                 tldLabel.frame = CGRectMake(idnLabel.frame.origin.x - (tldLabel.frame.size.width + 5.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
             } else {
@@ -289,6 +322,8 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             cell = createDefaultCell(indexPath)
         } else if indexPath.section == 1 {
             cell = createRegistrarCell(indexPath)
+        } else if indexPath.section == 2 {
+            cell = createDomainCell(indexPath)
         }
         
         cell.accessoryView = UIImageView(image: UIImage(named: "accessoryArrow")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
@@ -336,10 +371,12 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             
             } else if indexPath.section == 1 {
                 
-                if indexPath.row >= 4 {
+                if indexPath.row > 2 {
                     
-                    let newArray: NSArray = self.info.registrars!.objectsAtIndexes(NSIndexSet(indexesInRange: NSMakeRange(4, self.info.registrars!.count-8))) as NSArray
-                    let registrarsViewController: NRRegistrarViewController = NRRegistrarViewController(registrars: newArray)
+                    let newArray: NSArray = self.info.registrars!.subarrayWithRange(NSMakeRange(3, self.info.registrars!.count-3))
+                    println(newArray)
+                    println(newArray.count)
+                    let registrarsViewController: NRRegistrarsViewController = NRRegistrarsViewController(registrars: newArray)
                     
                     self.navigationController?.pushViewController(registrarsViewController, animated: true)
                 
@@ -365,11 +402,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         if indexPath.row == 1 {
            titleString = "TLD Wikipedia Article"
         }
-        
-        if indexPath.row == 2 {
-            titleString = "Alternative Domains"
-        }
-        
+
         var cell: NRInfoViewGenericCell? = tableView.dequeueReusableCellWithIdentifier("NRInfoViewGenericCell", forIndexPath: indexPath) as? NRInfoViewGenericCell
         
         if cell == nil {
@@ -382,18 +415,37 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         
     }
     
-    func createRegistrarCell(indexPath: NSIndexPath!) -> NRInfoViewRegistrarCell {
+    func createRegistrarCell(indexPath: NSIndexPath!) -> NRRegistrarCell {
         
-        var cell: NRInfoViewRegistrarCell? = tableView.dequeueReusableCellWithIdentifier("NRInfoViewRegistrarCell", forIndexPath: indexPath) as? NRInfoViewRegistrarCell
+        var cell: NRRegistrarCell? = tableView.dequeueReusableCellWithIdentifier("NRRegistrarCell", forIndexPath: indexPath) as? NRRegistrarCell
         
         if cell == nil {
-            cell = NRInfoViewRegistrarCell(style: .Default, reuseIdentifier: "NRInfoViewRegistrarCell")
+            cell = NRRegistrarCell(style: .Default, reuseIdentifier: "NRRegistrarCell")
         }
         
-        cell?.textLabel?.text = (NSString(format: "View %d ", info.registrars!.count - 6) as String) + "Others"
+        cell?.textLabel?.text = (NSString(format: "View %d ", info.registrars!.count - 3) as String) + "Others"
         
         
-        if indexPath.row < 6 {
+        if indexPath.row <= 2 {
+            cell?.textLabel?.text = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String
+        }
+        
+        return cell!
+        
+    }
+    
+    func createDomainCell(indexPath: NSIndexPath!) -> NRDomainCell {
+        
+        var cell: NRDomainCell? = tableView.dequeueReusableCellWithIdentifier("NRDomainCell", forIndexPath: indexPath) as? NRDomainCell
+        
+        if cell == nil {
+            cell = NRDomainCell(style: .Default, reuseIdentifier: "NRRegistrarCell")
+        }
+        
+        cell?.textLabel?.text = (NSString(format: "View %d ", info.registrars!.count - 3) as String) + "Others"
+        
+        
+        if indexPath.row <= 2 {
             cell?.textLabel?.text = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String
         }
         

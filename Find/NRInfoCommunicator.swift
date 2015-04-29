@@ -14,7 +14,7 @@ class NRInfoCommunicator: NSObject {
     
     func getInfoForDomain(query: String!) {
         
-        let urlAsString: String = String(format: "https://domainr.com/api/json/info?client_id=example&q=%@", query)
+        let urlAsString: String = String(format: "https://api.domainr.com/v1/info?client_id=find&q=%@", query)
         let url: NSURL = NSURL(string: urlAsString)!
         
         NSURLConnection.sendAsynchronousRequest(NSURLRequest(URL: url), queue: NSOperationQueue(), completionHandler: {

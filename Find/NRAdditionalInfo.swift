@@ -10,7 +10,9 @@ import UIKit
 
 class NRAdditionalInfo: NSObject {
     
-    var purchaseOptions: NSArray?
-    var domainAlternatives: NSArray?
+    var purchaseOptions: NSArray!
+    var isIDN: Bool!
+    var domain: String!
+    var domainAlternatives: NSArray!
     
 }

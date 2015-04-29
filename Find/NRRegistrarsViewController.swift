@@ -1,5 +1,5 @@
 //
-//  NRRegistrarViewController.swift
+//  NRRegistrarsViewController.swift
 //  Find
 //
 //  Created by Jonathon Toon on 3/15/15.
@@ -8,12 +8,12 @@
 
 import UIKit
 
-class NRRegistrarViewController: UIViewController, UIGestureRecognizerDelegate, UITableViewDelegate, UITableViewDataSource {
+class NRRegistrarsViewController: UIViewController, UIGestureRecognizerDelegate, UITableViewDelegate, UITableViewDataSource {
 
     var registrars: NSArray!
     var tableView: UITableView!
     
-    let registrarsTableViewCellIdentifier: String = "NRInfoViewRegistrarCell"
+    let registrarsTableViewCellIdentifier: String = "NRRegistrarCell"
     
     init(registrars: NSArray!) {
         super.init(nibName: nil, bundle: nil)
@@ -40,7 +40,7 @@ class NRRegistrarViewController: UIViewController, UIGestureRecognizerDelegate, 
         tableView = UITableView(frame: self.view.frame, style: UITableViewStyle.Grouped)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: registrarsTableViewCellIdentifier)
+        tableView.registerClass(NRRegistrarCell.self, forCellReuseIdentifier: registrarsTableViewCellIdentifier)
         tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
         tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
         tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 0.0, 0)
@@ -86,7 +86,7 @@ class NRRegistrarViewController: UIViewController, UIGestureRecognizerDelegate, 
         
         if registrars != nil {
             self.tableView.separatorStyle = .SingleLine
-            return registrars!.count-1
+            return registrars!.count
         } else {
             self.tableView.separatorStyle = .None
             return 0
@@ -101,10 +101,10 @@ class NRRegistrarViewController: UIViewController, UIGestureRecognizerDelegate, 
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell: NRInfoViewRegistrarCell! = tableView.dequeueReusableCellWithIdentifier("NRInfoViewRegistrarCell", forIndexPath: indexPath) as? NRInfoViewRegistrarCell
+        var cell: NRRegistrarCell! = tableView.dequeueReusableCellWithIdentifier("NRRegistrarCell", forIndexPath: indexPath) as? NRRegistrarCell
         
         if cell == nil {
-            cell = NRInfoViewRegistrarCell(style: .Default, reuseIdentifier: registrarsTableViewCellIdentifier)
+            cell = NRRegistrarCell(style: .Default, reuseIdentifier: registrarsTableViewCellIdentifier)
         }
         
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator

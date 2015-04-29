@@ -10,7 +10,7 @@ import Foundation
 
 protocol NRAdditionalInfoManagerDelegate {
     
-    func didReceiveAdditionalInfo(suggestions: NSArray!) -> Void
+    func didReceiveAdditionalInfo(additionalInfo: NRAdditionalInfo!) -> Void
     func fetchingAdditionalInfoFailedWithError(error: NSError!) -> Void
     
 }

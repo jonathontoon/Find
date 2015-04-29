@@ -1,5 +1,5 @@
 //
-//  NRInfoViewRegistrarCell.swift
+//  NRRegistrarCell.swift
 //  Find
 //
 //  Created by Jonathon Toon on 3/8/15.
@@ -8,6 +8,6 @@
 
 import UIKit
 
-class NRInfoViewRegistrarCell: NRDefaultCell {
+class NRRegistrarCell: NRDefaultCell {
     
 }

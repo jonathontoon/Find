@@ -13,19 +13,19 @@ class NRAdditionalInfoManager: NSObject, NRAdditionalInfoCommunicatorDelegate {
     var communicator: NRAdditionalInfoCommunicator!
     var delegate: NRAdditionalInfoManagerDelegate!
     
-    func fetchAdditionalInfoForDomain(query: String!) {
-        communicator.getAdditionalInfoForDomain(query!)
+    func fetchAdditionalInfoForDomain(domain: String!, searchedString: String!) {
+        communicator.getAdditionalInfoForDomain(domain!, searchedString: searchedString)
     }
     
     // #pragma mark - NRAdditionalInfoManagerDelegate
     func receivedAdditionalInfoJSON(objectNotation: NSData) {
         var localError: NSError? = nil
-        var suggestions: NSArray = NRModelBuilder().getAdditionalInfoFromJSON(objectNotation, error: localError)!
+        var additionalInfo: NRAdditionalInfo = NRModelBuilder().getAdditionalInfoFromJSON(objectNotation, error: localError)!
         
         if localError != nil {
             self.delegate.fetchingAdditionalInfoFailedWithError(localError)
         } else {
-            self.delegate.didReceiveAdditionalInfo(suggestions)
+            self.delegate.didReceiveAdditionalInfo(additionalInfo)
         }
         
     }
