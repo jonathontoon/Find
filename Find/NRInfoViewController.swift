@@ -435,17 +435,21 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     
     func createDomainCell(indexPath: NSIndexPath!) -> NRDomainCell {
         
-        var cell: NRDomainCell? = tableView.dequeueReusableCellWithIdentifier("NRDomainCell", forIndexPath: indexPath) as? NRDomainCell
+        var cell: NRDomainCell! = tableView.dequeueReusableCellWithIdentifier("NRDomainCell", forIndexPath: indexPath) as? NRDomainCell
         
         if cell == nil {
-            cell = NRDomainCell(style: .Default, reuseIdentifier: "NRRegistrarCell")
+            cell = NRDomainCell(style: .Default, reuseIdentifier: "NRDomainCell")
         }
         
-        cell?.textLabel?.text = (NSString(format: "View %d ", info.registrars!.count - 3) as String) + "Others"
+        cell.textLabel?.text = (NSString(format: "View %d ", info.registrars!.count - 3) as String) + "Others"
         
+        println(additionalInfo.domainAlternatives!.objectAtIndex(indexPath.row).valueForKey("text"))
         
         if indexPath.row <= 2 {
-            cell?.textLabel?.text = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String
+            
+            var domainString: NSString = (additionalInfo.domainAlternatives!.objectAtIndex(indexPath.row).valueForKey("text") as? NSString)!
+            var firstWord: NSString = (domainString as NSString).substringToIndex(1).capitalizedString
+            cell.textLabel?.text = domainString.stringByReplacingCharactersInRange(NSMakeRange(0, 1), withString: firstWord as String)
         }
         
         return cell!
