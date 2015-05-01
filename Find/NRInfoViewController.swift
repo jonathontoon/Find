@@ -245,64 +245,14 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        let headerView: UIView! = UIView()
-        
-        if section == 1 {
-            
-            if additionalInfo != nil {
-            
-                println(additionalInfo.isIDN)
-                
-                headerView.frame = CGRectMake(0, 0, tableView.frame.size.width, 28.0)
-                
-                let headerImage: UIImageView! = UIImageView(image: UIImage(named: "shoppingCart")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
-                    headerImage.frame = CGRectMake(15.0, 24.0, 12.0, 11.0)
-                    headerImage.tintColor = NRColor().domainrSubtextGreyColor()
-                    headerImage.contentMode = UIViewContentMode.ScaleAspectFit
-                    headerView.addSubview(headerImage)
-                
-                let headerTitle: UILabel! = UILabel()
-                    headerTitle.text = "PURCHASE OPTIONS"
-                    headerTitle.font = UIFont(name: "HelveticaNeue", size: 12.0)
-                    headerTitle.textColor = NRColor().domainrSubtextGreyColor()
-                    headerTitle.sizeToFit()
-                    headerTitle.frame = CGRectMake(33.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
-                    headerView.addSubview(headerTitle)
-                
-                let idnLabel: UILabel! = UILabel(frame: CGRectMake(tableView.frame.size.width - (27.0 + 15.0), 21.0, 27.0, 16.0))
-                    idnLabel.text = "IDN"
-                    idnLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 10.0)
-                    idnLabel.textColor = UIColor.whiteColor()
-                    idnLabel.backgroundColor = NRColor().domainrOrangeColor()
-                    idnLabel.textAlignment = NSTextAlignment.Center
-                    idnLabel.layer.cornerRadius = 2.0
-                    idnLabel.clipsToBounds = true
-
-                let tldLabel: UILabel! = UILabel()
-                    tldLabel.text = (additionalInfo.domain != nil ? additionalInfo.domain.uppercaseString  : "")
-                    tldLabel.font = headerTitle.font
-                    tldLabel.textColor = headerTitle.textColor
-                    tldLabel.sizeToFit()
-                
-                if additionalInfo.isIDN == "IDN" {
-                    headerView.addSubview(idnLabel)
-                    tldLabel.frame = CGRectMake(idnLabel.frame.origin.x - (tldLabel.frame.size.width + 5.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
-                } else {
-                     tldLabel.frame = CGRectMake(self.view.frame.size.width - (tldLabel.frame.size.width + 15.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
-                }
-                
-                    headerView.addSubview(tldLabel)
-            }
-        }
-        
-        return headerView
+        return createSectionHeader(section)
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         var height: CGFloat = 25.0
         
-        if section == 1 {
+        if section == 1 || section == 2 {
             height = 45.0
         }
         
@@ -310,7 +260,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0.1
+        return 1.0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -453,6 +403,78 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         }
         
         return cell!
+        
+    }
+    
+    func createSectionHeader(section: Int) -> UIView {
+        
+        let headerView: UIView! = UIView()
+            headerView.frame = CGRectMake(0, 0, tableView.frame.size.width, 28.0)
+        
+        if additionalInfo != nil {
+            
+            if section == 1 {
+                
+                let headerImage: UIImageView! = UIImageView(image: UIImage(named: "shoppingCart")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
+                    headerImage.frame = CGRectMake(15.0, 24.0, 12.0, 11.0)
+                    headerImage.tintColor = NRColor().domainrSubtextGreyColor()
+                    headerImage.contentMode = UIViewContentMode.ScaleAspectFit
+                    headerView.addSubview(headerImage)
+                    headerImage.frame = CGRectIntegral(headerImage.frame)
+                
+                let headerTitle: UILabel! = UILabel()
+                    headerTitle.text = "PURCHASE OPTIONS"
+                    headerTitle.font = UIFont(name: "HelveticaNeue", size: 12.0)
+                    headerTitle.textColor = NRColor().domainrSubtextGreyColor()
+                    headerTitle.sizeToFit()
+                    headerTitle.frame = CGRectMake(33.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
+                    headerView.addSubview(headerTitle)
+                    
+                let idnLabel: UILabel! = UILabel(frame: CGRectMake(tableView.frame.size.width - (27.0 + 15.0), 21.0, 27.0, 16.0))
+                    idnLabel.text = "IDN"
+                    idnLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 10.0)
+                    idnLabel.textColor = UIColor.whiteColor()
+                    idnLabel.backgroundColor = NRColor().domainrOrangeColor()
+                    idnLabel.textAlignment = NSTextAlignment.Center
+                    idnLabel.layer.cornerRadius = 2.0
+                    idnLabel.clipsToBounds = true
+                    
+                let tldLabel: UILabel! = UILabel()
+                    tldLabel.text = (additionalInfo.domain != nil ? additionalInfo.domain.uppercaseString  : "")
+                    tldLabel.font = headerTitle.font
+                    tldLabel.textColor = headerTitle.textColor
+                    tldLabel.sizeToFit()
+                    
+                    if additionalInfo.isIDN == "IDN" {
+                        headerView.addSubview(idnLabel)
+                        tldLabel.frame = CGRectMake(idnLabel.frame.origin.x - (tldLabel.frame.size.width + 5.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
+                    } else {
+                        tldLabel.frame = CGRectMake(self.view.frame.size.width - (tldLabel.frame.size.width + 15.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
+                    }
+                    
+                    headerView.addSubview(tldLabel)
+
+            } else if section == 2 {
+             
+                let headerImage: UIImageView! = UIImageView(image: UIImage(named: "alternativeDomains")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
+                headerImage.frame = CGRectMake(15.0, 24.0, 12.0, 11.0)
+                headerImage.tintColor = NRColor().domainrSubtextGreyColor()
+                headerImage.contentMode = UIViewContentMode.ScaleAspectFit
+                headerView.addSubview(headerImage)
+                headerImage.frame = CGRectIntegral(headerImage.frame)
+                
+                let headerTitle: UILabel! = UILabel()
+                headerTitle.text = "ALTERNATIVE DOMAINS"
+                headerTitle.font = UIFont(name: "HelveticaNeue", size: 12.0)
+                headerTitle.textColor = NRColor().domainrSubtextGreyColor()
+                headerTitle.sizeToFit()
+                headerTitle.frame = CGRectMake(33.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
+                headerView.addSubview(headerTitle)
+
+            }
+        }
+        
+        return headerView
         
     }
     
