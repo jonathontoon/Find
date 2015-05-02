@@ -8,6 +8,6 @@
 
 import UIKit
 
-class NRResultCell: NRDefaultCell {
+class NRDomainResultsCell: NRDomainCell {
     
 }

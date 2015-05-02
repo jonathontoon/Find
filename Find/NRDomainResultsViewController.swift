@@ -18,7 +18,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     var query: String!
     
     var resultsSearchController: UISearchController!
-    let resultsTableViewCellIdentifier: String = "NRResultCell"
+    let resultsTableViewCellIdentifier: String = "NRDomainResultsCell"
     let suggestionOptionCellIdentifier: String = "NRSuggestionOptionCell"
     
     override func viewDidLoad() {
@@ -54,7 +54,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         resultsSearchController.hidesNavigationBarDuringPresentation = false
         resultsSearchController.dimsBackgroundDuringPresentation = false
 
-        self.tableView.registerClass(NRResultCell.self, forCellReuseIdentifier: resultsTableViewCellIdentifier)
+        self.tableView.registerClass(NRDomainResultsCell.self, forCellReuseIdentifier: resultsTableViewCellIdentifier)
         self.tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: suggestionOptionCellIdentifier)
         self.tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 36.0, 0)
         self.tableView.tableFooterView = UIView(frame: CGRectZero)
@@ -132,10 +132,10 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
             
             if self.results?.count > 0 {
                 
-                cell = tableView.dequeueReusableCellWithIdentifier(resultsTableViewCellIdentifier) as! NRResultCell
+                cell = tableView.dequeueReusableCellWithIdentifier(resultsTableViewCellIdentifier) as! NRDomainResultsCell
             
                 if cell == nil {
-                    cell = NRResultCell(style: .Default, reuseIdentifier: resultsTableViewCellIdentifier)
+                    cell = NRDomainResultsCell(style: .Default, reuseIdentifier: resultsTableViewCellIdentifier)
                 }
                 
                 cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator

@@ -1,5 +1,5 @@
 //
-//  NRInfoViewGenericCell.swift
+//  NRInfoViewCell.swift
 //  Find
 //
 //  Created by Jonathon Toon on 4/13/15.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NRInfoViewGenericCell: NRDefaultCell {
+class NRInfoViewCell: NRDefaultCell {
 
     var icon: UIImageView!
     var cellTitle: UILabel!
@@ -27,14 +27,7 @@ class NRInfoViewGenericCell: NRDefaultCell {
     }
     
     func addViews(title: String!) {
-        cellTitle = UILabel()
-        cellTitle.text = title
-        cellTitle.textColor = NRColor().domainrRegularDarkGreyColor()
-        cellTitle.sizeToFit()
-        cellTitle.frame = CGRectMake(50.0, 0, cellTitle.frame.size.width, cellTitle.frame.size.height)
-        cellTitle.center.y = self.contentView.center.y
-        self.contentView.addSubview(cellTitle)
-        
+
         icon = UIImageView(frame: CGRectMake(15.0, 0, 20.0, 20.0))
         if title == "Whois Info" {
             icon.image = UIImage(named: "whoisInfo")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
@@ -47,6 +40,14 @@ class NRInfoViewGenericCell: NRDefaultCell {
         icon.contentMode = UIViewContentMode.ScaleAspectFit
         icon.center.y = round(self.contentView.center.y)
         self.contentView.addSubview(icon)
+        
+        cellTitle = UILabel()
+        cellTitle.text = title
+        cellTitle.textColor = NRColor().domainrRegularDarkGreyColor()
+        cellTitle.sizeToFit()
+        cellTitle.frame = CGRectMake(50.0, 0, cellTitle.frame.size.width, cellTitle.frame.size.height)
+        cellTitle.center.y = self.contentView.center.y
+        self.contentView.addSubview(cellTitle)
     }
     
     override func prepareForReuse() {

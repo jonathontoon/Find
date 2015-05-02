@@ -58,7 +58,12 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         styleNavigationBar()
-        UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+        
+        if  UIApplication.sharedApplication().statusBarStyle != .LightContent {
+            UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+        } else {
+            UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: false)
+        }
     }
     
     override func viewDidLoad() {
@@ -78,7 +83,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         tableView = UITableView(frame: CGRectMake(0, 0, self.view.frame.size.width, (self.view.frame.size.height - 50)), style: UITableViewStyle.Grouped)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.registerClass(NRInfoViewGenericCell.self, forCellReuseIdentifier: "NRInfoViewGenericCell")
+        tableView.registerClass(NRInfoViewCell.self, forCellReuseIdentifier: "NRInfoViewCell")
         tableView.registerClass(NRRegistrarCell.self, forCellReuseIdentifier: "NRRegistrarCell")
         tableView.registerClass(NRDomainCell.self, forCellReuseIdentifier: "NRDomainCell")
         tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
@@ -339,12 +344,36 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
                     self.presentViewController(navController, animated: true, completion: nil)
                     
                 }
+            
+            } else if indexPath.section == 2 {
+                
+                if indexPath.row > 2 {
+                    
+                    let newArray: NSArray = self.additionalInfo.domainAlternatives!.subarrayWithRange(NSMakeRange(3, self.additionalInfo.domainAlternatives!.count-3))
+                    let registrarsViewController: NRAlternativeDomainsViewController = NRAlternativeDomainsViewController(alternatives: newArray)
+                    
+                    self.navigationController?.pushViewController(registrarsViewController, animated: true)
+                    
+                } else {
+                    
+                    let result: NRResult = self.result
+                    
+                    result.tld = (split(result.domain!, maxSplit: 1, allowEmptySlices: false, isSeparator: { $0 == "."}) as NSArray).objectAtIndex(1) as? String
+                    if result.availability == "maybe" {
+                        result.availability = "Coming Soon"
+                    }
+                    
+                    let infoViewController: NRInfoViewController = NRInfoViewController(result: result)
+                    navController!.viewControllers = [infoViewController]
+                    self.presentViewController(navController, animated: true, completion: nil)
+                    
+                }
                 
             }
         });
     }
     
-    func createDefaultCell(indexPath: NSIndexPath!) -> NRInfoViewGenericCell {
+    func createDefaultCell(indexPath: NSIndexPath!) -> NRInfoViewCell {
         
         var titleString: String! = "Whois Info"
         
@@ -352,10 +381,10 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
            titleString = "TLD Wikipedia Article"
         }
 
-        var cell: NRInfoViewGenericCell? = tableView.dequeueReusableCellWithIdentifier("NRInfoViewGenericCell", forIndexPath: indexPath) as? NRInfoViewGenericCell
+        var cell: NRInfoViewCell? = tableView.dequeueReusableCellWithIdentifier("NRInfoViewCell", forIndexPath: indexPath) as? NRInfoViewCell
         
         if cell == nil {
-            cell = NRInfoViewGenericCell(title: titleString)
+            cell = NRInfoViewCell(title: titleString)
         } else {
             cell?.addViews(titleString)
         }
@@ -391,9 +420,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
             cell = NRDomainCell(style: .Default, reuseIdentifier: "NRDomainCell")
         }
         
-        cell.textLabel?.text = (NSString(format: "View %d ", info.registrars!.count - 3) as String) + "Others"
-        
-        println(additionalInfo.domainAlternatives!.objectAtIndex(indexPath.row).valueForKey("text"))
+        cell.textLabel?.text = (NSString(format: "View %d ", additionalInfo.domainAlternatives!.count - 3) as String) + "Others"
         
         if indexPath.row <= 2 {
             
@@ -512,7 +539,11 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     }
     
     func dismissViewController() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.dismissViewControllerAnimated(true, completion: {
+        
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            
+        })
     }
     
     func nr_resizeHeaderView(scrollView: UIScrollView) {
