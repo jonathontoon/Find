@@ -358,6 +358,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
                     
                     let result: NRResult = self.result
                     
+                    result.domain = self.additionalInfo.domainAlternatives.objectAtIndex(indexPath.row).objectForKey("text") as? String
                     result.tld = (split(result.domain!, maxSplit: 1, allowEmptySlices: false, isSeparator: { $0 == "."}) as NSArray).objectAtIndex(1) as? String
                     if result.availability == "maybe" {
                         result.availability = "Coming Soon"
@@ -420,13 +421,19 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
             cell = NRDomainCell(style: .Default, reuseIdentifier: "NRDomainCell")
         }
         
-        cell.textLabel?.text = (NSString(format: "View %d ", additionalInfo.domainAlternatives!.count - 3) as String) + "Others"
+        cell.setTextLabel(NSString(format: "View %d Others", additionalInfo.domainAlternatives!.count - 3) as String)
         
         if indexPath.row <= 2 {
             
+            println("#############")
+            
+            var availabilityString: NSString = (additionalInfo.domainAlternatives!.objectAtIndex(indexPath.row).valueForKey("class") as? NSString)!
+            println(availabilityString)
+            cell.setAvailability(availabilityString as String)
+            
             var domainString: NSString = (additionalInfo.domainAlternatives!.objectAtIndex(indexPath.row).valueForKey("text") as? NSString)!
-            var firstWord: NSString = (domainString as NSString).substringToIndex(1).capitalizedString
-            cell.textLabel?.text = domainString.stringByReplacingCharactersInRange(NSMakeRange(0, 1), withString: firstWord as String)
+            println(domainString)
+            cell.setTextLabel(domainString as String)
         }
         
         return cell!
@@ -539,11 +546,9 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     }
     
     func dismissViewController() {
-        self.dismissViewControllerAnimated(true, completion: {
         
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            
-        })
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        self.dismissViewControllerAnimated(true, completion:nil)
     }
     
     func nr_resizeHeaderView(scrollView: UIScrollView) {

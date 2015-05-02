@@ -14,7 +14,7 @@ class NRAlternativeDomainsViewController: UIViewController, UIGestureRecognizerD
     var alternatives: NSArray!
     var tableView: UITableView!
     
-    let registrarsTableViewCellIdentifier: String = "NRRegistrarCell"
+    let registrarsTableViewCellIdentifier: String = "NRDomainCell"
     
     init(alternatives: NSArray!) {
         super.init(nibName: nil, bundle: nil)
@@ -102,14 +102,20 @@ class NRAlternativeDomainsViewController: UIViewController, UIGestureRecognizerD
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell: NRRegistrarCell! = tableView.dequeueReusableCellWithIdentifier("NRRegistrarCell", forIndexPath: indexPath) as? NRRegistrarCell
+        var cell: NRDomainCell! = tableView.dequeueReusableCellWithIdentifier(registrarsTableViewCellIdentifier, forIndexPath: indexPath) as? NRDomainCell
         
         if cell == nil {
-            cell = NRRegistrarCell(style: .Default, reuseIdentifier: registrarsTableViewCellIdentifier)
+            cell = NRDomainCell(style: .Default, reuseIdentifier: registrarsTableViewCellIdentifier)
         }
         
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-        cell?.textLabel?.text = alternatives!.objectAtIndex(indexPath.row).valueForKey("text") as? String
+        var availabilityString: NSString = (alternatives.objectAtIndex(indexPath.row).valueForKey("class") as? NSString)!
+        println(availabilityString)
+        cell.setAvailability(availabilityString as String)
+        
+        var domainString: NSString = (alternatives.objectAtIndex(indexPath.row).valueForKey("text") as? NSString)!
+        println(domainString)
+        cell.setTextLabel(domainString as String)
         
         return cell
         
