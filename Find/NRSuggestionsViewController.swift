@@ -8,8 +8,10 @@
 
 import UIKit
 
-class NRSearchSuggestionsViewController: UITableViewController, NRSearchSuggestionsManagerDelegate {
+class NRSearchSuggestionsViewController: UIViewController, NRSearchSuggestionsManagerDelegate, UITableViewDataSource, UITableViewDelegate {
 
+    var tableView: UITableView!
+    
     var query: String!
     var searchSuggestions: NSArray?
     var searchSuggestionManager: NRSearchSuggestionsManager!
@@ -27,6 +29,8 @@ class NRSearchSuggestionsViewController: UITableViewController, NRSearchSuggesti
     }
     
     override func viewDidLoad() {
+        self.title = "Search Suggestions"
+        
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
         
         let backButtonItem: UIBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
@@ -37,21 +41,33 @@ class NRSearchSuggestionsViewController: UITableViewController, NRSearchSuggesti
         self.navigationItem.titleView?.backgroundColor = UIColor.clearColor()
         self.navigationItem.titleView?.layer.backgroundColor = UIColor.clearColor().CGColor
         
+        tableView = UITableView(frame: self.view.frame, style: UITableViewStyle.Grouped)
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.registerClass(NRSearchSuggestionCell.self, forCellReuseIdentifier: searchSuggestionsTableViewCellIdentifier)
+        tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
+        tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
+        tableView.scrollIndicatorInsets = UIEdgeInsetsMake(44, 0, 0, 0)
+        tableView.scrollRectToVisible(CGRectMake(0, 0, 1, 1), animated: false)
+        tableView.tableHeaderView?.backgroundColor = NRColor().domairTableViewSeparatorBorder()
+        tableView.tableFooterView?.backgroundColor = NRColor().domairTableViewSeparatorBorder()
+        self.view.addSubview(tableView)
+        
         searchSuggestionManager = NRSearchSuggestionsManager()
         searchSuggestionManager.communicator = NRSearchSuggestionsCommunicator()
         searchSuggestionManager.communicator.delegate = searchSuggestionManager
         searchSuggestionManager.delegate = self
         
-        self.tableView.registerClass(NRSearchSuggestionCell.self, forCellReuseIdentifier: searchSuggestionsTableViewCellIdentifier)
-        self.tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 0, 0)
-        self.tableView.tableFooterView = UIView(frame: CGRectZero)
-        
         startFetchingSearchSuggestionForQuery(query)
     }
-    
+
     func startFetchingSearchSuggestionForQuery(queryString: String!) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         searchSuggestionManager.fetchSearchSuggestionsForDomain(queryString)
+    }
+    
+    func popViewController() {
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     // #pragma mark - NRSearchSuggestinosManagerDelegate
@@ -72,11 +88,11 @@ class NRSearchSuggestionsViewController: UITableViewController, NRSearchSuggesti
     
     // #pragma mark - UITableViewDataSource
     
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         return 1
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if self.searchSuggestions != nil {
             self.tableView.separatorStyle = .SingleLine
@@ -89,11 +105,11 @@ class NRSearchSuggestionsViewController: UITableViewController, NRSearchSuggesti
     
     // #pragma mark - UITableViewDelegate
 
-    override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         return 0.0
     }
     
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell: NRSearchSuggestionCell! = tableView.dequeueReusableCellWithIdentifier(searchSuggestionsTableViewCellIdentifier) as! NRSearchSuggestionCell
         
@@ -108,11 +124,11 @@ class NRSearchSuggestionsViewController: UITableViewController, NRSearchSuggesti
         
     }
     
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 45.0
     }
     
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
     }
     

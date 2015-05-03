@@ -21,11 +21,13 @@ class NRDomainCell: NRDefaultCell {
         
         status.center.y = round(self.contentView.center.y)
         self.contentView.addSubview(status)
+        status.frame = CGRectIntegral(status.frame)
         
         cellTitle = UILabel(frame: CGRectMake(42.0, 0, 100.0, 17.0))
-        cellTitle.center.y = self.contentView.center.y + 2
+        cellTitle.center.y = round(self.contentView.center.y + 2)
         cellTitle.textColor = NRColor().domainrRegularDarkGreyColor()
         self.contentView.addSubview(cellTitle)
+        cellTitle.frame = CGRectIntegral(cellTitle.frame)
     }
     
     required init(coder decoder: NSCoder) {

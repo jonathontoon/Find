@@ -78,7 +78,7 @@ class NRInfoNavigationBarView: UIView {
         subTitle.sizeToFit()
         subTitle.frame = CGRectIntegral(subTitle.frame)
         subTitle.textAlignment = NSTextAlignment.Center
-        subTitle.center = CGPointIntegral(CGPointMake(self.center.x, (self.bounds.size.height/2) + 17.0))
+        subTitle.center = CGPointIntegral(CGPointMake(self.center.x, (self.bounds.size.height/2) + 19.0))
         
         self.addSubview(subTitle)
 
@@ -86,14 +86,14 @@ class NRInfoNavigationBarView: UIView {
     
     func centerElements() {
 
-        let centerYOffset: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 175.0, r2: 64.0, t1: 10.0, t2: -7)
+        let centerYOffset: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 175.0, r2: 64.0, t1: 10.0, t2: -9)
         titleLabel.center = CGPointIntegral(CGPointMake(self.bounds.size.width/2, (self.bounds.size.height/2) - centerYOffset))
         
         var scale: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 175.0, r2: 64.0, t1: 1.0, t2: 0.68)
         scale = scale < 1.0 ? scale : 1.0
         titleLabel.transform = CGAffineTransformMakeScale(scale, scale)
 
-        subTitle.center = CGPointIntegral(CGPointMake(self.bounds.size.width/2, (self.bounds.size.height/2) + 17.0))
+        subTitle.center = CGPointIntegral(CGPointMake(self.bounds.size.width/2, (self.bounds.size.height/2) + 19.0))
         
         var subScale: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 175.0, r2: 64.0, t1: 1.0, t2: 0.5)
         subScale = subScale < 1.0 ? subScale : 1.0

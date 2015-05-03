@@ -14,7 +14,7 @@ class NRAlternativeDomainsViewController: UIViewController, UIGestureRecognizerD
     var alternatives: NSArray!
     var tableView: UITableView!
     
-    let registrarsTableViewCellIdentifier: String = "NRDomainCell"
+    let registrarsTableViewCellIdentifier: String = "NRAlternativeDomainCell"
     
     init(alternatives: NSArray!) {
         super.init(nibName: nil, bundle: nil)
@@ -41,7 +41,7 @@ class NRAlternativeDomainsViewController: UIViewController, UIGestureRecognizerD
         tableView = UITableView(frame: self.view.frame, style: UITableViewStyle.Grouped)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.registerClass(NRRegistrarCell.self, forCellReuseIdentifier: registrarsTableViewCellIdentifier)
+        tableView.registerClass(NRDomainCell.self, forCellReuseIdentifier: registrarsTableViewCellIdentifier)
         tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
         tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
         tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 0.0, 0)
@@ -102,21 +102,21 @@ class NRAlternativeDomainsViewController: UIViewController, UIGestureRecognizerD
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell: NRDomainCell! = tableView.dequeueReusableCellWithIdentifier(registrarsTableViewCellIdentifier, forIndexPath: indexPath) as? NRDomainCell
+        var cell: NRDomainCell! = tableView.dequeueReusableCellWithIdentifier(self.registrarsTableViewCellIdentifier) as? NRDomainCell
         
         if cell == nil {
-            cell = NRDomainCell(style: .Default, reuseIdentifier: registrarsTableViewCellIdentifier)
+            cell = NRDomainCell(style: .Default, reuseIdentifier: self.registrarsTableViewCellIdentifier)
         }
         
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-        var availabilityString: NSString = (alternatives.objectAtIndex(indexPath.row).valueForKey("class") as? NSString)!
+        var availabilityString: NSString = (self.alternatives.objectAtIndex(indexPath.row).valueForKey("class") as? NSString)!
         println(availabilityString)
         cell.setAvailability(availabilityString as String)
         
-        var domainString: NSString = (alternatives.objectAtIndex(indexPath.row).valueForKey("text") as? NSString)!
+        var domainString: NSString = (self.alternatives.objectAtIndex(indexPath.row).valueForKey("text") as? NSString)!
         println(domainString)
         cell.setTextLabel(domainString as String)
-        
+
         return cell
         
     }
@@ -140,7 +140,5 @@ class NRAlternativeDomainsViewController: UIViewController, UIGestureRecognizerD
         self.presentViewController(navController, animated: true, completion: nil)
         
     }
-    
-
     
 }

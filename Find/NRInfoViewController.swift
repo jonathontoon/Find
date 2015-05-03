@@ -30,6 +30,8 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     var navigationBarView: NRInfoNavigationBarView!
     var previousScrollOffsetY: CGFloat!
     
+    var newNavigationBar: UINavigationBar!
+    
     var tableView: UITableView!
     var actionButton: NRActionButton!
     
@@ -94,12 +96,12 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         tableView.stickyHeader = true
         tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
         tableView.tableFooterView = UIView(frame: CGRectZero)
-        
-        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, availabilityType == AvailabilityType.Unavailable ? 0.0 : 25.0, 0.0)
-        
+       
         self.view.addSubview(tableView)
         
         if availabilityType != AvailabilityType.Unavailable {
+            tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, availabilityType == AvailabilityType.Unavailable ? 0.0 : 25.0, 0.0)
+            
             let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 50.0, self.view.frame.size.width, 50.0)
             actionButton = NRActionButton(frame: buttonFrame, buttonType: availabilityType)
             actionButton.addTarget(self, action: "presentAction", forControlEvents: UIControlEvents.TouchUpInside)
@@ -109,6 +111,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        
         UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
     }
     
@@ -118,21 +121,28 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     
     func styleNavigationBar() {
         
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        if newNavigationBar == nil  {
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
         
-        let newNavigationBar: UINavigationBar! = UINavigationBar(frame: CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 64.0))
-        newNavigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        newNavigationBar.shadowImage = UIImage()
-        newNavigationBar.translucent = true
-        newNavigationBar.tintColor = UIColor.whiteColor()
-        
-        let titleItem = UINavigationItem()
-        
-        let cancelButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "closeButton")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), style: UIBarButtonItemStyle.Plain, target: self, action: "dismissViewController")
-        titleItem.leftBarButtonItem = cancelButtonItem
-        
-        newNavigationBar.setItems([titleItem], animated: false)
-        self.view.addSubview(newNavigationBar)
+            newNavigationBar = UINavigationBar(frame: CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 64.0))
+            newNavigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+            newNavigationBar.shadowImage = UIImage()
+            newNavigationBar.translucent = true
+            newNavigationBar.tintColor = UIColor.whiteColor()
+            newNavigationBar.tag = 69
+            
+            let titleItem = UINavigationItem()
+            
+            let cancelButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "closeButton")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), style: UIBarButtonItemStyle.Plain, target: self, action: "dismissViewController")
+            titleItem.leftBarButtonItem = cancelButtonItem
+            
+            let favoriteButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "favoriteButton")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), style: UIBarButtonItemStyle.Plain, target: self, action: "favoriteDomain")
+            titleItem.rightBarButtonItem = favoriteButtonItem
+            
+            newNavigationBar.setItems([titleItem], animated: false)
+            
+            self.view.addSubview(newNavigationBar)
+        }
     }
     
     func presentAction() {
@@ -421,8 +431,6 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
             cell = NRDomainCell(style: .Default, reuseIdentifier: "NRDomainCell")
         }
         
-        cell.setTextLabel(NSString(format: "View %d Others", additionalInfo.domainAlternatives!.count - 3) as String)
-        
         if indexPath.row <= 2 {
             
             println("#############")
@@ -434,6 +442,13 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
             var domainString: NSString = (additionalInfo.domainAlternatives!.objectAtIndex(indexPath.row).valueForKey("text") as? NSString)!
             println(domainString)
             cell.setTextLabel(domainString as String)
+        
+        } else {
+        
+            cell.status.removeFromSuperview()
+            cell.setTextLabel(NSString(format: "View %d Others", additionalInfo.domainAlternatives!.count - 3) as String)
+            cell.cellTitle.frame = CGRectMake(15.0, cell.cellTitle.frame.origin.y, cell.cellTitle.frame.size.width, cell.cellTitle.frame.size.height)
+            
         }
         
         return cell!

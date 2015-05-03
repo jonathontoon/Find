@@ -56,13 +56,11 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
 
         self.tableView.registerClass(NRDomainResultsCell.self, forCellReuseIdentifier: resultsTableViewCellIdentifier)
         self.tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: suggestionOptionCellIdentifier)
-        self.tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 36.0, 0)
-        self.tableView.tableFooterView = UIView(frame: CGRectZero)
-        
+        self.tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
+        self.tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
+        self.tableView.contentInset = UIEdgeInsetsMake(25.0, 0, 0.0, 0)
+        self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(44, 0, 0, 0)
         self.navigationItem.titleView = resultsSearchController.searchBar
-       
-        // Implement API stuff
-        // https://www.kimonolabs.com/api/ondemand/9c160p7k?apikey=e64b763681f140bec8391a4e8547d9dd&kimmodify=1&keyword=KEYWORD
     }
 
     override func didReceiveMemoryWarning() {
@@ -82,6 +80,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         
         dispatch_async(dispatch_get_main_queue(), {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+
             self.tableView.reloadData()
         });
     }
@@ -124,6 +123,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     }
     
     // #pragma mark - UITableViewDataSource
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell: UITableViewCell!
@@ -143,10 +143,6 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
             }
         
         } else if isSearching == true && resultsSearchController.searchBar.text != nil {
-            
-            println("yes")
-            
-            println(resultsSearchController.searchBar.text)
             
             cell = tableView.dequeueReusableCellWithIdentifier(suggestionOptionCellIdentifier) as! NRDefaultCell
             
@@ -187,9 +183,6 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         } else if isSearching == true {
             
             if indexPath.row == 0 {
-                
-                println("did execute?")
-                
                 viewControllerForPush = NRSearchSuggestionsViewController(query: resultsSearchController.searchBar.text)
             } else {
                 // Search Using History
@@ -212,7 +205,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     // #pragma mark - UISearchBarDelegate
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        NSLog("searchBarSearchButtonClicked")
+
         isSearching = false
         self.query = searchBar.text
         startFetchingResultsFromQuery(self.query)
@@ -229,6 +222,11 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        self.tableView.tableHeaderView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 0.5))
+        self.tableView.tableHeaderView?.backgroundColor = NRColor().domairTableViewSeparatorBorder()
+        self.tableView.tableFooterView =  UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 0.5))
+        self.tableView.tableFooterView?.backgroundColor = NRColor().domairTableViewSeparatorBorder()
         self.tableView.reloadData()
     }
     
