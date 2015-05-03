@@ -11,14 +11,20 @@ import UIKit
 class NRRegistrarsViewController: UIViewController, UIGestureRecognizerDelegate, UITableViewDelegate, UITableViewDataSource {
 
     var registrars: NSArray!
+    var purchaseOptions: NSArray!
+    
     var tableView: UITableView!
     
     let registrarsTableViewCellIdentifier: String = "NRRegistrarCell"
     
-    init(registrars: NSArray!) {
+    init(registrars: NSArray!, purchaseOptions: NSArray?) {
         super.init(nibName: nil, bundle: nil)
         
         self.registrars = registrars
+        self.purchaseOptions = purchaseOptions
+        
+        println(self.purchaseOptions)
+        
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -101,14 +107,45 @@ class NRRegistrarsViewController: UIViewController, UIGestureRecognizerDelegate,
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell: NRRegistrarCell! = tableView.dequeueReusableCellWithIdentifier("NRRegistrarCell", forIndexPath: indexPath) as? NRRegistrarCell
+        var cell: NRRegistrarCell! = tableView.dequeueReusableCellWithIdentifier("NRRegistrarCell") as? NRRegistrarCell
         
         if cell == nil {
             cell = NRRegistrarCell(style: .Default, reuseIdentifier: registrarsTableViewCellIdentifier)
         }
         
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-        cell?.textLabel?.text = registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String
+        
+        var domainString: NSString = (self.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String!)!
+        var metaString: NSString?
+   
+        for option in self.purchaseOptions {
+            
+            if (option.valueForKey("text") as! NSString).containsString(domainString as String) {
+             
+                if (option.valueForKey("text") as! NSString).containsString("\n") {
+                    metaString = ((option.valueForKey("text") as! NSString).componentsSeparatedByString("\n") as NSArray).objectAtIndex(1) as? NSString
+                    
+                    println(metaString)
+                    
+                    if metaString!.containsString("students") {
+                        metaString = NSString(format: "Only %@", (metaString!.componentsSeparatedByString(" ") as NSArray).objectAtIndex(1) as! NSString)
+                    }
+                    
+                    if metaString!.containsString(".co sale") {
+                        metaString = ".co sale"
+                    }
+                } else {
+                    metaString = nil
+                }
+            }
+        }
+        
+        cell.setTextLabels(domainString as String, subTitle: metaString as? String)
+        cell.cellSubTitle.frame = CGRectMake(cell.frame.size.width - cell.cellSubTitle.frame.size.width - 30.0, cell.cellSubTitle.frame.origin.y, cell.cellSubTitle.frame.size.width, cell.cellSubTitle.frame.size.height)
+        
+        cell.cellTitle.frame = CGRectMake(15.0, 0, cell.cellTitle.frame.size.width, cell.cellTitle.frame.size.height)
+        cell.cellTitle.center.y = round(cell.contentView.center.y)
+        cell.cellTitle.frame = CGRectIntegral(cell.cellTitle.frame)
         
         return cell
         

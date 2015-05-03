@@ -343,10 +343,15 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
                 
                 if indexPath.row > 2 {
                     
-                    let newArray: NSArray = self.info.registrars!.subarrayWithRange(NSMakeRange(3, self.info.registrars!.count-3))
-                    println(newArray)
-                    println(newArray.count)
-                    let registrarsViewController: NRRegistrarsViewController = NRRegistrarsViewController(registrars: newArray)
+                    let registrars: NSArray = self.info.registrars!.subarrayWithRange(NSMakeRange(3, self.info.registrars!.count-3))
+                    println(registrars)
+                    println(registrars.count)
+                    
+                    let purchaseOptions: NSArray = self.additionalInfo.purchaseOptions
+                    println(purchaseOptions)
+                    println(purchaseOptions.count)
+                    
+                    let registrarsViewController: NRRegistrarsViewController = NRRegistrarsViewController(registrars: registrars, purchaseOptions: purchaseOptions)
                     
                     self.navigationController?.pushViewController(registrarsViewController, animated: true)
                 
@@ -412,18 +417,46 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     
     func createRegistrarCell(indexPath: NSIndexPath!) -> NRRegistrarCell {
         
-        var cell: NRRegistrarCell? = tableView.dequeueReusableCellWithIdentifier("NRRegistrarCell", forIndexPath: indexPath) as? NRRegistrarCell
+        var cell: NRRegistrarCell! = tableView.dequeueReusableCellWithIdentifier("NRRegistrarCell", forIndexPath: indexPath) as? NRRegistrarCell
         
         if cell == nil {
             cell = NRRegistrarCell(style: .Default, reuseIdentifier: "NRRegistrarCell")
         }
         
-        cell?.textLabel?.text = (NSString(format: "View %d ", info.registrars!.count - 3) as String) + "Others"
-        
-        
         if indexPath.row <= 2 {
-            cell?.textLabel?.text = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String
+            var domainString: NSString = (info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String!)!
+            var metaString: NSString?
+            
+            if additionalInfo.purchaseOptions!.objectAtIndex(indexPath.row).valueForKey("text") != nil {
+            
+                metaString = (additionalInfo.purchaseOptions!.objectAtIndex(indexPath.row).valueForKey("text") as? NSString)!
+                
+                if metaString!.containsString("\n") {
+                    metaString = (metaString!.componentsSeparatedByString("\n") as NSArray).objectAtIndex(1) as? NSString
+                    
+                    if metaString!.containsString("students") {
+                        metaString = NSString(format: "Only %@", (metaString!.componentsSeparatedByString(" ") as NSArray).objectAtIndex(1) as! NSString)
+                    }
+                    
+                    if metaString!.containsString(".co sale") {
+                        metaString = ".co sale"
+                    }
+                } else {
+                    metaString = nil
+                }
+            }
+            
+            cell.setTextLabels(domainString as String, subTitle: metaString as? String)
+            cell.cellSubTitle.frame = CGRectMake(cell.frame.size.width - cell.cellSubTitle.frame.size.width - 30.0, cell.cellSubTitle.frame.origin.y, cell.cellSubTitle.frame.size.width, cell.cellSubTitle.frame.size.height)
+            
+        } else {
+            cell.setTextLabel(NSString(format: "View %d Others", info.registrars!.count - 3) as String)
+            cell.cellTitle.frame = CGRectMake(16.0, cell.cellTitle.frame.origin.y, cell.cellTitle.frame.size.width, cell.cellTitle.frame.size.height)
         }
+        
+        cell.cellTitle.frame = CGRectMake(15.0, 0, cell.cellTitle.frame.size.width, cell.cellTitle.frame.size.height)
+        cell.cellTitle.center.y = round(cell.contentView.center.y)
+        cell.cellTitle.frame = CGRectIntegral(cell.cellTitle.frame)
         
         return cell!
         
@@ -438,15 +471,13 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         }
         
         if indexPath.row <= 2 {
-            
-            println("#############")
-            
+
             var availabilityString: NSString = (additionalInfo.domainAlternatives!.objectAtIndex(indexPath.row).valueForKey("class") as? NSString)!
             println(availabilityString)
             cell.setAvailability(availabilityString as String)
             
             var domainString: NSString = (additionalInfo.domainAlternatives!.objectAtIndex(indexPath.row).valueForKey("text") as? NSString)!
-            println(domainString)
+
             cell.setTextLabel(domainString as String)
         
         } else {

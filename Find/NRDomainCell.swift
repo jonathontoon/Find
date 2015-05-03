@@ -12,6 +12,7 @@ class NRDomainCell: NRDefaultCell {
 
     var status: UIView!
     var cellTitle: UILabel!
+    var cellSubTitle: UILabel!
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -24,7 +25,7 @@ class NRDomainCell: NRDefaultCell {
         status.frame = CGRectIntegral(status.frame)
         
         cellTitle = UILabel(frame: CGRectMake(42.0, 0, 100.0, 17.0))
-        cellTitle.center.y = round(self.contentView.center.y + 2)
+        cellTitle.center.y = round(self.contentView.center.y)
         cellTitle.textColor = NRColor().domainrRegularDarkGreyColor()
         self.contentView.addSubview(cellTitle)
         cellTitle.frame = CGRectIntegral(cellTitle.frame)
@@ -49,12 +50,13 @@ class NRDomainCell: NRDefaultCell {
         }
     }
     
-    func setTextLabel(text: String!) {
-        var firstWord: NSString = (text as NSString).substringToIndex(1).capitalizedString
-        cellTitle.text = (text as NSString).stringByReplacingCharactersInRange(NSMakeRange(0, 1), withString: firstWord as String)
+    func setTextLabel(title: String!) {
+        var firstWord: NSString = (title as NSString).substringToIndex(1).capitalizedString
+        cellTitle.text = (title as NSString).stringByReplacingCharactersInRange(NSMakeRange(0, 1), withString: firstWord as String)
         cellTitle.sizeToFit()
         cellTitle.frame = CGRectMake(42.0, 0, cellTitle.frame.size.width, cellTitle.frame.size.height)
-        cellTitle.center.y = self.contentView.center.y
+        cellTitle.center.y = round(self.contentView.center.y)
+        cellTitle.frame = CGRectIntegral(cellTitle.frame)
     }
     
 //    override func prepareForReuse() {

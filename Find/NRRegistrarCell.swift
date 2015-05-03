@@ -8,6 +8,44 @@
 
 import UIKit
 
-class NRRegistrarCell: NRDefaultCell {
+class NRRegistrarCell: NRDomainCell {
+ 
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+
+        status.removeFromSuperview()
+        
+        cellTitle = UILabel(frame: CGRectMake(15.0, 0, 100.0, 17.0))
+        cellTitle.center.y = round(self.contentView.center.y)
+        cellTitle.textColor = NRColor().domainrRegularDarkGreyColor()
+        self.contentView.addSubview(cellTitle)
+        cellTitle.frame = CGRectIntegral(cellTitle.frame)
+        
+        cellSubTitle = UILabel(frame: CGRectMake(60.0, 0, 50.0, 12.0))
+        cellSubTitle.center.y = round(self.contentView.center.y + 1)
+        cellSubTitle.font = UIFont(name: "HelveticaNeue-Medium", size: 12.0)
+        cellSubTitle.textColor = NRColor().domainrGreenColor()
+        cellSubTitle.textAlignment = NSTextAlignment.Right
+        self.contentView.addSubview(cellSubTitle)
+        cellSubTitle.frame = CGRectIntegral(cellSubTitle.frame)
+    }
+
+    required init(coder decoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setTextLabels(title: String!, subTitle: String?) {
+        super.setTextLabel(title)
+        
+        if subTitle != nil {
+            cellSubTitle.text = subTitle!.uppercaseString
+            cellSubTitle.sizeToFit()
+            cellSubTitle.frame = CGRectMake(60.0, 0, cellSubTitle.frame.size.width, cellSubTitle.frame.size.height)
+            cellSubTitle.center.y = round(self.contentView.center.y + 1)
+            cellSubTitle.frame = CGRectIntegral(cellSubTitle.frame)
+        } else {
+            cellSubTitle.removeFromSuperview()
+        }
+    }
     
 }
