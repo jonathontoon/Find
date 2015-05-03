@@ -24,7 +24,7 @@ CHECKOUT OPTIONS:
     :commit: 89da0fb94c9007ea8f5be9a4258bc970d69b8ba7
     :git: https://github.com/jonathontoon/CGPointIntegral.git
   SVWebViewController:
-    :commit: 58d025d18abc7085525117fa6b6546c7a6bb64bc
+    :commit: a1f07faf20e5f41107475c534a6ff2becff31c28
     :git: https://github.com/jonathontoon/SVWebViewController.git
   UIColor+Hex:
     :commit: 866b6e3785df690f75975aea699b11a72081c415

@@ -145,7 +145,7 @@
         _webView.delegate = self;
         _webView.scalesPageToFit = YES;
         
-        [_webView.scrollView setContentInset:UIEdgeInsetsMake(43, 0, 0, 0)];
+        [_webView.scrollView setContentInset:UIEdgeInsetsMake(43, 0, -24, 0)];
         [_webView.scrollView setScrollIndicatorInsets:UIEdgeInsetsMake(44, 0, 0, 0)];
         [_webView.scrollView scrollRectToVisible:CGRectMake(0, 0, 0, 0) animated:NO];
     }

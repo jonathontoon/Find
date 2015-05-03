@@ -74,9 +74,12 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         self.automaticallyAdjustsScrollViewInsets = false
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
         
+        println("## AVL")
+        println(result.availability)
+        
         if result.availability == "taken" {
             availabilityType = AvailabilityType.Taken
-        } else if result.availability == "coming soon" {
+        } else if result.availability == "Coming Soon" {
             availabilityType = AvailabilityType.ComingSoon
         } else if result.availability == "unavailable" {
             availabilityType = AvailabilityType.Unavailable
@@ -148,14 +151,17 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     func presentAction() {
 
         let registerURL: NSURL! = NSURL(string: info.register_url!)
-
-        let registerViewController: SVModalWebViewController = SVModalWebViewController(URL: registerURL)
+        
+        var navController: UINavigationController! = UINavigationController()
+        navController.navigationBar.barTintColor = UIColor.whiteColor()
+        navController.navigationBar.tintColor = NRColor().domainrBlueColor()
+        navController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: NRColor().domainrRegularDarkGreyColor()]
+        
+        let registerViewController: SVWebViewController = SVWebViewController(URL: registerURL)
         registerViewController.title = info.registrars?.objectAtIndex(0).valueForKey("name") as? String
-        registerViewController.navigationBar.barTintColor = UIColor.whiteColor()
-        registerViewController.navigationBar.translucent = false
-        registerViewController.navigationBar.tintColor = NRColor().domainrBlueColor()
-
-        self.presentViewController(registerViewController, animated: true, completion: nil)
+        
+        navController!.viewControllers = [registerViewController]
+        self.presentViewController(navController, animated: true, completion: nil)
         
     }
     
@@ -447,7 +453,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         
             cell.status.removeFromSuperview()
             cell.setTextLabel(NSString(format: "View %d Others", additionalInfo.domainAlternatives!.count - 3) as String)
-            cell.cellTitle.frame = CGRectMake(15.0, cell.cellTitle.frame.origin.y, cell.cellTitle.frame.size.width, cell.cellTitle.frame.size.height)
+            cell.cellTitle.frame = CGRectMake(16.0, cell.cellTitle.frame.origin.y, cell.cellTitle.frame.size.width, cell.cellTitle.frame.size.height)
             
         }
         
