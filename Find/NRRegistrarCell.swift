@@ -12,8 +12,15 @@ class NRRegistrarCell: NRDomainCell {
  
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        addViews()
+    }
 
-        status.removeFromSuperview()
+    required init(coder decoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func addViews() {
         
         cellTitle = UILabel(frame: CGRectMake(15.0, 0, 100.0, 17.0))
         cellTitle.center.y = round(self.contentView.center.y)
@@ -29,10 +36,6 @@ class NRRegistrarCell: NRDomainCell {
         self.contentView.addSubview(cellSubTitle)
         cellSubTitle.frame = CGRectIntegral(cellSubTitle.frame)
     }
-
-    required init(coder decoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
     
     func setTextLabels(title: String!, subTitle: String?) {
         super.setTextLabel(title)
@@ -46,6 +49,14 @@ class NRRegistrarCell: NRDomainCell {
         } else {
             cellSubTitle.removeFromSuperview()
         }
+    }
+    
+    override func prepareForReuse() {
+        cellTitle.removeFromSuperview()
+        cellTitle = nil
+        
+        cellSubTitle.removeFromSuperview()
+        cellSubTitle = nil
     }
     
 }

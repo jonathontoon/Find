@@ -15,7 +15,7 @@ class NRRegistrarsViewController: UIViewController, UIGestureRecognizerDelegate,
     
     var tableView: UITableView!
     
-    let registrarsTableViewCellIdentifier: String = "NRRegistrarCell"
+    let registrarsTableViewCellIdentifier: String = "NRRegistrarsCell"
     
     init(registrars: NSArray!, purchaseOptions: NSArray?) {
         super.init(nibName: nil, bundle: nil)
@@ -107,10 +107,12 @@ class NRRegistrarsViewController: UIViewController, UIGestureRecognizerDelegate,
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        var cell: NRRegistrarCell! = tableView.dequeueReusableCellWithIdentifier("NRRegistrarCell") as? NRRegistrarCell
+        var cell: NRRegistrarCell! = tableView.dequeueReusableCellWithIdentifier(registrarsTableViewCellIdentifier) as? NRRegistrarCell
         
         if cell == nil {
             cell = NRRegistrarCell(style: .Default, reuseIdentifier: registrarsTableViewCellIdentifier)
+        } else {
+            cell.addViews()
         }
         
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
@@ -120,7 +122,7 @@ class NRRegistrarsViewController: UIViewController, UIGestureRecognizerDelegate,
    
         for option in self.purchaseOptions {
             
-            if (option.valueForKey("text") as! NSString).containsString(domainString as String) {
+            if (option.valueForKey("text") as! NSString).containsString(domainString as! String) {
              
                 if (option.valueForKey("text") as! NSString).containsString("\n") {
                     metaString = ((option.valueForKey("text") as! NSString).componentsSeparatedByString("\n") as NSArray).objectAtIndex(1) as? NSString

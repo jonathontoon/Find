@@ -421,14 +421,16 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         
         if cell == nil {
             cell = NRRegistrarCell(style: .Default, reuseIdentifier: "NRRegistrarCell")
+        } else {
+            cell.addViews()
         }
         
         if indexPath.row <= 2 {
             var domainString: NSString = (info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String!)!
             var metaString: NSString?
             
-            if additionalInfo.purchaseOptions!.objectAtIndex(indexPath.row).valueForKey("text") != nil {
-            
+            if indexPath.row < additionalInfo.purchaseOptions!.count-1 {
+
                 metaString = (additionalInfo.purchaseOptions!.objectAtIndex(indexPath.row).valueForKey("text") as? NSString)!
                 
                 if metaString!.containsString("\n") {
@@ -468,6 +470,8 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         
         if cell == nil {
             cell = NRDomainCell(style: .Default, reuseIdentifier: "NRDomainCell")
+        } else {
+            cell.addViews()
         }
         
         if indexPath.row <= 2 {

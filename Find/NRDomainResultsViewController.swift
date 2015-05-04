@@ -18,7 +18,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     var query: String!
     
     var resultsSearchController: UISearchController!
-    let resultsTableViewCellIdentifier: String = "NRDomainResultsCell"
+    let resultsTableViewCellIdentifier: String = "NRDomainCell"
     let suggestionOptionCellIdentifier: String = "NRSuggestionOptionCell"
     
     override func viewDidLoad() {
@@ -54,7 +54,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         resultsSearchController.hidesNavigationBarDuringPresentation = false
         resultsSearchController.dimsBackgroundDuringPresentation = false
 
-        self.tableView.registerClass(NRDomainResultsCell.self, forCellReuseIdentifier: resultsTableViewCellIdentifier)
+        self.tableView.registerClass(NRDomainCell.self, forCellReuseIdentifier: resultsTableViewCellIdentifier)
         self.tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: suggestionOptionCellIdentifier)
         self.tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
         self.tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
@@ -132,10 +132,12 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
             
             if self.results?.count > 0 {
                 
-                cell = tableView.dequeueReusableCellWithIdentifier(resultsTableViewCellIdentifier) as! NRDomainResultsCell
+                cell = tableView.dequeueReusableCellWithIdentifier(resultsTableViewCellIdentifier) as! NRDomainCell
             
                 if cell == nil {
-                    cell = NRDomainResultsCell(style: .Default, reuseIdentifier: resultsTableViewCellIdentifier)
+                    cell = NRDomainCell(style: .Default, reuseIdentifier: resultsTableViewCellIdentifier)
+                } else {
+                    (cell as! NRDomainCell).addViews()
                 }
                 
                 cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator

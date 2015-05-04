@@ -17,6 +17,14 @@ class NRDomainCell: NRDefaultCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        addViews()
+    }
+    
+    required init(coder decoder: NSCoder) {
+        super.init(coder: decoder)
+    }
+    
+    func addViews() {
         status = UIView(frame: CGRectMake(15.0, 0, 12.0, 12.0))
         status.layer.cornerRadius = 6.0
         
@@ -24,15 +32,11 @@ class NRDomainCell: NRDefaultCell {
         self.contentView.addSubview(status)
         status.frame = CGRectIntegral(status.frame)
         
-        cellTitle = UILabel(frame: CGRectMake(42.0, 0, 100.0, 17.0))
+        cellTitle = UILabel(frame: CGRectMake(34.0, 0, 100.0, 17.0))
         cellTitle.center.y = round(self.contentView.center.y)
         cellTitle.textColor = NRColor().domainrRegularDarkGreyColor()
         self.contentView.addSubview(cellTitle)
         cellTitle.frame = CGRectIntegral(cellTitle.frame)
-    }
-    
-    required init(coder decoder: NSCoder) {
-        super.init(coder: decoder)
     }
     
     func setAvailability(availability: String!) {
@@ -54,16 +58,16 @@ class NRDomainCell: NRDefaultCell {
         var firstWord: NSString = (title as NSString).substringToIndex(1).capitalizedString
         cellTitle.text = (title as NSString).stringByReplacingCharactersInRange(NSMakeRange(0, 1), withString: firstWord as String)
         cellTitle.sizeToFit()
-        cellTitle.frame = CGRectMake(42.0, 0, cellTitle.frame.size.width, cellTitle.frame.size.height)
+        cellTitle.frame = CGRectMake(34.0, 0, cellTitle.frame.size.width, cellTitle.frame.size.height)
         cellTitle.center.y = round(self.contentView.center.y)
         cellTitle.frame = CGRectIntegral(cellTitle.frame)
     }
     
-//    override func prepareForReuse() {
-//        status.removeFromSuperview()
-//        cellTitle.removeFromSuperview()
-//        status = nil
-//        cellTitle = nil
-//    }
+    override func prepareForReuse() {
+        status.removeFromSuperview()
+        cellTitle.removeFromSuperview()
+        status = nil
+        cellTitle = nil
+    }
     
 }

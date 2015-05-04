@@ -106,6 +106,8 @@ class NRAlternativeDomainsViewController: UIViewController, UIGestureRecognizerD
         
         if cell == nil {
             cell = NRDomainCell(style: .Default, reuseIdentifier: self.registrarsTableViewCellIdentifier)
+        } else {
+            cell.addViews()
         }
         
         cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
