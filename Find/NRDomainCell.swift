@@ -12,7 +12,6 @@ class NRDomainCell: NRDefaultCell {
 
     var status: UIView!
     var cellTitle: UILabel!
-    var cellSubTitle: UILabel!
 
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

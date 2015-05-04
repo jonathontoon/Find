@@ -10,6 +10,8 @@ import UIKit
 
 class NRRegistrarCell: NRDomainCell {
  
+    var cellSubTitle: UILabel!
+    
     override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
@@ -29,7 +31,7 @@ class NRRegistrarCell: NRDomainCell {
         cellTitle.frame = CGRectIntegral(cellTitle.frame)
         
         cellSubTitle = UILabel(frame: CGRectMake(60.0, 0, 50.0, 12.0))
-        cellSubTitle.center.y = round(self.contentView.center.y + 1)
+        cellSubTitle.center.y = round(self.contentView.center.y)
         cellSubTitle.font = UIFont(name: "HelveticaNeue-Medium", size: 12.0)
         cellSubTitle.textColor = NRColor().domainrGreenColor()
         cellSubTitle.textAlignment = NSTextAlignment.Right
@@ -44,7 +46,7 @@ class NRRegistrarCell: NRDomainCell {
             cellSubTitle.text = subTitle!.uppercaseString
             cellSubTitle.sizeToFit()
             cellSubTitle.frame = CGRectMake(60.0, 0, cellSubTitle.frame.size.width, cellSubTitle.frame.size.height)
-            cellSubTitle.center.y = round(self.contentView.center.y + 1)
+            cellSubTitle.center.y = round(self.contentView.center.y)
             cellSubTitle.frame = CGRectIntegral(cellSubTitle.frame)
         } else {
             cellSubTitle.removeFromSuperview()

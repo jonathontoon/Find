@@ -140,8 +140,9 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
                     (cell as! NRDomainCell).addViews()
                 }
                 
-                cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-                cell.textLabel?.text = (results!.objectAtIndex(indexPath.row) as! NRResult).domain! + " " + (results!.objectAtIndex(indexPath.row) as! NRResult).availability!
+                (cell as! NRDomainCell).accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+                (cell as! NRDomainCell).setTextLabel((results!.objectAtIndex(indexPath.row) as! NRResult).domain)
+                (cell as! NRDomainCell).setAvailability((results!.objectAtIndex(indexPath.row) as! NRResult).availability!)
             }
         
         } else if isSearching == true && resultsSearchController.searchBar.text != nil {
