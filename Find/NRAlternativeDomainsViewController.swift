@@ -10,15 +10,16 @@ import UIKit
 
 class NRAlternativeDomainsViewController: UIViewController, UIGestureRecognizerDelegate, UITableViewDelegate, UITableViewDataSource {
 
-    
+    var initialResult: NRResult!
     var alternatives: NSArray!
     var tableView: UITableView!
     
     let registrarsTableViewCellIdentifier: String = "NRAlternativeDomainCell"
     
-    init(alternatives: NSArray!) {
+    init(alternatives: NSArray!, result:NRResult!) {
         super.init(nibName: nil, bundle: nil)
         
+        self.initialResult = result
         self.alternatives = alternatives
     }
     
@@ -129,17 +130,25 @@ class NRAlternativeDomainsViewController: UIViewController, UIGestureRecognizerD
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        var navController: UINavigationController! = UINavigationController()
-        navController.navigationBar.barTintColor = UIColor.whiteColor()
-        navController.navigationBar.tintColor = NRColor().domainrBlueColor()
-        navController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: NRColor().domainrRegularDarkGreyColor()]
+        let result: NRResult = self.initialResult
         
-        let registrarURL: NSURL! = NSURL(string: alternatives!.objectAtIndex(indexPath.row).valueForKey("register_url") as! String)
-        let registrarViewController: SVWebViewController = SVWebViewController(URL: registrarURL)
-        registrarViewController.title = alternatives!.objectAtIndex(indexPath.row).valueForKey("text") as? String
+        result.domain = alternatives.objectAtIndex(indexPath.row).objectForKey("text") as? String
+        var availabilityString: NSString = (alternatives.objectAtIndex(indexPath.row).valueForKey("class") as? NSString)!
         
-        navController!.viewControllers = [registrarViewController]
-        self.presentViewController(navController, animated: true, completion: nil)
+        println("@@@@@@@@")
+        println(result.domain)
+        println(availabilityString)
+        
+        if availabilityString.rangeOfString("available").location != NSNotFound {
+            result.availability = "available"
+        } else if availabilityString.rangeOfString("maybe").location != NSNotFound || availabilityString.rangeOfString("coming soon").location != NSNotFound {
+            result.availability = "Coming Soon"
+        } else if availabilityString.rangeOfString("taken").location != NSNotFound {
+            result.availability = "taken"
+        }
+        
+        let infoViewController: NRInfoViewController = NRInfoViewController(result: result)
+        self.navigationController?.pushViewController(infoViewController, animated: true)
         
     }
     

@@ -42,6 +42,7 @@ class NRRegistrarsViewController: UIViewController, UIGestureRecognizerDelegate,
         
         self.title = "More Registrars"
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
+        self.navigationController!.interactivePopGestureRecognizer.delegate = self
         
         tableView = UITableView(frame: self.view.frame, style: UITableViewStyle.Grouped)
         tableView.delegate = self
@@ -159,18 +160,15 @@ class NRRegistrarsViewController: UIViewController, UIGestureRecognizerDelegate,
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        var navController: UINavigationController! = UINavigationController()
-        navController.navigationBar.barTintColor = UIColor.whiteColor()
-        navController.navigationBar.tintColor = NRColor().domainrBlueColor()
-        navController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: NRColor().domainrRegularDarkGreyColor()]
-        
+//        navController.navigationBar.barTintColor = UIColor.whiteColor()
+//        navController.navigationBar.tintColor = NRColor().domainrBlueColor()
+//        navController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: NRColor().domainrRegularDarkGreyColor()]
+//        
         let registrarURL: NSURL! = NSURL(string: registrars!.objectAtIndex(indexPath.row).valueForKey("register_url") as! String)
         let registrarViewController: SVWebViewController = SVWebViewController(URL: registrarURL)
         registrarViewController.title = registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String
         
-        navController!.viewControllers = [registrarViewController]
-        self.presentViewController(navController, animated: true, completion: nil)
-        
+        self.navigationController?.pushViewController(registrarViewController, animated: true)
     }
 
 }

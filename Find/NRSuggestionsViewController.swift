@@ -8,7 +8,7 @@
 
 import UIKit
 
-class NRSearchSuggestionsViewController: UIViewController, NRSearchSuggestionsManagerDelegate, UITableViewDataSource, UITableViewDelegate {
+class NRSearchSuggestionsViewController: UIViewController, NRSearchSuggestionsManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
 
     var tableView: UITableView!
     
@@ -32,6 +32,7 @@ class NRSearchSuggestionsViewController: UIViewController, NRSearchSuggestionsMa
         self.title = "Search Suggestions"
         
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
+        self.navigationController!.interactivePopGestureRecognizer.delegate = self
         
         let backButtonItem: UIBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
         self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButtonItem

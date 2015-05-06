@@ -15,7 +15,7 @@ enum AvailabilityType {
     case Unavailable
 }
 
-class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditionalInfoManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
+class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditionalInfoManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate {
 
     var result: NRResult!
     
@@ -60,6 +60,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         styleNavigationBar()
+        self.navigationController!.interactivePopGestureRecognizer.delegate = self
         
         if  UIApplication.sharedApplication().statusBarStyle != .LightContent {
             UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
@@ -73,9 +74,8 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         
         self.automaticallyAdjustsScrollViewInsets = false
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
-        
-        println("## AVL")
-        println(result.availability)
+
+        availabilityType = AvailabilityType.Available
         
         if result.availability == "taken" {
             availabilityType = AvailabilityType.Taken
@@ -136,11 +136,8 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
             
             let titleItem = UINavigationItem()
             
-            let cancelButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "closeButton")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), style: UIBarButtonItemStyle.Plain, target: self, action: "dismissViewController")
+            let cancelButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "backButton")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), style: UIBarButtonItemStyle.Plain, target: self, action: "popViewController")
             titleItem.leftBarButtonItem = cancelButtonItem
-            
-            let favoriteButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "favoriteButton")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), style: UIBarButtonItemStyle.Plain, target: self, action: "favoriteDomain")
-            titleItem.rightBarButtonItem = favoriteButtonItem
             
             newNavigationBar.setItems([titleItem], animated: false)
             
@@ -324,9 +321,8 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
                     let whoisURL: NSURL! = NSURL(string: self.info.whois_url!)
                     let whoisViewController: SVWebViewController = SVWebViewController(URL: whoisURL)
                     whoisViewController.title = "Whois Info"
-                    
-                    navController!.viewControllers = [whoisViewController]
-                    self.presentViewController(navController, animated: true, completion: nil)
+
+                    self.navigationController?.pushViewController(whoisViewController, animated: true)
                     
                 } else if indexPath.row == 1 {
                     
@@ -334,8 +330,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
                     let wikipediaViewController: SVWebViewController = SVWebViewController(URL: wikipediaURL)
                     wikipediaViewController.title = "TLD Wikipedia Article"
 
-                    navController!.viewControllers = [wikipediaViewController]
-                    self.presentViewController(navController, animated: true, completion: nil)
+                    self.navigationController?.pushViewController(wikipediaViewController, animated: true)
                 
                 }
             
@@ -344,15 +339,9 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
                 if indexPath.row > 2 {
                     
                     let registrars: NSArray = self.info.registrars!.subarrayWithRange(NSMakeRange(3, self.info.registrars!.count-3))
-                    println(registrars)
-                    println(registrars.count)
-                    
                     let purchaseOptions: NSArray = self.additionalInfo.purchaseOptions
-                    println(purchaseOptions)
-                    println(purchaseOptions.count)
-                    
                     let registrarsViewController: NRRegistrarsViewController = NRRegistrarsViewController(registrars: registrars, purchaseOptions: purchaseOptions)
-                    
+
                     self.navigationController?.pushViewController(registrarsViewController, animated: true)
                 
                 } else {
@@ -360,9 +349,8 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
                     let registrarURL: NSURL! = NSURL(string: self.info.registrars!.objectAtIndex(indexPath.row).valueForKey("register_url") as! String)
                     let registrarViewController: SVWebViewController = SVWebViewController(URL: registrarURL)
                     registrarViewController.title = self.info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String
-                    
-                    navController!.viewControllers = [registrarViewController]
-                    self.presentViewController(navController, animated: true, completion: nil)
+
+                    self.navigationController?.pushViewController(registrarViewController, animated: true)
                     
                 }
             
@@ -371,8 +359,8 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
                 if indexPath.row > 2 {
                     
                     let newArray: NSArray = self.additionalInfo.domainAlternatives!.subarrayWithRange(NSMakeRange(3, self.additionalInfo.domainAlternatives!.count-3))
-                    let registrarsViewController: NRAlternativeDomainsViewController = NRAlternativeDomainsViewController(alternatives: newArray)
-                    
+                    let registrarsViewController: NRAlternativeDomainsViewController = NRAlternativeDomainsViewController(alternatives: newArray, result: self.result)
+            
                     self.navigationController?.pushViewController(registrarsViewController, animated: true)
                     
                 } else {
@@ -380,14 +368,23 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
                     let result: NRResult = self.result
                     
                     result.domain = self.additionalInfo.domainAlternatives.objectAtIndex(indexPath.row).objectForKey("text") as? String
-                    result.tld = (split(result.domain!, maxSplit: 1, allowEmptySlices: false, isSeparator: { $0 == "."}) as NSArray).objectAtIndex(1) as? String
-                    if result.availability == "maybe" {
-                        result.availability = "Coming Soon"
-                    }
+                    var availabilityString: NSString = (self.additionalInfo.domainAlternatives!.objectAtIndex(indexPath.row).valueForKey("class") as? NSString)!
                     
+                    println("@@@@@@@@")
+                    println(result.domain)
+                    println(availabilityString)
+                    
+                    if availabilityString.rangeOfString("available").location != NSNotFound {
+                        result.availability = "available"
+                    } else if availabilityString.rangeOfString("maybe").location != NSNotFound || availabilityString.rangeOfString("coming soon").location != NSNotFound {
+                        result.availability = "Coming Soon"
+                    } else if availabilityString.rangeOfString("taken").location != NSNotFound {
+                        result.availability = "taken"
+                    }
+                
                     let infoViewController: NRInfoViewController = NRInfoViewController(result: result)
-                    navController!.viewControllers = [infoViewController]
-                    self.presentViewController(navController, animated: true, completion: nil)
+      
+                    self.navigationController?.pushViewController(infoViewController, animated: true)
                     
                 }
                 
@@ -601,10 +598,11 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         nr_resizeHeaderView(scrollView)
     }
     
-    func dismissViewController() {
+    func popViewController() {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        self.dismissViewControllerAnimated(true, completion:nil)
+        self.presentingViewController?.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     func nr_resizeHeaderView(scrollView: UIScrollView) {

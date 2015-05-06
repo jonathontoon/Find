@@ -10,7 +10,7 @@
 #import "SVWebViewControllerActivitySafari.h"
 #import "SVWebViewController.h"
 
-@interface SVWebViewController () <UIWebViewDelegate>
+@interface SVWebViewController () <UIWebViewDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) UIBarButtonItem *backBarButtonItem;
 @property (nonatomic, strong) UIBarButtonItem *forwardBarButtonItem;
@@ -85,7 +85,7 @@
     if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
         [self.navigationController setToolbarHidden:NO animated:animated];
         [self styleNavigationBar];
-        
+        self.navigationController.interactivePopGestureRecognizer.delegate = self;
     }
     else if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
         [self.navigationController setToolbarHidden:YES animated:animated];
@@ -123,7 +123,7 @@
     UINavigationItem *titleItem = [[UINavigationItem alloc] init];
     titleItem.title = self.title;
     
-    UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"closeButton"] style:UIBarButtonItemStylePlain target:self action:@selector(dismissviewController)];
+    UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"backButton"] style:UIBarButtonItemStylePlain target:self action:@selector(popViewController)];
     titleItem.leftBarButtonItem = closeButtonItem;
     
     [newNavigationBar setItems:[NSArray arrayWithObjects:titleItem, nil]];
@@ -133,8 +133,8 @@
     self.navigationController.toolbar.translucent = YES;
 }
 
-- (void)dismissviewController {
-    [self dismissViewControllerAnimated:YES completion:nil];
+- (void)popViewController {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 #pragma mark - Getters
