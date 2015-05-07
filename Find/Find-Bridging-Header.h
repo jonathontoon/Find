@@ -19,3 +19,5 @@
 #import "UITableView+StickyHeader.h"
 
 #import "CGPointIntegral.h"
+
+#import "NRActivityIndicatorView.h"

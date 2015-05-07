@@ -17,6 +17,8 @@ enum AvailabilityType {
 
 class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditionalInfoManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate {
 
+    var activityIndicatorView: NRActivityIndicatorView!
+    
     var result: NRResult!
     
     var infoManager: NRInfoManager!
@@ -37,6 +39,12 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     
     init(result: NRResult!) {
         super.init(nibName: nil, bundle: nil)
+        
+        self.activityIndicatorView = NRActivityIndicatorView(image: UIImage(named: "activityIndicator")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
+        self.activityIndicatorView.center = CGPointIntegral(self.view.center)
+        self.activityIndicatorView.tintColor = NRColor().domainrBlueColor()
+        self.view.addSubview(self.activityIndicatorView)
+        self.activityIndicatorView.startAnimating()
         
         self.result = result
         
@@ -74,16 +82,6 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         
         self.automaticallyAdjustsScrollViewInsets = false
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
-
-        availabilityType = AvailabilityType.Available
-        
-        if result.availability == "taken" {
-            availabilityType = AvailabilityType.Taken
-        } else if result.availability == "Coming Soon" {
-            availabilityType = AvailabilityType.ComingSoon
-        } else if result.availability == "unavailable" {
-            availabilityType = AvailabilityType.Unavailable
-        }
         
         tableView = UITableView(frame: CGRectMake(0, 0, self.view.frame.size.width, (self.view.frame.size.height - 50)), style: UITableViewStyle.Grouped)
         tableView.delegate = self
@@ -92,24 +90,18 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         tableView.registerClass(NRRegistrarCell.self, forCellReuseIdentifier: "NRRegistrarCell")
         tableView.registerClass(NRDomainCell.self, forCellReuseIdentifier: "NRDomainCell")
         tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
-        navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 175.0), title: self.result.domain, subTitle: self.result.availability?.capitalizedString, labelType: availabilityType, tld: result.tld)
-        tableView.tableHeaderView = navigationBarView
-        tableView.tableHeaderView?.layer.zPosition = 100
+        tableView.tableHeaderView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 175.0))
+        tableView.tableHeaderView!.backgroundColor = NRColor().domainrBackgroundBlackColor()
+        tableView.tableHeaderView!.layer.zPosition = 100
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
         tableView.stickyHeader = true
         tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
         tableView.tableFooterView = UIView(frame: CGRectZero)
+        tableView.scrollEnabled = false
+        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
        
         self.view.addSubview(tableView)
-        
-        if availabilityType != AvailabilityType.Unavailable {
-            tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, availabilityType == AvailabilityType.Unavailable ? 0.0 : 25.0, 0.0)
-            
-            let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 50.0, self.view.frame.size.width, 50.0)
-            actionButton = NRActionButton(frame: buttonFrame, buttonType: availabilityType)
-            actionButton.addTarget(self, action: "presentAction", forControlEvents: UIControlEvents.TouchUpInside)
-            self.view.addSubview(actionButton)
-        }
+
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -143,6 +135,38 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
             
             self.view.addSubview(newNavigationBar)
         }
+    }
+    
+    func reloadViews() {
+        
+        self.activityIndicatorView.removeFromSuperview()
+        
+        result.availability = info.availability
+        availabilityType = AvailabilityType.Available
+        
+        if result.availability == "taken" {
+            availabilityType = AvailabilityType.Taken
+        } else if result.availability == "Coming Soon" {
+            availabilityType = AvailabilityType.ComingSoon
+        } else if result.availability == "unavailable" {
+            availabilityType = AvailabilityType.Unavailable
+        }
+        
+        navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 175.0), title: self.info.domain, subTitle: self.info.availability?.capitalizedString, labelType: availabilityType, tld: result.tld)
+        
+        tableView.tableHeaderView = navigationBarView
+        tableView.tableHeaderView!.layer.zPosition = 100
+        
+        if result.availability != "unavailable" {
+            tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 25.0, 0.0)
+            
+            let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 50.0, self.view.frame.size.width, 50.0)
+            actionButton = NRActionButton(frame: buttonFrame, buttonType: availabilityType)
+            actionButton.addTarget(self, action: "presentAction", forControlEvents: UIControlEvents.TouchUpInside)
+            self.view.addSubview(actionButton)
+        }
+        
+        tableView.scrollEnabled = true
     }
     
     func presentAction() {
@@ -185,6 +209,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
 
         dispatch_async(dispatch_get_main_queue(), {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            self.reloadViews()
             self.tableView.reloadData()
         });
     }
