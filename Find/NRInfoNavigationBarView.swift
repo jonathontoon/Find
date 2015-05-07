@@ -10,7 +10,7 @@ import UIKit
 
 class NRInfoNavigationBarView: UIView {
 
-    var containerView: UIView!
+    var patternView: NRInfoNavigationBarPatternView!
     
     var titleString: String?
     var titleLabel: UILabel!
@@ -18,13 +18,15 @@ class NRInfoNavigationBarView: UIView {
     var subTitleString: String?
     var subTitle: NRSubtitleLabel!
     
+    var tldString: String?
+    
     var type: AvailabilityType!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
     
-    init(frame:CGRect, title:String!, subTitle:String!, labelType: AvailabilityType!) {
+    init(frame:CGRect, title:String!, subTitle:String!, labelType: AvailabilityType!, tld: String!) {
         super.init(frame: frame)
         
         self.backgroundColor = NRColor().domainrBackgroundBlackColor()
@@ -32,6 +34,7 @@ class NRInfoNavigationBarView: UIView {
         titleString = title
         subTitleString = subTitle
         type = labelType
+        tldString = tld
     }
 
     required init(coder aDecoder: NSCoder) {
@@ -39,81 +42,69 @@ class NRInfoNavigationBarView: UIView {
     }
     
     override func drawRect(rect: CGRect) {
-        self.backgroundColor = UIColor.clearColor()
-        self.layer.backgroundColor = UIColor.blueColor().CGColor
+        
+        patternView = NRInfoNavigationBarPatternView(frame: CGRectMake(0, 0, self.frame.size.width, UIScreen.mainScreen().bounds.height), topLevelDomain: tldString)
+        self.addSubview(patternView)
         
         titleLabel = UILabel()
         titleLabel.text = titleString
         titleLabel.textColor = UIColor.whiteColor()
-        titleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 22.0)
-        titleLabel.sizeToFit()
+        titleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 25.0)
         titleLabel.backgroundColor = UIColor.clearColor()
         titleLabel.layer.backgroundColor = UIColor.clearColor().CGColor
-        titleLabel.frame.origin.x = round(self.frame.width/2 - (titleLabel.frame.width/2))
+        titleLabel.transform = CGAffineTransformMakeScale(1.0, 1.0)
+        titleLabel.sizeToFit()
+        titleLabel.frame = CGRectIntegral(titleLabel.frame)
         titleLabel.textAlignment = NSTextAlignment.Center
+        titleLabel.center = CGPointIntegral(CGPointMake(self.center.x, self.center.y - 10))
         self.addSubview(titleLabel)
         
         subTitle = NRSubtitleLabel()
         subTitle.text = subTitleString?.uppercaseString
         subTitle.textColor = UIColor.whiteColor()
-        subTitle.font = UIFont(name: "HelveticaNeue", size: 10.0)
+        subTitle.font = UIFont(name: "HelveticaNeue-Medium", size: 10.0)
         subTitle.backgroundColor = NRColor().domainrGreenColor()
-        subTitle.textAlignment = NSTextAlignment.Center
         subTitle.layer.cornerRadius = 2.0
         subTitle.clipsToBounds = true
-        subTitle.sizeToFit()
+        subTitle.transform = CGAffineTransformMakeScale(1.0, 1.0)
         
         if type == AvailabilityType.Taken {
             subTitle.backgroundColor = NRColor().domainrBlueColor()
-        }
-        
-        if type == AvailabilityType.Unavailable {
+        } else if type == AvailabilityType.Unavailable {
             subTitle.backgroundColor = NRColor().domainrRedColor()
         }
         
         subTitle.layer.backgroundColor = UIColor.clearColor().CGColor
-        subTitle.frame.origin.x = round(self.frame.width/2 - (subTitle.frame.width/2))
-        self.addSubview(subTitle)
+        subTitle.sizeToFit()
+        subTitle.frame = CGRectIntegral(subTitle.frame)
+        subTitle.textAlignment = NSTextAlignment.Center
+        subTitle.center = CGPointIntegral(CGPointMake(self.center.x, (self.bounds.size.height/2) + 19.0))
         
-        centerElements()
+        self.addSubview(subTitle)
+
     }
     
     func centerElements() {
 
-        println(self.frame.size.height)
+        let centerYOffset: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 175.0, r2: 64.0, t1: 10.0, t2: -9)
+        titleLabel.center = CGPointIntegral(CGPointMake(self.bounds.size.width/2, (self.bounds.size.height/2) - centerYOffset))
         
-        var titleFontSize: CGFloat = mapCGFloatRange(round(self.frame.size.height), r1: 160.0, r2: 100.0, t1: 22.0, t2: 17.0)
+        var scale: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 175.0, r2: 64.0, t1: 1.0, t2: 0.68)
+        scale = scale < 1.0 ? scale : 1.0
+        titleLabel.transform = CGAffineTransformMakeScale(scale, scale)
+
+        subTitle.center = CGPointIntegral(CGPointMake(self.bounds.size.width/2, (self.bounds.size.height/2) + 19.0))
         
-        if titleFontSize > 22.0 {
-            titleFontSize = 22.0
-        } else if titleFontSize < 17.0 {
-            titleFontSize = 17.0
-        }
+        var subScale: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 175.0, r2: 64.0, t1: 1.0, t2: 0.5)
+        subScale = subScale < 1.0 ? subScale : 1.0
+        subTitle.transform = CGAffineTransformMakeScale(subScale, subScale)
+
+        var subRadius: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 175.0, r2: 64.0, t1: 2.0, t2: 0.2)
+        subRadius = subRadius < 2.0 ? subRadius : 2.0
+        subTitle.layer.cornerRadius = subRadius
         
-        titleLabel.font = UIFont(name: "HelveticaNeue-Medium", size: titleFontSize)
-        titleLabel.frame.origin.x = round(self.frame.width/2 - (titleLabel.frame.width/2))
-        
-        if self.frame.height > 160.0 {
-            titleLabel.frame.origin.y = round((self.frame.size.height/2 - titleLabel.frame.height/2) - 8.0)
-        } else {
-            titleLabel.frame.origin.y = round(mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: round((80 - titleLabel.frame.height/2) - 8.0), t2: 28.0))
-        }
-        
-        var subTitleFontSize: CGFloat = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 100.0, t1: 10.0, t2: 8.0)
-        
-        if subTitleFontSize > 10.0 {
-            subTitleFontSize = 10.0
-        } else if subTitleFontSize < 8.0 {
-            subTitleFontSize = 8.0
-        }
-        
-        subTitle.font = UIFont(name: "HelveticaNeue", size: subTitleFontSize)
-        
-        subTitle.sizeToFit()
-        subTitle.frame.origin.x = round(self.frame.width/2 - (subTitle.frame.width/2))
-        subTitle.frame.origin.y = round(titleLabel.frame.origin.y + titleLabel.frame.size.height + 3.0)
-        
-        subTitle.alpha = mapCGFloatRange(self.frame.size.height, r1: 160.0, r2: 64.0, t1: 1.0, t2: 0.0)
+        subTitle.alpha = mapCGFloatRange(self.frame.size.height, r1: 175.0, r2: 72.0, t1: 1.0, t2: 0.0)
+
     }
     
     // http://stackoverflow.com/a/6237034/553149

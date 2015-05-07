@@ -1,0 +1,17 @@
+{
+  "name": "CGPointIntegral",
+  "version": "0.0.1",
+  "summary": "Akin to CGRectIntegral, CGPointIntegral aligns a CGPoint to the screen's pixel boundaries by rounding its values appropriately. This avoids the blurry anti-aliasing seen when drawing fractional coordinates (e.g. 20.224).",
+  "homepage": "https://github.com/jonathontoon/CGPointIntegral",
+  "source": {
+    "git": "https://github.com/jonathontoon/CGPointIntegral.git"
+  },
+  "platforms": {
+    "ios": "6.0"
+  },
+  "source_files": "CGPointIntegral.{h,m}",
+  "frameworks": [
+    "UIKit",
+    "Foundation"
+  ]
+}

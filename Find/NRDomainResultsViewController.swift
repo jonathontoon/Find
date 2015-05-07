@@ -18,7 +18,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     var query: String!
     
     var resultsSearchController: UISearchController!
-    let resultsTableViewCellIdentifier: String = "NRResultCell"
+    let resultsTableViewCellIdentifier: String = "NRDomainCell"
     let suggestionOptionCellIdentifier: String = "NRSuggestionOptionCell"
     
     override func viewDidLoad() {
@@ -48,23 +48,31 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         }
         
         // Rough code to change the UISearchBar style
-        (resultsSearchController.searchBar.subviews[0].subviews[1] as UITextField).borderStyle = .None
+        (resultsSearchController.searchBar.subviews[0].subviews[1] as! UITextField).borderStyle = .None
         
         resultsSearchController.definesPresentationContext = true
         resultsSearchController.hidesNavigationBarDuringPresentation = false
         resultsSearchController.dimsBackgroundDuringPresentation = false
 
-        self.tableView.registerClass(NRResultCell.self, forCellReuseIdentifier: resultsTableViewCellIdentifier)
+        self.tableView.registerClass(NRDomainCell.self, forCellReuseIdentifier: resultsTableViewCellIdentifier)
         self.tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: suggestionOptionCellIdentifier)
-        self.tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 36.0, 0)
-        self.tableView.tableFooterView = UIView(frame: CGRectZero)
-        
+        self.tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
+        self.tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
+        self.tableView.contentInset = UIEdgeInsetsMake(25.0, 0, 0.0, 0)
+        self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(44, 0, 0, 0)
         self.navigationItem.titleView = resultsSearchController.searchBar
-       
-        // Implement API stuff
-        // https://www.kimonolabs.com/api/ondemand/9c160p7k?apikey=e64b763681f140bec8391a4e8547d9dd&kimmodify=1&keyword=KEYWORD
     }
 
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -82,6 +90,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         
         dispatch_async(dispatch_get_main_queue(), {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+
             self.tableView.reloadData()
         });
     }
@@ -124,6 +133,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     }
     
     // #pragma mark - UITableViewDataSource
+    
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
         var cell: UITableViewCell!
@@ -132,29 +142,29 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
             
             if self.results?.count > 0 {
                 
-                cell = tableView.dequeueReusableCellWithIdentifier(resultsTableViewCellIdentifier) as NRResultCell
+                cell = tableView.dequeueReusableCellWithIdentifier(resultsTableViewCellIdentifier) as! NRDomainCell
             
                 if cell == nil {
-                    cell = NRResultCell(style: .Default, reuseIdentifier: resultsTableViewCellIdentifier)
+                    cell = NRDomainCell(style: .Default, reuseIdentifier: resultsTableViewCellIdentifier)
+                } else {
+                    (cell as! NRDomainCell).addViews()
                 }
                 
-                cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
-                cell.textLabel?.text = (results!.objectAtIndex(indexPath.row) as NRResult).domain! + " " + (results!.objectAtIndex(indexPath.row) as NRResult).availability!
+                (cell as! NRDomainCell).accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+                (cell as! NRDomainCell).setTextLabel((results!.objectAtIndex(indexPath.row) as! NRResult).domain)
+                (cell as! NRDomainCell).setAvailability((results!.objectAtIndex(indexPath.row) as! NRResult).availability!)
             }
         
         } else if isSearching == true && resultsSearchController.searchBar.text != nil {
             
-            println("yes")
-            
-            println(resultsSearchController.searchBar.text)
-            
-            cell = tableView.dequeueReusableCellWithIdentifier(suggestionOptionCellIdentifier) as NRDefaultCell
+            cell = tableView.dequeueReusableCellWithIdentifier(suggestionOptionCellIdentifier) as! NRDefaultCell
             
             if cell == nil {
                 cell = NRDefaultCell(style: .Default, reuseIdentifier: suggestionOptionCellIdentifier)
             }
             
             cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+            cell.selectionStyle = UITableViewCellSelectionStyle.None
             cell.textLabel?.text = "Suggestions for \"" + resultsSearchController.searchBar.text.stringByReplacingOccurrencesOfString(" ", withString: "") + "\""
             
         }
@@ -173,16 +183,20 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         
         if isSearching == false && self.results?.count > 0 {
             
-            let result: NRResult = results!.objectAtIndex(indexPath.row) as NRResult
+            let result: NRResult = results!.objectAtIndex(indexPath.row) as! NRResult
+            result.searchedString = resultsSearchController.searchBar.text
+            
+            result.tld = (split(result.domain!, maxSplit: 1, allowEmptySlices: false, isSeparator: { $0 == "."}) as NSArray).objectAtIndex(1) as? String
+            if result.availability == "maybe" {
+                result.availability = "Coming Soon"
+            }
+            
             viewControllerForPush = NRInfoViewController(result: result)
            
         } else if isSearching == true {
             
             if indexPath.row == 0 {
-                
-                println("did execute?")
-                
-                viewControllerForPush = NRSuggestionsViewController(query: resultsSearchController.searchBar.text)
+                viewControllerForPush = NRSearchSuggestionsViewController(query: resultsSearchController.searchBar.text)
             } else {
                 // Search Using History
             }
@@ -190,20 +204,13 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         
         self.resultsSearchController.active = false
         
-        if viewControllerForPush.isKindOfClass(NRInfoViewController) {
-            
-            var navigationController: UINavigationController = UINavigationController(rootViewController: viewControllerForPush)
-            self.presentViewController(navigationController, animated: true, completion: nil)
-            
-        } else {
-            self.navigationController?.pushViewController(viewControllerForPush, animated: true)
-        }
+         self.navigationController?.pushViewController(viewControllerForPush, animated: true)
     }
     
     // #pragma mark - UISearchBarDelegate
     
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {
-        NSLog("searchBarSearchButtonClicked")
+
         isSearching = false
         self.query = searchBar.text
         startFetchingResultsFromQuery(self.query)
@@ -220,6 +227,11 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
     }
     
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        
+        self.tableView.tableHeaderView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 0.5))
+        self.tableView.tableHeaderView?.backgroundColor = NRColor().domairTableViewSeparatorBorder()
+        self.tableView.tableFooterView =  UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 0.5))
+        self.tableView.tableFooterView?.backgroundColor = NRColor().domairTableViewSeparatorBorder()
         self.tableView.reloadData()
     }
     

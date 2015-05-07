@@ -13,7 +13,9 @@ import UIKit
 
 class NRResult: NSObject {
  
+    var searchedString: String?
     var domain: String?
+    var tld: String?
     var register_url: String?
     var host: String?
     var path: String?

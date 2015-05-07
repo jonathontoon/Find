@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Pods-CGPointIntegral.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-SVWebViewController.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -22,17 +27,22 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>97BB92929120485D7AB5B38C</key>
+		<key>06AB8352042DA4DF3A0F9D38</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A20E061AEDD2F23E20DD1583</key>
+		<key>3175817E99BDC91C6502DBA1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AFEEAA82254E351B5A916F5A</key>
+		<key>480F253CE5FDD8C8D4F75080</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A799ADA75C970FE2CD4E92C1</key>
 		<dict>
 			<key>primary</key>
 			<true/>

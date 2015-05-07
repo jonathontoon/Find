@@ -13,6 +13,9 @@ class NRActionButton: UIButton {
     init(frame: CGRect, buttonType: AvailabilityType) {
         super.init(frame: frame)
         
+        println("######")
+        println(buttonType == AvailabilityType.ComingSoon)
+        
         if buttonType == AvailabilityType.Available {
             self.setTitle("Buy Now", forState: UIControlState.Normal)
             self.backgroundColor = NRColor().domainrGreenColor()

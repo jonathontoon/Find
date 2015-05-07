@@ -15,17 +15,22 @@ enum AvailabilityType {
     case Unavailable
 }
 
-class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
+class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditionalInfoManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate {
 
     var result: NRResult!
     
-    var manager: NRInfoManager!
+    var infoManager: NRInfoManager!
     var info: NRInfo!
+    
+    var additionalInfoManager: NRAdditionalInfoManager!
+    var additionalInfo: NRAdditionalInfo!
     
     var availabilityType: AvailabilityType! = AvailabilityType.Available
     
     var navigationBarView: NRInfoNavigationBarView!
     var previousScrollOffsetY: CGFloat!
+    
+    var newNavigationBar: UINavigationBar!
     
     var tableView: UITableView!
     var actionButton: NRActionButton!
@@ -35,10 +40,15 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         
         self.result = result
         
-        manager = NRInfoManager()
-        manager.communicator = NRInfoCommunicator()
-        manager.communicator.delegate = manager
-        manager.delegate = self
+        infoManager = NRInfoManager()
+        infoManager.communicator = NRInfoCommunicator()
+        infoManager.communicator.delegate = infoManager
+        infoManager.delegate = self
+        
+        additionalInfoManager = NRAdditionalInfoManager()
+        additionalInfoManager.communicator = NRAdditionalInfoCommunicator()
+        additionalInfoManager.communicator.delegate = additionalInfoManager
+        additionalInfoManager.delegate = self
         
         startFetchingInfo()
     }
@@ -47,88 +57,142 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        styleNavigationBar()
+        self.navigationController!.interactivePopGestureRecognizer.delegate = self
+        
+        if  UIApplication.sharedApplication().statusBarStyle != .LightContent {
+            UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: true)
+        } else {
+            UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: false)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.translucent = true
-        self.navigationController?.navigationBar.barStyle = UIBarStyle.Black
-        
-        let cancelButtonItem: UIBarButtonItem = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "dismissViewController")
-        cancelButtonItem.tintColor = UIColor.whiteColor()
-        self.navigationController?.navigationBar.topItem?.leftBarButtonItem = cancelButtonItem
-        
         self.automaticallyAdjustsScrollViewInsets = false
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
+
+        availabilityType = AvailabilityType.Available
         
         if result.availability == "taken" {
             availabilityType = AvailabilityType.Taken
-        } else if result.availability == "maybe" {
+        } else if result.availability == "Coming Soon" {
             availabilityType = AvailabilityType.ComingSoon
+        } else if result.availability == "unavailable" {
+            availabilityType = AvailabilityType.Unavailable
         }
         
         tableView = UITableView(frame: CGRectMake(0, 0, self.view.frame.size.width, (self.view.frame.size.height - 50)), style: UITableViewStyle.Grouped)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: "NRDefaultCell")
-        tableView.registerClass(NRInfoViewRegistrarCell.self, forCellReuseIdentifier: "NRInfoViewRegistrarCell")
+        tableView.registerClass(NRInfoViewCell.self, forCellReuseIdentifier: "NRInfoViewCell")
+        tableView.registerClass(NRRegistrarCell.self, forCellReuseIdentifier: "NRRegistrarCell")
+        tableView.registerClass(NRDomainCell.self, forCellReuseIdentifier: "NRDomainCell")
         tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
-        navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 160), title: self.result.domain, subTitle: self.result.availability?.capitalizedString, labelType: availabilityType)
+        navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 175.0), title: self.result.domain, subTitle: self.result.availability?.capitalizedString, labelType: availabilityType, tld: result.tld)
         tableView.tableHeaderView = navigationBarView
+        tableView.tableHeaderView?.layer.zPosition = 100
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
         tableView.stickyHeader = true
+        tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
         tableView.tableFooterView = UIView(frame: CGRectZero)
-
+       
         self.view.addSubview(tableView)
         
-        let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 50.0, self.view.frame.size.width, 50.0)
-        actionButton = NRActionButton(frame: buttonFrame, buttonType: availabilityType)
-        actionButton.addTarget(self, action: "presentAction", forControlEvents: UIControlEvents.TouchUpInside)
-        self.view.addSubview(actionButton)
+        if availabilityType != AvailabilityType.Unavailable {
+            tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, availabilityType == AvailabilityType.Unavailable ? 0.0 : 25.0, 0.0)
+            
+            let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 50.0, self.view.frame.size.width, 50.0)
+            actionButton = NRActionButton(frame: buttonFrame, buttonType: availabilityType)
+            actionButton.addTarget(self, action: "presentAction", forControlEvents: UIControlEvents.TouchUpInside)
+            self.view.addSubview(actionButton)
+        }
+    }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        UIApplication.sharedApplication().statusBarStyle = UIStatusBarStyle.Default
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    }
+    
+    func styleNavigationBar() {
+        
+        if newNavigationBar == nil  {
+            self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+            newNavigationBar = UINavigationBar(frame: CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 64.0))
+            newNavigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+            newNavigationBar.shadowImage = UIImage()
+            newNavigationBar.translucent = true
+            newNavigationBar.tintColor = UIColor.whiteColor()
+            newNavigationBar.tag = 69
+            
+            let titleItem = UINavigationItem()
+            
+            let cancelButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "backButton")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), style: UIBarButtonItemStyle.Plain, target: self, action: "popViewController")
+            titleItem.leftBarButtonItem = cancelButtonItem
+            
+            newNavigationBar.setItems([titleItem], animated: false)
+            
+            self.view.addSubview(newNavigationBar)
+        }
     }
     
     func presentAction() {
 
         let registerURL: NSURL! = NSURL(string: info.register_url!)
-
-        let registerViewController: SVModalWebViewController = SVModalWebViewController(URL: registerURL)
+        
+        var navController: UINavigationController! = UINavigationController()
+        navController.navigationBar.barTintColor = UIColor.whiteColor()
+        navController.navigationBar.tintColor = NRColor().domainrBlueColor()
+        navController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: NRColor().domainrRegularDarkGreyColor()]
+        
+        let registerViewController: SVWebViewController = SVWebViewController(URL: registerURL)
         registerViewController.title = info.registrars?.objectAtIndex(0).valueForKey("name") as? String
-        registerViewController.navigationBar.barTintColor = UIColor.whiteColor()
-        registerViewController.navigationBar.translucent = false
-        registerViewController.navigationBar.tintColor = NRColor().domainrBlueColor()
-
-        self.presentViewController(registerViewController, animated: true, completion: nil)
+        
+        navController!.viewControllers = [registerViewController]
+        self.presentViewController(navController, animated: true, completion: nil)
         
     }
     
     func startFetchingInfo() {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-        manager.fetchInfoForDomain(result.domain)
+        infoManager.fetchInfoForDomain(result.domain)
+        additionalInfoManager.fetchAdditionalInfoForDomain(result.domain, searchedString: result.searchedString)
     }
     
-    // #pragma mark - NRResultsManagerDelegate
+    // #pragma mark - NRInfoManagerDelegate
     
     func didReceiveInfo(info: NRInfo!) {
         self.info = info
-        
-        println(self.info)
-        
-        dispatch_async(dispatch_get_main_queue(), {
-            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            self.tableView.reloadData()
-        });
     }
     
     func fetchingInfoFailedWithError(error: NSError!) {
         NSLog("Error %@; %@", error, error.localizedDescription)
     }
 
+    // #pragma mark - NRAdditionalInfoManagerDelegate
+    
+    func didReceiveAdditionalInfo(additionalInfo: NRAdditionalInfo!) {
+        self.additionalInfo = additionalInfo
+
+        dispatch_async(dispatch_get_main_queue(), {
+            UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            self.tableView.reloadData()
+        });
+    }
+    
+    func fetchingAdditionalInfoFailedWithError(error: NSError!) {
+        NSLog("Error %@; %@", error, error.localizedDescription)
+    }
+    
     // #pragma mark - UITableViewDataSource
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -138,6 +202,12 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         if info != nil {
             if info.registrars != nil {
                 sectionTotal++
+            }
+        }
+        
+        if additionalInfo != nil {
+            if additionalInfo.domainAlternatives != nil {
+                sectionTotal++;
             }
         }
         
@@ -157,16 +227,22 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
                 if info.tld?.valueForKey("wikipedia_url") != nil {
                    numberOfRows++
                 }
-                
-                //Suggestions
-                numberOfRows++;
+
             }
             
             if section == 1 {
-                if info.registrars?.count < 5 {
+                if info.registrars?.count < 4 {
                     numberOfRows = info.registrars!.count
                 } else {
-                    numberOfRows = 5
+                    numberOfRows = 4
+                }
+            }
+            
+            if section == 2 {
+                if additionalInfo.domainAlternatives?.count < 4 {
+                    numberOfRows = additionalInfo.domainAlternatives!.count
+                } else {
+                    numberOfRows = 4
                 }
             }
         }
@@ -185,19 +261,24 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     
     // #pragma mark - UITableViewDelegate
     
+    func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        return createSectionHeader(section)
+    }
+    
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         
         var height: CGFloat = 25.0
         
-        if section == 1 {
-            height = 30.0
+        if section == 1 || section == 2 {
+            height = 45.0
         }
         
         return height
     }
     
     func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0.0
+        return 1.0
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -208,9 +289,13 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
             cell = createDefaultCell(indexPath)
         } else if indexPath.section == 1 {
             cell = createRegistrarCell(indexPath)
+        } else if indexPath.section == 2 {
+            cell = createDomainCell(indexPath)
         }
         
-        cell.textLabel?.textColor = NRColor().domainrBlueColor()
+        cell.accessoryView = UIImageView(image: UIImage(named: "accessoryArrow")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
+        cell.accessoryView!.tintColor = NRColor().domainrAccessoryViewColor()
+        cell.selectionStyle = UITableViewCellSelectionStyle.None
         
         return cell
         
@@ -222,96 +307,261 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-        if indexPath.section == 0 {
-            
-            if indexPath.row == 0 {
-                
-                let whoisURL: NSURL! = NSURL(string: info.whois_url!)
-                let whoisViewController: SVWebViewController = SVWebViewController(URL: whoisURL)
-                whoisViewController.title = "Whois Info"
-                whoisViewController.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
-                whoisViewController.navigationController?.navigationBar.shadowImage = nil
-                whoisViewController.navigationController?.navigationBar.translucent = false
-                
-                self.navigationController?.pushViewController(whoisViewController, animated: true)
-                
-            } else if indexPath.row == 1 {
-                
-                let wikipediaURL: NSURL! = NSURL(string: info.tld!.valueForKey("wikipedia_url") as String)
-                let wikipediaViewController: SVWebViewController = SVWebViewController(URL: wikipediaURL)
-                wikipediaViewController.title = "TLD Wikipedia Article"
-                wikipediaViewController.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
-                wikipediaViewController.navigationController?.navigationBar.shadowImage = nil
-                wikipediaViewController.navigationController?.navigationBar.translucent = false
-                self.navigationController?.pushViewController(wikipediaViewController, animated: true)
-            
-            }
+        dispatch_async(dispatch_get_main_queue(), {
         
-        } else if indexPath.section == 1 {
+            var navController: UINavigationController! = UINavigationController()
+            navController.navigationBar.barTintColor = UIColor.whiteColor()
+            navController.navigationBar.tintColor = NRColor().domainrBlueColor()
+            navController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: NRColor().domainrRegularDarkGreyColor()]
             
-            if indexPath.row >= 4 {
+            if indexPath.section == 0 {
                 
-                let newArray: NSArray = info.registrars!.objectsAtIndexes(NSIndexSet(indexesInRange: NSMakeRange(4, info.registrars!.count-8))) as NSArray
-                let registrarsViewController: NRRegistrarViewController = NRRegistrarViewController(registrars: newArray)
-                registrarsViewController.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
-                registrarsViewController.navigationController?.navigationBar.shadowImage = nil
-                registrarsViewController.navigationController?.navigationBar.translucent = false
+                if indexPath.row == 0 {
+                    
+                    let whoisURL: NSURL! = NSURL(string: self.info.whois_url!)
+                    let whoisViewController: SVWebViewController = SVWebViewController(URL: whoisURL)
+                    whoisViewController.title = "Whois Info"
 
-                self.navigationController?.pushViewController(registrarsViewController, animated: true)
+                    self.navigationController?.pushViewController(whoisViewController, animated: true)
+                    
+                } else if indexPath.row == 1 {
+                    
+                    let wikipediaURL: NSURL! = NSURL(string: self.info.tld!.valueForKey("wikipedia_url") as! String)
+                    let wikipediaViewController: SVWebViewController = SVWebViewController(URL: wikipediaURL)
+                    wikipediaViewController.title = "TLD Wikipedia Article"
+
+                    self.navigationController?.pushViewController(wikipediaViewController, animated: true)
+                
+                }
             
-            } else {
+            } else if indexPath.section == 1 {
                 
-                let registrarURL: NSURL! = NSURL(string: info.registrars!.objectAtIndex(indexPath.row).valueForKey("register_url") as String)
-                let registrarViewController: SVWebViewController = SVWebViewController(URL: registrarURL)
-                registrarViewController.title = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String
-                registrarViewController.navigationController?.navigationBar.setBackgroundImage(nil, forBarMetrics: UIBarMetrics.Default)
-                registrarViewController.navigationController?.navigationBar.shadowImage = nil
-                registrarViewController.navigationController?.navigationBar.translucent = false
+                if indexPath.row > 2 {
+                    
+                    let registrars: NSArray = self.info.registrars!.subarrayWithRange(NSMakeRange(3, self.info.registrars!.count-3))
+                    let purchaseOptions: NSArray = self.additionalInfo.purchaseOptions
+                    let registrarsViewController: NRRegistrarsViewController = NRRegistrarsViewController(registrars: registrars, purchaseOptions: purchaseOptions)
+
+                    self.navigationController?.pushViewController(registrarsViewController, animated: true)
                 
-                self.navigationController?.pushViewController(registrarViewController, animated: true)
+                } else {
+                    
+                    let registrarURL: NSURL! = NSURL(string: self.info.registrars!.objectAtIndex(indexPath.row).valueForKey("register_url") as! String)
+                    let registrarViewController: SVWebViewController = SVWebViewController(URL: registrarURL)
+                    registrarViewController.title = self.info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String
+
+                    self.navigationController?.pushViewController(registrarViewController, animated: true)
+                    
+                }
+            
+            } else if indexPath.section == 2 {
+                
+                if indexPath.row > 2 {
+                    
+                    let newArray: NSArray = self.additionalInfo.domainAlternatives!.subarrayWithRange(NSMakeRange(3, self.additionalInfo.domainAlternatives!.count-3))
+                    let registrarsViewController: NRAlternativeDomainsViewController = NRAlternativeDomainsViewController(alternatives: newArray, result: self.result)
+            
+                    self.navigationController?.pushViewController(registrarsViewController, animated: true)
+                    
+                } else {
+                    
+                    let result: NRResult = self.result
+                    
+                    result.domain = self.additionalInfo.domainAlternatives.objectAtIndex(indexPath.row).objectForKey("text") as? String
+                    var availabilityString: NSString = (self.additionalInfo.domainAlternatives!.objectAtIndex(indexPath.row).valueForKey("class") as? NSString)!
+                    
+                    println("@@@@@@@@")
+                    println(result.domain)
+                    println(availabilityString)
+                    
+                    if availabilityString.rangeOfString("available").location != NSNotFound {
+                        result.availability = "available"
+                    } else if availabilityString.rangeOfString("maybe").location != NSNotFound || availabilityString.rangeOfString("coming soon").location != NSNotFound {
+                        result.availability = "Coming Soon"
+                    } else if availabilityString.rangeOfString("taken").location != NSNotFound {
+                        result.availability = "taken"
+                    }
+                
+                    let infoViewController: NRInfoViewController = NRInfoViewController(result: result)
+      
+                    self.navigationController?.pushViewController(infoViewController, animated: true)
+                    
+                }
                 
             }
-            
-        }
-        
+        });
     }
     
-    func createDefaultCell(indexPath: NSIndexPath!) -> NRDefaultCell {
+    func createDefaultCell(indexPath: NSIndexPath!) -> NRInfoViewCell {
         
-        var cell: NRDefaultCell? = tableView.dequeueReusableCellWithIdentifier("NRDefaultCell", forIndexPath: indexPath) as? NRDefaultCell
-        
-        if cell == nil {
-            cell = NRDefaultCell(style: .Default, reuseIdentifier: "NRDefaultCell")
-        }
-
-        cell?.textLabel?.text = "Whois Info"
-        cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        var titleString: String! = "Whois Info"
         
         if indexPath.row == 1 {
-            cell?.textLabel?.text = "TLD Wikipedia Article"
+           titleString = "TLD Wikipedia Article"
+        }
+
+        var cell: NRInfoViewCell? = tableView.dequeueReusableCellWithIdentifier("NRInfoViewCell", forIndexPath: indexPath) as? NRInfoViewCell
+        
+        if cell == nil {
+            cell = NRInfoViewCell(title: titleString)
+        } else {
+            cell?.addViews(titleString)
         }
 
         return cell!
         
     }
     
-    func createRegistrarCell(indexPath: NSIndexPath!) -> NRInfoViewRegistrarCell {
+    func createRegistrarCell(indexPath: NSIndexPath!) -> NRRegistrarCell {
         
-        var cell: NRInfoViewRegistrarCell? = tableView.dequeueReusableCellWithIdentifier("NRInfoViewRegistrarCell", forIndexPath: indexPath) as? NRInfoViewRegistrarCell
+        var cell: NRRegistrarCell! = tableView.dequeueReusableCellWithIdentifier("NRRegistrarCell", forIndexPath: indexPath) as? NRRegistrarCell
         
         if cell == nil {
-            cell = NRInfoViewRegistrarCell(style: .Default, reuseIdentifier: "NRInfoViewRegistrarCell")
+            cell = NRRegistrarCell(style: .Default, reuseIdentifier: "NRRegistrarCell")
+        } else {
+            cell.addViews()
         }
         
-        cell?.textLabel?.text = NSString(format: "View %d ", info.registrars!.count - 4) + "Others"
-        cell?.accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
+        if indexPath.row <= 2 {
+            var domainString: NSString = (info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String!)!
+            var metaString: NSString?
+            
+            if indexPath.row < additionalInfo.purchaseOptions!.count-1 {
+
+                metaString = (additionalInfo.purchaseOptions!.objectAtIndex(indexPath.row).valueForKey("text") as? NSString)!
+                
+                if metaString!.containsString("\n") {
+                    metaString = (metaString!.componentsSeparatedByString("\n") as NSArray).objectAtIndex(1) as? NSString
+                    
+                    if metaString!.containsString("students") {
+                        metaString = NSString(format: "Only %@", (metaString!.componentsSeparatedByString(" ") as NSArray).objectAtIndex(1) as! NSString)
+                    }
+                    
+                    if metaString!.containsString(".co sale") {
+                        metaString = ".co sale"
+                    }
+                } else {
+                    metaString = nil
+                }
+            }
+            
+            cell.setTextLabels(domainString as String, subTitle: metaString as? String)
+            cell.cellSubTitle.frame = CGRectMake(cell.frame.size.width - cell.cellSubTitle.frame.size.width - 30.0, cell.cellSubTitle.frame.origin.y, cell.cellSubTitle.frame.size.width, cell.cellSubTitle.frame.size.height)
+            
+        } else {
+            cell.setTextLabel(NSString(format: "View %d Others", info.registrars!.count - 3) as String)
+            cell.cellTitle.frame = CGRectMake(16.0, cell.cellTitle.frame.origin.y, cell.cellTitle.frame.size.width, cell.cellTitle.frame.size.height)
+        }
         
+        cell.cellTitle.frame = CGRectMake(15.0, 0, cell.cellTitle.frame.size.width, cell.cellTitle.frame.size.height)
+        cell.cellTitle.center.y = round(cell.contentView.center.y)
+        cell.cellTitle.frame = CGRectIntegral(cell.cellTitle.frame)
         
-        if indexPath.row < 4 {
-            cell?.textLabel?.text = info.registrars!.objectAtIndex(indexPath.row).valueForKey("name") as NSString
+        return cell!
+        
+    }
+    
+    func createDomainCell(indexPath: NSIndexPath!) -> NRDomainCell {
+        
+        var cell: NRDomainCell! = tableView.dequeueReusableCellWithIdentifier("NRDomainCell", forIndexPath: indexPath) as? NRDomainCell
+        
+        if cell == nil {
+            cell = NRDomainCell(style: .Default, reuseIdentifier: "NRDomainCell")
+        } else {
+            cell.addViews()
+        }
+        
+        if indexPath.row <= 2 {
+
+            var availabilityString: NSString = (additionalInfo.domainAlternatives!.objectAtIndex(indexPath.row).valueForKey("class") as? NSString)!
+            println(availabilityString)
+            cell.setAvailability(availabilityString as String)
+            
+            var domainString: NSString = (additionalInfo.domainAlternatives!.objectAtIndex(indexPath.row).valueForKey("text") as? NSString)!
+
+            cell.setTextLabel(domainString as String)
+        
+        } else {
+        
+            cell.status.removeFromSuperview()
+            cell.setTextLabel(NSString(format: "View %d Others", additionalInfo.domainAlternatives!.count - 3) as String)
+            cell.cellTitle.frame = CGRectMake(16.0, cell.cellTitle.frame.origin.y, cell.cellTitle.frame.size.width, cell.cellTitle.frame.size.height)
+            
         }
         
         return cell!
+        
+    }
+    
+    func createSectionHeader(section: Int) -> UIView {
+        
+        let headerView: UIView! = UIView()
+            headerView.frame = CGRectMake(0, 0, tableView.frame.size.width, 28.0)
+        
+        if additionalInfo != nil {
+            
+            if section == 1 {
+                
+                let headerImage: UIImageView! = UIImageView(image: UIImage(named: "shoppingCart")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
+                    headerImage.frame = CGRectMake(15.0, 24.0, 12.0, 11.0)
+                    headerImage.tintColor = NRColor().domainrSubtextGreyColor()
+                    headerImage.contentMode = UIViewContentMode.ScaleAspectFit
+                    headerView.addSubview(headerImage)
+                    headerImage.frame = CGRectIntegral(headerImage.frame)
+                
+                let headerTitle: UILabel! = UILabel()
+                    headerTitle.text = "PURCHASE OPTIONS"
+                    headerTitle.font = UIFont(name: "HelveticaNeue", size: 12.0)
+                    headerTitle.textColor = NRColor().domainrSubtextGreyColor()
+                    headerTitle.sizeToFit()
+                    headerTitle.frame = CGRectMake(33.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
+                    headerView.addSubview(headerTitle)
+                    
+                let idnLabel: UILabel! = UILabel(frame: CGRectMake(tableView.frame.size.width - (27.0 + 15.0), 21.0, 27.0, 16.0))
+                    idnLabel.text = "IDN"
+                    idnLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 10.0)
+                    idnLabel.textColor = UIColor.whiteColor()
+                    idnLabel.backgroundColor = NRColor().domainrOrangeColor()
+                    idnLabel.textAlignment = NSTextAlignment.Center
+                    idnLabel.layer.cornerRadius = 2.0
+                    idnLabel.clipsToBounds = true
+                    
+                let tldLabel: UILabel! = UILabel()
+                    tldLabel.text = (additionalInfo.domain != nil ? additionalInfo.domain.uppercaseString  : "")
+                    tldLabel.font = headerTitle.font
+                    tldLabel.textColor = headerTitle.textColor
+                    tldLabel.sizeToFit()
+                    
+                    if additionalInfo.isIDN == "IDN" {
+                        headerView.addSubview(idnLabel)
+                        tldLabel.frame = CGRectMake(idnLabel.frame.origin.x - (tldLabel.frame.size.width + 5.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
+                    } else {
+                        tldLabel.frame = CGRectMake(self.view.frame.size.width - (tldLabel.frame.size.width + 15.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
+                    }
+                    
+                    headerView.addSubview(tldLabel)
+
+            } else if section == 2 {
+             
+                let headerImage: UIImageView! = UIImageView(image: UIImage(named: "alternativeDomains")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
+                headerImage.frame = CGRectMake(15.0, 24.0, 12.0, 11.0)
+                headerImage.tintColor = NRColor().domainrSubtextGreyColor()
+                headerImage.contentMode = UIViewContentMode.ScaleAspectFit
+                headerView.addSubview(headerImage)
+                headerImage.frame = CGRectIntegral(headerImage.frame)
+                
+                let headerTitle: UILabel! = UILabel()
+                headerTitle.text = "ALTERNATIVE DOMAINS"
+                headerTitle.font = UIFont(name: "HelveticaNeue", size: 12.0)
+                headerTitle.textColor = NRColor().domainrSubtextGreyColor()
+                headerTitle.sizeToFit()
+                headerTitle.frame = CGRectMake(33.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
+                headerView.addSubview(headerTitle)
+
+            }
+        }
+        
+        return headerView
         
     }
     
@@ -329,30 +579,33 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
     // #pragma mark - UIScrollViewDelegate
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
-        resizeHeaderView(scrollView)
+        nr_resizeHeaderView(scrollView)
     }
     
     func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
-        resizeHeaderView(scrollView)
+        nr_resizeHeaderView(scrollView)
     }
     
     func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        resizeHeaderView(scrollView)
+        nr_resizeHeaderView(scrollView)
     }
     
     func scrollViewWillBeginDragging(scrollView: UIScrollView) {
-        resizeHeaderView(scrollView)
+        nr_resizeHeaderView(scrollView)
     }
     
     func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
-        resizeHeaderView(scrollView)
+        nr_resizeHeaderView(scrollView)
     }
     
-    func dismissViewController() {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    func popViewController() {
+        
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        self.presentingViewController?.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
-    func resizeHeaderView(scrollView: UIScrollView) {
+    func nr_resizeHeaderView(scrollView: UIScrollView) {
         
         if previousScrollOffsetY == nil {
             previousScrollOffsetY = scrollView.contentOffset.y
@@ -361,16 +614,23 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, UITableView
         if scrollView.isEqual(tableView) {
             
             let velocity: CGFloat = scrollView.panGestureRecognizer.velocityInView(scrollView).y
-            let offset: CGFloat = scrollView.contentOffset.y
+            var offset: CGFloat! = scrollView.contentOffset.y
             
-            println(offset)
+            NSLog("offset %f", offset)
+            NSLog("height %f", tableView.tableHeaderView!.frame.size.height)
             
-            if offset < 94.0 {
-                tableView.tableHeaderView!.frame.size.height += (previousScrollOffsetY - scrollView.contentOffset.y)
+            if offset < 111.0 {
+                
+                if offset < 0 {
+                    tableView.tableHeaderView!.frame.size.height = 175.0
+                } else {
+                    tableView.tableHeaderView!.frame.size.height += (previousScrollOffsetY - scrollView.contentOffset.y)
+                }
+                
                 previousScrollOffsetY = offset
             } else {
                 tableView.tableHeaderView!.frame.size.height = 64.0
-                previousScrollOffsetY = 94.0
+                previousScrollOffsetY = 111.0
             }
             navigationBarView.centerElements()
             tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)

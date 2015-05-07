@@ -14,7 +14,7 @@ class NRResultsCommunicator: NSObject {
     
     func searchForDomainsThatContainQuery(query: NSString!) {
        
-        let urlAsString: String = String(format: "https://domainr.com/api/json/search?client_id=example&q=%@", query.stringByReplacingOccurrencesOfString(" ", withString: ""))
+        let urlAsString: String = String(format: "https://api.domainr.com/v1/search?client_id=find&q=%@", query.stringByReplacingOccurrencesOfString(" ", withString: ""))
             
         let url: NSURL = NSURL(string: urlAsString)!
         

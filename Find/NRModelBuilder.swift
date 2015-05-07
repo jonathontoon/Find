@@ -18,15 +18,15 @@ class NRModelBuilder: NSObject {
         
         if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
 
-            let pulledResults: NSArray = parsedObject.valueForKey("results") as NSArray
+            let pulledResults: NSArray = parsedObject.valueForKey("results") as! NSArray
             
-            for resultDic in pulledResults as [NSDictionary] {
+            for resultDic in pulledResults as! [NSDictionary] {
                 let result: NRResult = NRResult()
                 
                 for object in resultDic {
                     
-                    if result.respondsToSelector(NSSelectorFromString(object.key as String)) {
-                        result.setValue(object.value, forKey:object.key as String)
+                    if result.respondsToSelector(NSSelectorFromString(object.key as! String)) {
+                        result.setValue(object.value, forKey:object.key as! String)
                     }
                 }
                 
@@ -48,8 +48,8 @@ class NRModelBuilder: NSObject {
         if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
             
             for object in parsedObject {
-                if info.respondsToSelector(NSSelectorFromString(object.key as String)) {
-                    info.setValue(object.value, forKey:object.key as String)
+                if info.respondsToSelector(NSSelectorFromString(object.key as! String)) {
+                    info.setValue(object.value, forKey:object.key as! String)
                 }
             }
             
@@ -60,22 +60,42 @@ class NRModelBuilder: NSObject {
         return info
     }
     
-    func getSuggestionsFromJSON(objectNotation: NSData!, error: NSError?) -> NSArray? {
+    func getSearchSuggestionsFromJSON(objectNotation: NSData!, error: NSError?) -> NSArray? {
         
         println(objectNotation)
         
-        var suggestions: NSArray!
+        var searchSuggestions: NSArray!
         var error: NSError? = nil
         
         if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
             
             println(parsedObject)
-            suggestions = parsedObject.objectForKey("results") as NSArray
+            searchSuggestions = parsedObject.objectForKey("results") as! NSArray
             
         } else {
             println("Could not parse JSON: \(error!)")
         }
         
-        return suggestions
+        return searchSuggestions
+    }
+    
+    func getAdditionalInfoFromJSON(objectNotation: NSData!, error: NSError?) -> NRAdditionalInfo? {
+
+        let additionalInfo = NRAdditionalInfo()
+        var error: NSError? = nil
+        
+        if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
+
+            for object in parsedObject {
+                if additionalInfo.respondsToSelector(NSSelectorFromString(object.key as! String)) {
+                    additionalInfo.setValue(object.value, forKey:object.key as! String)
+                }
+            }
+
+        } else {
+            println("Could not parse JSON: \(error!)")
+        }
+        
+        return additionalInfo
     }
 }
