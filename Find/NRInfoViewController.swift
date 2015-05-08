@@ -157,10 +157,12 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
             availabilityType = AvailabilityType.Unavailable
         }
         
-        navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 175.0), title: self.info.domain, subTitle: self.info.availability?.capitalizedString, labelType: availabilityType, tld: result.tld)
+        if navigationBarView == nil {
+            navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 175.0), title: self.info.domain, subTitle: self.info.availability?.capitalizedString, labelType: availabilityType, tld: result.tld)
         
-        tableView.tableHeaderView = navigationBarView
-        tableView.tableHeaderView!.layer.zPosition = 100
+            tableView.tableHeaderView = navigationBarView
+            tableView.tableHeaderView!.layer.zPosition = 100
+        }
         
         if result.availability != "unavailable" {
             tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, (self.view.frame.size.height - 50))

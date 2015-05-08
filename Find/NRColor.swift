@@ -11,7 +11,7 @@ import UIKit
 class NRColor: UIColor {
 
     func domainrBackgroundGreyColor() -> UIColor {
-        return UIColor(CSS: "F9FAF9")
+        return UIColor(CSS: "F5F5F5")
     }
     
     func domainrBackgroundBlackColor() -> UIColor {
