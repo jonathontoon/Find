@@ -88,7 +88,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         self.automaticallyAdjustsScrollViewInsets = false
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
         
-        tableView = UITableView(frame: CGRectMake(0, 0, self.view.frame.size.width, (self.view.frame.size.height - 50)), style: UITableViewStyle.Grouped)
+        tableView = UITableView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height), style: UITableViewStyle.Grouped)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(NRInfoViewCell.self, forCellReuseIdentifier: "NRInfoViewCell")
@@ -103,7 +103,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
         tableView.tableFooterView = UIView(frame: CGRectZero)
         tableView.scrollEnabled = false
-        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 0.0, 0.0)
+        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 25.0, 0.0)
        
         self.view.addSubview(tableView)
 
@@ -151,7 +151,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         
         if result.availability == "taken" {
             availabilityType = AvailabilityType.Taken
-        } else if result.availability == "Coming Soon" {
+        } else if result.availability == "Coming Soon" || result.availability == "maybe" {
             availabilityType = AvailabilityType.ComingSoon
         } else if result.availability == "unavailable" {
             availabilityType = AvailabilityType.Unavailable
@@ -163,7 +163,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         tableView.tableHeaderView!.layer.zPosition = 100
         
         if result.availability != "unavailable" {
-            tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 25.0, 0.0)
+            tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, (self.view.frame.size.height - 50))
             
             let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 50.0, self.view.frame.size.width, 50.0)
             actionButton = NRActionButton(frame: buttonFrame, buttonType: availabilityType)
@@ -187,7 +187,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         registerViewController.title = info.registrars?.objectAtIndex(0).valueForKey("name") as? String
         
         navController!.viewControllers = [registerViewController]
-        self.presentViewController(navController, animated: true, completion: nil)
+        self.navigationController?.pushViewController(navController, animated: true)
         
     }
     
