@@ -42,7 +42,7 @@ class NRDomainCell: NRDefaultCell {
         
         status.backgroundColor = NRColor().domainrListIconGreyColor()
         
-        if (availability as NSString).rangeOfString("available").location != NSNotFound {
+        if (availability as NSString).rangeOfString("available").location != NSNotFound && (availability as NSString).rangeOfString("unavailable").location == NSNotFound {
             status.backgroundColor = NRColor().domainrGreenColor()
         } else if (availability as NSString).rangeOfString("maybe").location != NSNotFound || (availability as NSString).rangeOfString("coming soon").location != NSNotFound {
             status.layer.backgroundColor = UIColor.clearColor().CGColor
@@ -50,6 +50,8 @@ class NRDomainCell: NRDefaultCell {
             status.layer.borderWidth = 1.0
         } else if (availability as NSString).rangeOfString("taken").location != NSNotFound {
             status.backgroundColor = NRColor().domainrBlueColor()
+        } else if (availability as NSString).rangeOfString("unavailable").location != NSNotFound {
+            status.backgroundColor = NRColor().domainrRedColor()
         }
     }
     

@@ -28,6 +28,13 @@ class NRSearchSuggestionsViewController: UIViewController, NRSearchSuggestionsMa
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(animated: Bool) {
+        var selection: NSIndexPath? = self.tableView?.indexPathForSelectedRow()
+        if (selection != nil) {
+            self.tableView.deselectRowAtIndexPath(selection!, animated:true)
+        }
+    }
+    
     override func viewDidLoad() {
         self.title = "Search Suggestions"
         
@@ -130,7 +137,7 @@ class NRSearchSuggestionsViewController: UIViewController, NRSearchSuggestionsMa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+
     }
     
 }

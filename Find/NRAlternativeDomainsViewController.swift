@@ -32,6 +32,11 @@ class NRAlternativeDomainsViewController: UIViewController, UIGestureRecognizerD
         
         styleNavigationBar()
         self.navigationController!.interactivePopGestureRecognizer.delegate = self
+        
+        var selection: NSIndexPath? = self.tableView?.indexPathForSelectedRow()
+        if (selection != nil) {
+            self.tableView.deselectRowAtIndexPath(selection!, animated:true)
+        }
     }
     
     override func viewDidLoad() {

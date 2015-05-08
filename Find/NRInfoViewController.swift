@@ -75,6 +75,11 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         } else {
             UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: false)
         }
+        
+        var selection: NSIndexPath? = self.tableView?.indexPathForSelectedRow()
+        if (selection != nil) {
+            self.tableView.deselectRowAtIndexPath(selection!, animated:true)
+        }
     }
     
     override func viewDidLoad() {
@@ -414,6 +419,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
                 }
                 
             }
+
         });
     }
     
