@@ -20,7 +20,7 @@ class NRSearchSuggestionsManager: NSObject, NRSearchSuggestionsCommunicatorDeleg
     // #pragma mark - NRSearchSuggestionsManagerDelegate
     func receivedSearchSuggestionsJSON(objectNotation: NSData) {
         var localError: NSError? = nil
-        var suggestions: NSArray = NRModelBuilder().getSearchSuggestionsFromJSON(objectNotation, error: localError)!
+        var suggestions: NSArray = NRModelBuilder().getSearchSuggestionsFromJSON(objectNotation, error: &localError)!
         
         if localError != nil {
             self.delegate.fetchingSearchSuggestionsFailedWithError(localError)

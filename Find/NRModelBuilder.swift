@@ -11,12 +11,12 @@ import UIKit
 
 class NRModelBuilder: NSObject {
 
-    func getResultsFromJSON(objectNotation: NSData!, error: NSError?) -> NSMutableArray {
+    func getResultsFromJSON(objectNotation: NSData!, error: NSErrorPointer!) -> NSMutableArray {
         
         let results: NSMutableArray = NSMutableArray()
-        var error: NSError? = nil
+        let localError: NSErrorPointer = error
         
-        if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
+        if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error: localError) as? NSDictionary {
 
             let pulledResults: NSArray = parsedObject.valueForKey("results") as! NSArray
             
@@ -34,18 +34,18 @@ class NRModelBuilder: NSObject {
             }
             
         } else {
-            println("Could not parse JSON: \(error!)")
+            println("Could not parse JSON: \(localError)")
         }
 
         return results;
     }
     
-    func getInfoFromJSON(objectNotation: NSData!, error: NSError?) -> NRInfo {
+    func getInfoFromJSON(objectNotation: NSData!, error: NSErrorPointer!) -> NRInfo {
 
         let info: NRInfo = NRInfo()
-        var error: NSError? = nil
-        
-        if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
+        let localError: NSErrorPointer = error
+
+        if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error: localError) as? NSDictionary {
             
             for object in parsedObject {
                 if info.respondsToSelector(NSSelectorFromString(object.key as! String)) {
@@ -54,37 +54,37 @@ class NRModelBuilder: NSObject {
             }
             
         } else {
-            println("Could not parse JSON: \(error!)")
+            println("Could not parse JSON: \(localError)")
         }
         
         return info
     }
     
-    func getSearchSuggestionsFromJSON(objectNotation: NSData!, error: NSError?) -> NSArray? {
+    func getSearchSuggestionsFromJSON(objectNotation: NSData!, error: NSErrorPointer!) -> NSArray? {
         
         println(objectNotation)
         
         var searchSuggestions: NSArray!
-        var error: NSError? = nil
-        
-        if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
+        let localError: NSErrorPointer = error
+  
+        if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error: localError) as? NSDictionary {
             
             println(parsedObject)
             searchSuggestions = parsedObject.objectForKey("results") as! NSArray
             
         } else {
-            println("Could not parse JSON: \(error!)")
+            println("Could not parse JSON: \(error)")
         }
         
         return searchSuggestions
     }
     
-    func getAdditionalInfoFromJSON(objectNotation: NSData!, error: NSError?) -> NRAdditionalInfo? {
+    func getAdditionalInfoFromJSON(objectNotation: NSData!, error: NSErrorPointer!) -> NRAdditionalInfo? {
 
         let additionalInfo = NRAdditionalInfo()
-        var error: NSError? = nil
+        let localError: NSErrorPointer = error
         
-        if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error:&error) as? NSDictionary {
+        if let parsedObject: NSDictionary = NSJSONSerialization.JSONObjectWithData(objectNotation, options: nil, error: localError) as? NSDictionary {
 
             for object in parsedObject {
                 if additionalInfo.respondsToSelector(NSSelectorFromString(object.key as! String)) {
@@ -93,7 +93,7 @@ class NRModelBuilder: NSObject {
             }
 
         } else {
-            println("Could not parse JSON: \(error!)")
+            println("Could not parse JSON: \(localError)")
         }
         
         return additionalInfo

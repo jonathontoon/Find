@@ -20,7 +20,7 @@ class NRInfoManager: NSObject, NRInfoCommunicatorDelegate {
     // #pragma mark - NRInfoManagerDelegate
     func receivedDomainInfoJSON(objectNotation: NSData) {
         var localError: NSError? = nil
-        let info: NRInfo = NRModelBuilder().getInfoFromJSON(objectNotation, error: localError)
+        let info: NRInfo = NRModelBuilder().getInfoFromJSON(objectNotation, error: &localError)
         
         if localError != nil {
             self.delegate.fetchingInfoFailedWithError(localError)

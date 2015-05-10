@@ -58,8 +58,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         self.tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: suggestionOptionCellIdentifier)
         self.tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
         self.tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
-        self.tableView.contentInset = UIEdgeInsetsMake(25.0, 0, 0.0, 0)
-        self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(44, 0, 0, 0)
+        self.tableView.contentInset = UIEdgeInsetsMake(25.0, 0, 25.0, 0)
         self.navigationItem.titleView = resultsSearchController.searchBar
     }
 

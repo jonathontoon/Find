@@ -174,6 +174,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         }
         
         tableView.scrollEnabled = true
+        tableView.reloadData()
     }
     
     func presentAction() {
@@ -206,7 +207,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     }
     
     func fetchingInfoFailedWithError(error: NSError!) {
-        NSLog("Error %@; %@", error, error.localizedDescription)
+        NSLog("Error Info %@; %@", error, error.localizedDescription)
     }
 
     // #pragma mark - NRAdditionalInfoManagerDelegate
@@ -217,12 +218,11 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         dispatch_async(dispatch_get_main_queue(), {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
             self.reloadViews()
-            self.tableView.reloadData()
         });
     }
     
     func fetchingAdditionalInfoFailedWithError(error: NSError!) {
-        NSLog("Error %@; %@", error, error.localizedDescription)
+        NSLog("Error Additional Info %@; %@", error, error.localizedDescription)
     }
     
     // #pragma mark - UITableViewDataSource
@@ -232,13 +232,14 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         var sectionTotal: Int = 1
         
         if info != nil {
-            if info.registrars != nil {
+            if info.registrars!.count > 0 {
                 sectionTotal++
             }
         }
         
         if additionalInfo != nil {
-            if additionalInfo.domainAlternatives != nil {
+            println(additionalInfo.domainAlternatives.count)
+            if additionalInfo.domainAlternatives!.count > 0 {
                 sectionTotal++;
             }
         }
@@ -262,16 +263,24 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
 
             }
             
-            if section == 1 {
-                if info.registrars?.count < 4 {
+            if section == 1 && info.registrars!.count > 0 {
+                
+                if info.registrars!.count < 4 {
                     numberOfRows = info.registrars!.count
+                } else {
+                    numberOfRows = 4
+                }
+                
+            } else if section == 1 && additionalInfo.domainAlternatives!.count > 0 {
+                if additionalInfo.domainAlternatives!.count < 4 {
+                    numberOfRows = additionalInfo.domainAlternatives!.count
                 } else {
                     numberOfRows = 4
                 }
             }
             
-            if section == 2 {
-                if additionalInfo.domainAlternatives?.count < 4 {
+            if section == 2 && additionalInfo.domainAlternatives!.count > 0 {
+                if additionalInfo.domainAlternatives!.count < 4 {
                     numberOfRows = additionalInfo.domainAlternatives!.count
                 } else {
                     numberOfRows = 4
@@ -295,7 +304,17 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        return createSectionHeader(section)
+        if section == 1 && info.registrars!.count > 0 {
+            return createPurchaseHeader()
+        } else if section == 1 && info.registrars!.count < 1 && additionalInfo.domainAlternatives!.count > 0 {
+            return createAlternativesHeader()
+        }
+        
+        if section == 2 && additionalInfo.domainAlternatives!.count > 0 {
+            return createAlternativesHeader()
+        }
+        
+        return UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 28.0))
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -319,9 +338,11 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         
         if indexPath.section == 0 {
             cell = createDefaultCell(indexPath)
-        } else if indexPath.section == 1 {
+        } else if indexPath.section == 1 && info.registrars!.count > 0 {
             cell = createRegistrarCell(indexPath)
-        } else if indexPath.section == 2 {
+        } else if indexPath.section == 1 && additionalInfo.domainAlternatives!.count > 0 {
+            cell = createDomainCell(indexPath)
+        } else if indexPath.section == 2 && additionalInfo.domainAlternatives!.count > 0 {
             cell = createDomainCell(indexPath)
         }
         
@@ -366,7 +387,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
                 
                 }
             
-            } else if indexPath.section == 1 {
+            } else if indexPath.section == 1 && self.info.registrars!.count > 0 {
                 
                 if indexPath.row > 2 {
                     
@@ -386,7 +407,37 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
                     
                 }
             
-            } else if indexPath.section == 2 {
+            } else if indexPath.section == 1 && self.additionalInfo.domainAlternatives!.count > 0 {
+                
+                if indexPath.row > 2 {
+                    
+                    let newArray: NSArray = self.additionalInfo.domainAlternatives!.subarrayWithRange(NSMakeRange(3, self.additionalInfo.domainAlternatives!.count-3))
+                    let registrarsViewController: NRAlternativeDomainsViewController = NRAlternativeDomainsViewController(alternatives: newArray, result: self.result)
+                    
+                    self.navigationController?.pushViewController(registrarsViewController, animated: true)
+                    
+                } else {
+                    
+                    let result: NRResult = self.result
+                    
+                    result.domain = self.additionalInfo.domainAlternatives.objectAtIndex(indexPath.row).objectForKey("text") as? String
+                    var availabilityString: NSString = (self.additionalInfo.domainAlternatives!.objectAtIndex(indexPath.row).valueForKey("class") as? NSString)!
+                    
+                    if availabilityString.rangeOfString("available").location != NSNotFound {
+                        result.availability = "available"
+                    } else if availabilityString.rangeOfString("maybe").location != NSNotFound || availabilityString.rangeOfString("coming soon").location != NSNotFound {
+                        result.availability = "Coming Soon"
+                    } else if availabilityString.rangeOfString("taken").location != NSNotFound {
+                        result.availability = "taken"
+                    }
+                    
+                    let infoViewController: NRInfoViewController = NRInfoViewController(result: result)
+                    
+                    self.navigationController?.pushViewController(infoViewController, animated: true)
+                    
+                }
+                
+            } else if indexPath.section == 2 && self.additionalInfo.domainAlternatives!.count > 0 {
                 
                 if indexPath.row > 2 {
                     
@@ -401,10 +452,6 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
                     
                     result.domain = self.additionalInfo.domainAlternatives.objectAtIndex(indexPath.row).objectForKey("text") as? String
                     var availabilityString: NSString = (self.additionalInfo.domainAlternatives!.objectAtIndex(indexPath.row).valueForKey("class") as? NSString)!
-                    
-                    println("@@@@@@@@")
-                    println(result.domain)
-                    println(availabilityString)
                     
                     if availabilityString.rangeOfString("available").location != NSNotFound {
                         result.availability = "available"
@@ -526,76 +573,75 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         
     }
     
-    func createSectionHeader(section: Int) -> UIView {
+    func createPurchaseHeader() -> UIView {
+        
+        let headerView: UIView! = UIView()
+            headerView.frame = CGRectMake(0, 0, tableView.frame.size.width, 28.0)
+
+        let headerImage: UIImageView! = UIImageView(image: UIImage(named: "shoppingCart")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
+            headerImage.frame = CGRectMake(15.0, 24.0, 12.0, 11.0)
+            headerImage.tintColor = NRColor().domainrSubtextGreyColor()
+            headerImage.contentMode = UIViewContentMode.ScaleAspectFit
+            headerView.addSubview(headerImage)
+            headerImage.frame = CGRectIntegral(headerImage.frame)
+        
+        let headerTitle: UILabel! = UILabel()
+            headerTitle.text = "PURCHASE OPTIONS"
+            headerTitle.font = UIFont(name: "HelveticaNeue", size: 12.0)
+            headerTitle.textColor = NRColor().domainrSubtextGreyColor()
+            headerTitle.sizeToFit()
+            headerTitle.frame = CGRectMake(33.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
+            headerView.addSubview(headerTitle)
+        
+        let idnLabel: UILabel! = UILabel(frame: CGRectMake(tableView.frame.size.width - (27.0 + 15.0), 21.0, 27.0, 16.0))
+            idnLabel.text = "IDN"
+            idnLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 10.0)
+            idnLabel.textColor = UIColor.whiteColor()
+            idnLabel.backgroundColor = NRColor().domainrOrangeColor()
+            idnLabel.textAlignment = NSTextAlignment.Center
+            idnLabel.layer.cornerRadius = 2.0
+            idnLabel.clipsToBounds = true
+        
+        let tldLabel: UILabel! = UILabel()
+            tldLabel.text = (additionalInfo.domain != nil ? additionalInfo.domain.uppercaseString  : "")
+            tldLabel.font = headerTitle.font
+            tldLabel.textColor = headerTitle.textColor
+            tldLabel.sizeToFit()
+        
+        if additionalInfo.isIDN == "IDN" {
+            headerView.addSubview(idnLabel)
+            tldLabel.frame = CGRectMake(idnLabel.frame.origin.x - (tldLabel.frame.size.width + 5.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
+        } else {
+            tldLabel.frame = CGRectMake(self.view.frame.size.width - (tldLabel.frame.size.width + 15.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
+        }
+        
+            headerView.addSubview(tldLabel)
+        
+        return headerView
+        
+    }
+    
+    func createAlternativesHeader() -> UIView {
         
         let headerView: UIView! = UIView()
             headerView.frame = CGRectMake(0, 0, tableView.frame.size.width, 28.0)
         
-        if additionalInfo != nil {
-            
-            if section == 1 {
-                
-                let headerImage: UIImageView! = UIImageView(image: UIImage(named: "shoppingCart")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
-                    headerImage.frame = CGRectMake(15.0, 24.0, 12.0, 11.0)
-                    headerImage.tintColor = NRColor().domainrSubtextGreyColor()
-                    headerImage.contentMode = UIViewContentMode.ScaleAspectFit
-                    headerView.addSubview(headerImage)
-                    headerImage.frame = CGRectIntegral(headerImage.frame)
-                
-                let headerTitle: UILabel! = UILabel()
-                    headerTitle.text = "PURCHASE OPTIONS"
-                    headerTitle.font = UIFont(name: "HelveticaNeue", size: 12.0)
-                    headerTitle.textColor = NRColor().domainrSubtextGreyColor()
-                    headerTitle.sizeToFit()
-                    headerTitle.frame = CGRectMake(33.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
-                    headerView.addSubview(headerTitle)
-                    
-                let idnLabel: UILabel! = UILabel(frame: CGRectMake(tableView.frame.size.width - (27.0 + 15.0), 21.0, 27.0, 16.0))
-                    idnLabel.text = "IDN"
-                    idnLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 10.0)
-                    idnLabel.textColor = UIColor.whiteColor()
-                    idnLabel.backgroundColor = NRColor().domainrOrangeColor()
-                    idnLabel.textAlignment = NSTextAlignment.Center
-                    idnLabel.layer.cornerRadius = 2.0
-                    idnLabel.clipsToBounds = true
-                    
-                let tldLabel: UILabel! = UILabel()
-                    tldLabel.text = (additionalInfo.domain != nil ? additionalInfo.domain.uppercaseString  : "")
-                    tldLabel.font = headerTitle.font
-                    tldLabel.textColor = headerTitle.textColor
-                    tldLabel.sizeToFit()
-                    
-                    if additionalInfo.isIDN == "IDN" {
-                        headerView.addSubview(idnLabel)
-                        tldLabel.frame = CGRectMake(idnLabel.frame.origin.x - (tldLabel.frame.size.width + 5.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
-                    } else {
-                        tldLabel.frame = CGRectMake(self.view.frame.size.width - (tldLabel.frame.size.width + 15.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
-                    }
-                    
-                    headerView.addSubview(tldLabel)
-
-            } else if section == 2 {
-             
-                let headerImage: UIImageView! = UIImageView(image: UIImage(named: "alternativeDomains")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
-                headerImage.frame = CGRectMake(15.0, 24.0, 12.0, 11.0)
-                headerImage.tintColor = NRColor().domainrSubtextGreyColor()
-                headerImage.contentMode = UIViewContentMode.ScaleAspectFit
-                headerView.addSubview(headerImage)
-                headerImage.frame = CGRectIntegral(headerImage.frame)
-                
-                let headerTitle: UILabel! = UILabel()
-                headerTitle.text = "ALTERNATIVE DOMAINS"
-                headerTitle.font = UIFont(name: "HelveticaNeue", size: 12.0)
-                headerTitle.textColor = NRColor().domainrSubtextGreyColor()
-                headerTitle.sizeToFit()
-                headerTitle.frame = CGRectMake(33.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
-                headerView.addSubview(headerTitle)
-
-            }
-        }
+        let headerImage: UIImageView! = UIImageView(image: UIImage(named: "alternativeDomains")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
+            headerImage.frame = CGRectMake(15.0, 24.0, 12.0, 11.0)
+            headerImage.tintColor = NRColor().domainrSubtextGreyColor()
+            headerImage.contentMode = UIViewContentMode.ScaleAspectFit
+            headerView.addSubview(headerImage)
+            headerImage.frame = CGRectIntegral(headerImage.frame)
+        
+        let headerTitle: UILabel! = UILabel()
+            headerTitle.text = "ALTERNATIVE DOMAINS"
+            headerTitle.font = UIFont(name: "HelveticaNeue", size: 12.0)
+            headerTitle.textColor = NRColor().domainrSubtextGreyColor()
+            headerTitle.sizeToFit()
+            headerTitle.frame = CGRectMake(33.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
+            headerView.addSubview(headerTitle)
         
         return headerView
-        
     }
     
     func tableViewWillFinishLoading(tableView: UITableView) {

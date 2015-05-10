@@ -19,8 +19,8 @@ class NRAdditionalInfoManager: NSObject, NRAdditionalInfoCommunicatorDelegate {
     
     // #pragma mark - NRAdditionalInfoManagerDelegate
     func receivedAdditionalInfoJSON(objectNotation: NSData) {
-        var localError: NSError? = nil
-        var additionalInfo: NRAdditionalInfo = NRModelBuilder().getAdditionalInfoFromJSON(objectNotation, error: localError)!
+        var localError: NSError?
+        var additionalInfo: NRAdditionalInfo = NRModelBuilder().getAdditionalInfoFromJSON(objectNotation, error: &localError)!
         
         if localError != nil {
             self.delegate.fetchingAdditionalInfoFailedWithError(localError)
