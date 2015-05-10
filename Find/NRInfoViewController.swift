@@ -208,6 +208,20 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     
     func fetchingInfoFailedWithError(error: NSError!) {
         NSLog("Error Info %@; %@", error, error.localizedDescription)
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        self.activityIndicatorView.hidden = true
+        
+        let alert = UIAlertController(title: "Oops!", message: "Uhoh, it looks like this page failed to load.", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.Default, handler: { action in
+            self.activityIndicatorView.hidden = false
+            self.startFetchingInfo()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Go Back", style: UIAlertActionStyle.Destructive, handler: { action in
+            self.popViewController()
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
 
     // #pragma mark - NRAdditionalInfoManagerDelegate
@@ -223,6 +237,21 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     
     func fetchingAdditionalInfoFailedWithError(error: NSError!) {
         NSLog("Error Additional Info %@; %@", error, error.localizedDescription)
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        self.activityIndicatorView.hidden = true
+        
+        let alert = UIAlertController(title: "Oops!", message: "Uhoh, it looks like this page failed to load.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addAction(UIAlertAction(title: "Go Back", style: UIAlertActionStyle.Destructive, handler: { action in
+            self.popViewController()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.Default, handler: { action in
+            self.activityIndicatorView.hidden = false
+            self.startFetchingInfo()
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     // #pragma mark - UITableViewDataSource
@@ -288,14 +317,6 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
             }
         }
         
-        if section == tableView.numberOfSections()-1 {
-            // cancel the perform request if there is another section
-            NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: "tableViewWillFinishLoading:", object: tableView)
-            
-            // create a perform request to call the didLoadRows method on the next event loop.
-            self.callSelector("tableViewWillFinishLoading:", object:tableView, delay:0)
-        }
-
         return numberOfRows
         
     }
@@ -644,17 +665,6 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         return headerView
     }
     
-    func tableViewWillFinishLoading(tableView: UITableView) {
-//        println(tableView.contentSize.height)
-//        println(UIScreen.mainScreen().bounds.height)
-//        if tableView.contentSize.height < UIScreen.mainScreen().bounds.height {
-//            tableView.scrollEnabled = false
-//        } else {
-//            tableView.scrollEnabled = true
-//        }
-        
-    }
-    
     // #pragma mark - UIScrollViewDelegate
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -677,6 +687,10 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         nr_resizeHeaderView(scrollView)
     }
     
+    func reloadView() {
+        self.activityIndicatorView.hidden = false
+    }
+    
     func popViewController() {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -694,10 +708,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
             
             let velocity: CGFloat = scrollView.panGestureRecognizer.velocityInView(scrollView).y
             var offset: CGFloat! = scrollView.contentOffset.y
-            
-            NSLog("offset %f", offset)
-            NSLog("height %f", tableView.tableHeaderView!.frame.size.height)
-            
+
             if offset < 111.0 {
                 
                 if offset < 0 {
