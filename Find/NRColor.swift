@@ -11,7 +11,7 @@ import UIKit
 class NRColor: UIColor {
 
     func domainrBackgroundGreyColor() -> UIColor {
-        return UIColor(CSS: "F9FAF9")
+        return UIColor(CSS: "F5F5F5")
     }
     
     func domainrBackgroundBlackColor() -> UIColor {
@@ -33,9 +33,13 @@ class NRColor: UIColor {
     func domainrAccessoryViewColor() -> UIColor {
         return UIColor(CSS: "949693")
     }
-        
+    
+    func domainrTableViewCellSelectedColor() -> UIColor {
+        return UIColor(CSS: "EBEBEB")
+    }
+    
     func domairTableViewSeparatorBorder() -> UIColor {
-        return UIColor(CSS: "E6E7E6")
+        return UIColor(CSS: "DEDEDE")
     }
     
     func domainrBlueColor() -> UIColor {

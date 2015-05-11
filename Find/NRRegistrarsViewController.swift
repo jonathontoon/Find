@@ -36,26 +36,17 @@ class NRRegistrarsViewController: UIViewController, UIGestureRecognizerDelegate,
         
         styleNavigationBar()
         self.navigationController!.interactivePopGestureRecognizer.delegate = self
+        
+        var selection: NSIndexPath? = self.tableView?.indexPathForSelectedRow()
+        if (selection != nil) {
+            self.tableView.deselectRowAtIndexPath(selection!, animated:true)
+        }
     }
     
     override func viewDidLoad() {
         
         self.title = "More Registrars"
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
-        self.navigationController!.interactivePopGestureRecognizer.delegate = self
-        
-        tableView = UITableView(frame: self.view.frame, style: UITableViewStyle.Grouped)
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.registerClass(NRRegistrarCell.self, forCellReuseIdentifier: registrarsTableViewCellIdentifier)
-        tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
-        tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
-        tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 0.0, 0)
-        tableView.scrollIndicatorInsets = UIEdgeInsetsMake(44, 0, 0, 0)
-        tableView.scrollRectToVisible(CGRectMake(0, 0, 1, 1), animated: false)
-        tableView.tableHeaderView?.backgroundColor = NRColor().domairTableViewSeparatorBorder()
-        tableView.tableFooterView?.backgroundColor = NRColor().domairTableViewSeparatorBorder()
-        self.view.addSubview(tableView)
         
     }
     
@@ -160,10 +151,6 @@ class NRRegistrarsViewController: UIViewController, UIGestureRecognizerDelegate,
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         
-//        navController.navigationBar.barTintColor = UIColor.whiteColor()
-//        navController.navigationBar.tintColor = NRColor().domainrBlueColor()
-//        navController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: NRColor().domainrRegularDarkGreyColor()]
-//        
         let registrarURL: NSURL! = NSURL(string: registrars!.objectAtIndex(indexPath.row).valueForKey("register_url") as! String)
         let registrarViewController: SVWebViewController = SVWebViewController(URL: registrarURL)
         registrarViewController.title = registrars!.objectAtIndex(indexPath.row).valueForKey("name") as? String

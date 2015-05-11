@@ -10,6 +10,7 @@ import UIKit
 
 class NRSearchSuggestionsViewController: UIViewController, NRSearchSuggestionsManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIGestureRecognizerDelegate {
 
+    var activityIndicatorView: NRActivityIndicatorView!
     var tableView: UITableView!
     
     var query: String!
@@ -28,31 +29,41 @@ class NRSearchSuggestionsViewController: UIViewController, NRSearchSuggestionsMa
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        styleNavigationBar()
+        self.navigationController!.interactivePopGestureRecognizer.delegate = self
+        
+        var selection: NSIndexPath? = self.tableView?.indexPathForSelectedRow()
+        if (selection != nil) {
+            self.tableView.deselectRowAtIndexPath(selection!, animated:true)
+        }
+    }
+    
     override func viewDidLoad() {
         self.title = "Search Suggestions"
         
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
-        self.navigationController!.interactivePopGestureRecognizer.delegate = self
-        
-        let backButtonItem: UIBarButtonItem = UIBarButtonItem(title: "", style: .Plain, target: nil, action: nil)
-        self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButtonItem
-        
-        self.title = "Search Suggestions"
-        
-        self.navigationItem.titleView?.backgroundColor = UIColor.clearColor()
-        self.navigationItem.titleView?.layer.backgroundColor = UIColor.clearColor().CGColor
-        
+   
         tableView = UITableView(frame: self.view.frame, style: UITableViewStyle.Grouped)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(NRSearchSuggestionCell.self, forCellReuseIdentifier: searchSuggestionsTableViewCellIdentifier)
         tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
         tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
+        tableView.contentInset = UIEdgeInsetsMake(36.0, 0, 0.0, 0)
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(44, 0, 0, 0)
         tableView.scrollRectToVisible(CGRectMake(0, 0, 1, 1), animated: false)
         tableView.tableHeaderView?.backgroundColor = NRColor().domairTableViewSeparatorBorder()
         tableView.tableFooterView?.backgroundColor = NRColor().domairTableViewSeparatorBorder()
         self.view.addSubview(tableView)
+        
+        self.activityIndicatorView = NRActivityIndicatorView(image: UIImage(named: "activityIndicator")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
+        self.activityIndicatorView.center = CGPointIntegral(self.view.center)
+        self.activityIndicatorView.tintColor = NRColor().domainrBlueColor()
+        self.view.addSubview(self.activityIndicatorView)
+        self.activityIndicatorView.startAnimating()
         
         searchSuggestionManager = NRSearchSuggestionsManager()
         searchSuggestionManager.communicator = NRSearchSuggestionsCommunicator()
@@ -62,12 +73,33 @@ class NRSearchSuggestionsViewController: UIViewController, NRSearchSuggestionsMa
         startFetchingSearchSuggestionForQuery(query)
     }
 
+    func styleNavigationBar() {
+        
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
+        
+        let newNavigationBar: UINavigationBar! = UINavigationBar(frame: CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), 64.0))
+        newNavigationBar.barTintColor = self.navigationController?.navigationBar.barTintColor
+        newNavigationBar.translucent = true
+        newNavigationBar.tintColor = NRColor().domainrBlueColor()
+        newNavigationBar.titleTextAttributes = [NSForegroundColorAttributeName: NRColor().domainrRegularDarkGreyColor()]
+        
+        let titleItem = UINavigationItem()
+        titleItem.title = self.title
+        
+        let backButtonItem: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "backButton")?.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate), style: UIBarButtonItemStyle.Plain, target: self, action: "popViewController")
+        titleItem.leftBarButtonItem = backButtonItem
+        
+        newNavigationBar.setItems([titleItem], animated: false)
+        self.view.addSubview(newNavigationBar)
+    }
+    
     func startFetchingSearchSuggestionForQuery(queryString: String!) {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = true
         searchSuggestionManager.fetchSearchSuggestionsForDomain(queryString)
     }
     
     func popViewController() {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         self.navigationController?.popViewControllerAnimated(true)
     }
     
@@ -75,16 +107,34 @@ class NRSearchSuggestionsViewController: UIViewController, NRSearchSuggestionsMa
     
     func didReceiveSearchSuggestions(suggestions: NSArray!) {
         self.searchSuggestions = suggestions
-
         dispatch_async(dispatch_get_main_queue(), {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+            self.activityIndicatorView.removeFromSuperview()
             self.tableView.reloadData()
-            println(self.searchSuggestions)
         });
     }
     
     func fetchingSearchSuggestionsFailedWithError(error: NSError!) {
-        NSLog("Error %@; %@", error, error.localizedDescription)
+        NSLog("Error Suggestions %@; %@", error, error.localizedDescription)
+        loadingFailed()
+    }
+    
+    func loadingFailed() {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        self.activityIndicatorView.hidden = true
+        
+        let alert = UIAlertController(title: "Oops!", message: "Sorry 'bout that, it looks like this page failed to load.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addAction(UIAlertAction(title: "Go Back", style: UIAlertActionStyle.Destructive, handler: { action in
+            self.popViewController()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.Default, handler: { action in
+            self.activityIndicatorView.hidden = false
+            self.startFetchingSearchSuggestionForQuery(self.query)
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     // #pragma mark - UITableViewDataSource
@@ -130,7 +180,12 @@ class NRSearchSuggestionsViewController: UIViewController, NRSearchSuggestionsMa
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        
+
+    }
+    
+    deinit {
+        searchSuggestionManager.communicator = nil
+        searchSuggestionManager = nil
     }
     
 }

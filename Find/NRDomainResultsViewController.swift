@@ -58,8 +58,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         self.tableView.registerClass(NRDefaultCell.self, forCellReuseIdentifier: suggestionOptionCellIdentifier)
         self.tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
         self.tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
-        self.tableView.contentInset = UIEdgeInsetsMake(25.0, 0, 0.0, 0)
-        self.tableView.scrollIndicatorInsets = UIEdgeInsetsMake(44, 0, 0, 0)
+        self.tableView.contentInset = UIEdgeInsetsMake(25.0, 0, 25.0, 0)
         self.navigationItem.titleView = resultsSearchController.searchBar
     }
 
@@ -118,7 +117,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
 
             if results != nil {
                 
-                numberOfRows = self.results!.count-1
+                numberOfRows = self.results!.count
                 
             } else {
                 
@@ -138,9 +137,13 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         
         var cell: UITableViewCell!
         
+      
         if isSearching == false {
             
-            if self.results?.count > 0 {
+            if self.results?.count != nil {
+                
+                println(results!.objectAtIndex(indexPath.row))
+                
                 
                 cell = tableView.dequeueReusableCellWithIdentifier(resultsTableViewCellIdentifier) as! NRDomainCell
             
@@ -204,7 +207,7 @@ class NRResultsViewController: UITableViewController, NRResultsManagerDelegate, 
         
         self.resultsSearchController.active = false
         
-         self.navigationController?.pushViewController(viewControllerForPush, animated: true)
+        self.navigationController?.pushViewController(viewControllerForPush, animated: true)
     }
     
     // #pragma mark - UISearchBarDelegate

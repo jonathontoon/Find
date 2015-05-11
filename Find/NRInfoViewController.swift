@@ -17,6 +17,8 @@ enum AvailabilityType {
 
 class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditionalInfoManagerDelegate, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate, UIGestureRecognizerDelegate {
 
+    var activityIndicatorView: NRActivityIndicatorView!
+    
     var result: NRResult!
     
     var infoManager: NRInfoManager!
@@ -37,8 +39,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     
     init(result: NRResult!) {
         super.init(nibName: nil, bundle: nil)
-        
-        self.result = result
+               self.result = result
         
         infoManager = NRInfoManager()
         infoManager.communicator = NRInfoCommunicator()
@@ -67,6 +68,11 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         } else {
             UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: false)
         }
+        
+        var selection: NSIndexPath? = self.tableView?.indexPathForSelectedRow()
+        if (selection != nil) {
+            self.tableView.deselectRowAtIndexPath(selection!, animated:true)
+        }
     }
     
     override func viewDidLoad() {
@@ -74,42 +80,26 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         
         self.automaticallyAdjustsScrollViewInsets = false
         self.view.backgroundColor = NRColor().domainrBackgroundGreyColor()
-
-        availabilityType = AvailabilityType.Available
         
-        if result.availability == "taken" {
-            availabilityType = AvailabilityType.Taken
-        } else if result.availability == "Coming Soon" {
-            availabilityType = AvailabilityType.ComingSoon
-        } else if result.availability == "unavailable" {
-            availabilityType = AvailabilityType.Unavailable
-        }
-        
-        tableView = UITableView(frame: CGRectMake(0, 0, self.view.frame.size.width, (self.view.frame.size.height - 50)), style: UITableViewStyle.Grouped)
+        tableView = UITableView(frame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height), style: UITableViewStyle.Grouped)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(NRInfoViewCell.self, forCellReuseIdentifier: "NRInfoViewCell")
         tableView.registerClass(NRRegistrarCell.self, forCellReuseIdentifier: "NRRegistrarCell")
         tableView.registerClass(NRDomainCell.self, forCellReuseIdentifier: "NRDomainCell")
         tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
-        navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 175.0), title: self.result.domain, subTitle: self.result.availability?.capitalizedString, labelType: availabilityType, tld: result.tld)
-        tableView.tableHeaderView = navigationBarView
-        tableView.tableHeaderView?.layer.zPosition = 100
+        tableView.tableHeaderView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 175.0))
+        tableView.tableHeaderView!.backgroundColor = NRColor().domainrBackgroundBlackColor()
+        tableView.tableHeaderView!.layer.zPosition = 100
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
         tableView.stickyHeader = true
         tableView.separatorColor = NRColor().domairTableViewSeparatorBorder()
         tableView.tableFooterView = UIView(frame: CGRectZero)
+        tableView.scrollEnabled = false
+        tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 25.0, 0.0)
        
         self.view.addSubview(tableView)
-        
-        if availabilityType != AvailabilityType.Unavailable {
-            tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, availabilityType == AvailabilityType.Unavailable ? 0.0 : 25.0, 0.0)
-            
-            let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 50.0, self.view.frame.size.width, 50.0)
-            actionButton = NRActionButton(frame: buttonFrame, buttonType: availabilityType)
-            actionButton.addTarget(self, action: "presentAction", forControlEvents: UIControlEvents.TouchUpInside)
-            self.view.addSubview(actionButton)
-        }
+
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -145,20 +135,49 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         }
     }
     
+    func reloadViews() {
+        
+        self.activityIndicatorView.removeFromSuperview()
+        
+        result.availability = info.availability
+        availabilityType = AvailabilityType.Available
+        
+        if result.availability == "taken" {
+            availabilityType = AvailabilityType.Taken
+        } else if result.availability == "Coming Soon" || result.availability == "maybe" {
+            availabilityType = AvailabilityType.ComingSoon
+        } else if result.availability == "unavailable" {
+            availabilityType = AvailabilityType.Unavailable
+        }
+        
+        if navigationBarView == nil {
+            navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 175.0), title: self.info.domain, subTitle: self.info.availability?.capitalizedString, labelType: availabilityType, tld: result.tld)
+        
+            tableView.tableHeaderView = navigationBarView
+            tableView.tableHeaderView!.layer.zPosition = 100
+        }
+        
+        if result.availability != "unavailable" {
+            tableView.frame = CGRectMake(0, 0, self.view.frame.size.width, (self.view.frame.size.height - 50))
+            
+            let buttonFrame: CGRect = CGRectMake(0, self.view.frame.size.height - 50.0, self.view.frame.size.width, 50.0)
+            actionButton = NRActionButton(frame: buttonFrame, buttonType: availabilityType)
+            actionButton.addTarget(self, action: "presentAction", forControlEvents: UIControlEvents.TouchUpInside)
+            self.view.addSubview(actionButton)
+        }
+        
+        tableView.scrollEnabled = true
+        tableView.reloadData()
+    }
+    
     func presentAction() {
 
         let registerURL: NSURL! = NSURL(string: info.register_url!)
-        
-        var navController: UINavigationController! = UINavigationController()
-        navController.navigationBar.barTintColor = UIColor.whiteColor()
-        navController.navigationBar.tintColor = NRColor().domainrBlueColor()
-        navController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: NRColor().domainrRegularDarkGreyColor()]
-        
+
         let registerViewController: SVWebViewController = SVWebViewController(URL: registerURL)
         registerViewController.title = info.registrars?.objectAtIndex(0).valueForKey("name") as? String
-        
-        navController!.viewControllers = [registerViewController]
-        self.presentViewController(navController, animated: true, completion: nil)
+
+        self.navigationController?.pushViewController(registerViewController, animated: true)
         
     }
     
@@ -175,7 +194,8 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     }
     
     func fetchingInfoFailedWithError(error: NSError!) {
-        NSLog("Error %@; %@", error, error.localizedDescription)
+        NSLog("Error Info %@; %@", error, error.localizedDescription)
+        loadingFailed()
     }
 
     // #pragma mark - NRAdditionalInfoManagerDelegate
@@ -185,12 +205,31 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
 
         dispatch_async(dispatch_get_main_queue(), {
             UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-            self.tableView.reloadData()
+            self.reloadViews()
         });
     }
     
     func fetchingAdditionalInfoFailedWithError(error: NSError!) {
-        NSLog("Error %@; %@", error, error.localizedDescription)
+        NSLog("Error Additional Info %@; %@", error, error.localizedDescription)
+        loadingFailed()
+    }
+    
+    func loadingFailed() {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+        self.activityIndicatorView.hidden = true
+        
+        let alert = UIAlertController(title: "Oops!", message: "Sorry 'bout that, it looks like this page failed to load.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addAction(UIAlertAction(title: "Go Back", style: UIAlertActionStyle.Destructive, handler: { action in
+            self.popViewController()
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.Default, handler: { action in
+            self.activityIndicatorView.hidden = false
+            self.startFetchingInfo()
+        }))
+        
+        self.presentViewController(alert, animated: true, completion: nil)
     }
     
     // #pragma mark - UITableViewDataSource
@@ -200,13 +239,14 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         var sectionTotal: Int = 1
         
         if info != nil {
-            if info.registrars != nil {
+            if info.registrars!.count > 0 {
                 sectionTotal++
             }
         }
         
         if additionalInfo != nil {
-            if additionalInfo.domainAlternatives != nil {
+            println(additionalInfo.domainAlternatives.count)
+            if additionalInfo.domainAlternatives!.count > 0 {
                 sectionTotal++;
             }
         }
@@ -230,16 +270,24 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
 
             }
             
-            if section == 1 {
-                if info.registrars?.count < 4 {
+            if section == 1 && info.registrars!.count > 0 {
+                
+                if info.registrars!.count < 4 {
                     numberOfRows = info.registrars!.count
+                } else {
+                    numberOfRows = 4
+                }
+                
+            } else if section == 1 && additionalInfo.domainAlternatives!.count > 0 {
+                if additionalInfo.domainAlternatives!.count < 4 {
+                    numberOfRows = additionalInfo.domainAlternatives!.count
                 } else {
                     numberOfRows = 4
                 }
             }
             
-            if section == 2 {
-                if additionalInfo.domainAlternatives?.count < 4 {
+            if section == 2 && additionalInfo.domainAlternatives!.count > 0 {
+                if additionalInfo.domainAlternatives!.count < 4 {
                     numberOfRows = additionalInfo.domainAlternatives!.count
                 } else {
                     numberOfRows = 4
@@ -247,14 +295,6 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
             }
         }
         
-        if section == tableView.numberOfSections()-1 {
-            // cancel the perform request if there is another section
-            NSObject.cancelPreviousPerformRequestsWithTarget(self, selector: "tableViewWillFinishLoading:", object: tableView)
-            
-            // create a perform request to call the didLoadRows method on the next event loop.
-            self.callSelector("tableViewWillFinishLoading:", object:tableView, delay:0)
-        }
-
         return numberOfRows
         
     }
@@ -263,7 +303,17 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     
     func tableView(tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         
-        return createSectionHeader(section)
+        if section == 1 && info.registrars!.count > 0 {
+            return createPurchaseHeader()
+        } else if section == 1 && info.registrars!.count < 1 && additionalInfo.domainAlternatives!.count > 0 {
+            return createAlternativesHeader()
+        }
+        
+        if section == 2 && additionalInfo.domainAlternatives!.count > 0 {
+            return createAlternativesHeader()
+        }
+        
+        return UIView(frame: CGRectMake(0, 0, tableView.frame.size.width, 28.0))
     }
     
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -287,9 +337,11 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         
         if indexPath.section == 0 {
             cell = createDefaultCell(indexPath)
-        } else if indexPath.section == 1 {
+        } else if indexPath.section == 1 && info.registrars!.count > 0 {
             cell = createRegistrarCell(indexPath)
-        } else if indexPath.section == 2 {
+        } else if indexPath.section == 1 && additionalInfo.domainAlternatives!.count > 0 {
+            cell = createDomainCell(indexPath)
+        } else if indexPath.section == 2 && additionalInfo.domainAlternatives!.count > 0 {
             cell = createDomainCell(indexPath)
         }
         
@@ -334,7 +386,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
                 
                 }
             
-            } else if indexPath.section == 1 {
+            } else if indexPath.section == 1 && self.info.registrars!.count > 0 {
                 
                 if indexPath.row > 2 {
                     
@@ -354,7 +406,37 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
                     
                 }
             
-            } else if indexPath.section == 2 {
+            } else if indexPath.section == 1 && self.additionalInfo.domainAlternatives!.count > 0 {
+                
+                if indexPath.row > 2 {
+                    
+                    let newArray: NSArray = self.additionalInfo.domainAlternatives!.subarrayWithRange(NSMakeRange(3, self.additionalInfo.domainAlternatives!.count-3))
+                    let registrarsViewController: NRAlternativeDomainsViewController = NRAlternativeDomainsViewController(alternatives: newArray, result: self.result)
+                    
+                    self.navigationController?.pushViewController(registrarsViewController, animated: true)
+                    
+                } else {
+                    
+                    let result: NRResult = self.result
+                    
+                    result.domain = self.additionalInfo.domainAlternatives.objectAtIndex(indexPath.row).objectForKey("text") as? String
+                    var availabilityString: NSString = (self.additionalInfo.domainAlternatives!.objectAtIndex(indexPath.row).valueForKey("class") as? NSString)!
+                    
+                    if availabilityString.rangeOfString("available").location != NSNotFound {
+                        result.availability = "available"
+                    } else if availabilityString.rangeOfString("maybe").location != NSNotFound || availabilityString.rangeOfString("coming soon").location != NSNotFound {
+                        result.availability = "Coming Soon"
+                    } else if availabilityString.rangeOfString("taken").location != NSNotFound {
+                        result.availability = "taken"
+                    }
+                    
+                    let infoViewController: NRInfoViewController = NRInfoViewController(result: result)
+                    
+                    self.navigationController?.pushViewController(infoViewController, animated: true)
+                    
+                }
+                
+            } else if indexPath.section == 2 && self.additionalInfo.domainAlternatives!.count > 0 {
                 
                 if indexPath.row > 2 {
                     
@@ -369,10 +451,6 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
                     
                     result.domain = self.additionalInfo.domainAlternatives.objectAtIndex(indexPath.row).objectForKey("text") as? String
                     var availabilityString: NSString = (self.additionalInfo.domainAlternatives!.objectAtIndex(indexPath.row).valueForKey("class") as? NSString)!
-                    
-                    println("@@@@@@@@")
-                    println(result.domain)
-                    println(availabilityString)
                     
                     if availabilityString.rangeOfString("available").location != NSNotFound {
                         result.availability = "available"
@@ -389,6 +467,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
                 }
                 
             }
+
         });
     }
     
@@ -493,87 +572,75 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         
     }
     
-    func createSectionHeader(section: Int) -> UIView {
+    func createPurchaseHeader() -> UIView {
         
         let headerView: UIView! = UIView()
             headerView.frame = CGRectMake(0, 0, tableView.frame.size.width, 28.0)
+
+        let headerImage: UIImageView! = UIImageView(image: UIImage(named: "shoppingCart")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
+            headerImage.frame = CGRectMake(15.0, 24.0, 12.0, 11.0)
+            headerImage.tintColor = NRColor().domainrSubtextGreyColor()
+            headerImage.contentMode = UIViewContentMode.ScaleAspectFit
+            headerView.addSubview(headerImage)
+            headerImage.frame = CGRectIntegral(headerImage.frame)
         
-        if additionalInfo != nil {
-            
-            if section == 1 {
-                
-                let headerImage: UIImageView! = UIImageView(image: UIImage(named: "shoppingCart")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
-                    headerImage.frame = CGRectMake(15.0, 24.0, 12.0, 11.0)
-                    headerImage.tintColor = NRColor().domainrSubtextGreyColor()
-                    headerImage.contentMode = UIViewContentMode.ScaleAspectFit
-                    headerView.addSubview(headerImage)
-                    headerImage.frame = CGRectIntegral(headerImage.frame)
-                
-                let headerTitle: UILabel! = UILabel()
-                    headerTitle.text = "PURCHASE OPTIONS"
-                    headerTitle.font = UIFont(name: "HelveticaNeue", size: 12.0)
-                    headerTitle.textColor = NRColor().domainrSubtextGreyColor()
-                    headerTitle.sizeToFit()
-                    headerTitle.frame = CGRectMake(33.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
-                    headerView.addSubview(headerTitle)
-                    
-                let idnLabel: UILabel! = UILabel(frame: CGRectMake(tableView.frame.size.width - (27.0 + 15.0), 21.0, 27.0, 16.0))
-                    idnLabel.text = "IDN"
-                    idnLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 10.0)
-                    idnLabel.textColor = UIColor.whiteColor()
-                    idnLabel.backgroundColor = NRColor().domainrOrangeColor()
-                    idnLabel.textAlignment = NSTextAlignment.Center
-                    idnLabel.layer.cornerRadius = 2.0
-                    idnLabel.clipsToBounds = true
-                    
-                let tldLabel: UILabel! = UILabel()
-                    tldLabel.text = (additionalInfo.domain != nil ? additionalInfo.domain.uppercaseString  : "")
-                    tldLabel.font = headerTitle.font
-                    tldLabel.textColor = headerTitle.textColor
-                    tldLabel.sizeToFit()
-                    
-                    if additionalInfo.isIDN == "IDN" {
-                        headerView.addSubview(idnLabel)
-                        tldLabel.frame = CGRectMake(idnLabel.frame.origin.x - (tldLabel.frame.size.width + 5.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
-                    } else {
-                        tldLabel.frame = CGRectMake(self.view.frame.size.width - (tldLabel.frame.size.width + 15.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
-                    }
-                    
-                    headerView.addSubview(tldLabel)
-
-            } else if section == 2 {
-             
-                let headerImage: UIImageView! = UIImageView(image: UIImage(named: "alternativeDomains")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
-                headerImage.frame = CGRectMake(15.0, 24.0, 12.0, 11.0)
-                headerImage.tintColor = NRColor().domainrSubtextGreyColor()
-                headerImage.contentMode = UIViewContentMode.ScaleAspectFit
-                headerView.addSubview(headerImage)
-                headerImage.frame = CGRectIntegral(headerImage.frame)
-                
-                let headerTitle: UILabel! = UILabel()
-                headerTitle.text = "ALTERNATIVE DOMAINS"
-                headerTitle.font = UIFont(name: "HelveticaNeue", size: 12.0)
-                headerTitle.textColor = NRColor().domainrSubtextGreyColor()
-                headerTitle.sizeToFit()
-                headerTitle.frame = CGRectMake(33.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
-                headerView.addSubview(headerTitle)
-
-            }
+        let headerTitle: UILabel! = UILabel()
+            headerTitle.text = "PURCHASE OPTIONS"
+            headerTitle.font = UIFont(name: "HelveticaNeue", size: 12.0)
+            headerTitle.textColor = NRColor().domainrSubtextGreyColor()
+            headerTitle.sizeToFit()
+            headerTitle.frame = CGRectMake(33.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
+            headerView.addSubview(headerTitle)
+        
+        let idnLabel: UILabel! = UILabel(frame: CGRectMake(tableView.frame.size.width - (27.0 + 15.0), 21.0, 27.0, 16.0))
+            idnLabel.text = "IDN"
+            idnLabel.font = UIFont(name: "HelveticaNeue-Medium", size: 10.0)
+            idnLabel.textColor = UIColor.whiteColor()
+            idnLabel.backgroundColor = NRColor().domainrOrangeColor()
+            idnLabel.textAlignment = NSTextAlignment.Center
+            idnLabel.layer.cornerRadius = 2.0
+            idnLabel.clipsToBounds = true
+        
+        let tldLabel: UILabel! = UILabel()
+            tldLabel.text = (additionalInfo.domain != nil ? additionalInfo.domain.uppercaseString  : "")
+            tldLabel.font = headerTitle.font
+            tldLabel.textColor = headerTitle.textColor
+            tldLabel.sizeToFit()
+        
+        if additionalInfo.isIDN == "IDN" {
+            headerView.addSubview(idnLabel)
+            tldLabel.frame = CGRectMake(idnLabel.frame.origin.x - (tldLabel.frame.size.width + 5.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
+        } else {
+            tldLabel.frame = CGRectMake(self.view.frame.size.width - (tldLabel.frame.size.width + 15.0), headerTitle.frame.origin.y, tldLabel.frame.size.width, headerTitle.frame.size.height)
         }
+        
+            headerView.addSubview(tldLabel)
         
         return headerView
         
     }
     
-    func tableViewWillFinishLoading(tableView: UITableView) {
-//        println(tableView.contentSize.height)
-//        println(UIScreen.mainScreen().bounds.height)
-//        if tableView.contentSize.height < UIScreen.mainScreen().bounds.height {
-//            tableView.scrollEnabled = false
-//        } else {
-//            tableView.scrollEnabled = true
-//        }
+    func createAlternativesHeader() -> UIView {
         
+        let headerView: UIView! = UIView()
+            headerView.frame = CGRectMake(0, 0, tableView.frame.size.width, 28.0)
+        
+        let headerImage: UIImageView! = UIImageView(image: UIImage(named: "alternativeDomains")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
+            headerImage.frame = CGRectMake(15.0, 24.0, 12.0, 11.0)
+            headerImage.tintColor = NRColor().domainrSubtextGreyColor()
+            headerImage.contentMode = UIViewContentMode.ScaleAspectFit
+            headerView.addSubview(headerImage)
+            headerImage.frame = CGRectIntegral(headerImage.frame)
+        
+        let headerTitle: UILabel! = UILabel()
+            headerTitle.text = "ALTERNATIVE DOMAINS"
+            headerTitle.font = UIFont(name: "HelveticaNeue", size: 12.0)
+            headerTitle.textColor = NRColor().domainrSubtextGreyColor()
+            headerTitle.sizeToFit()
+            headerTitle.frame = CGRectMake(33.0, 22.0, headerTitle.frame.size.width, headerTitle.frame.size.height)
+            headerView.addSubview(headerTitle)
+        
+        return headerView
     }
     
     // #pragma mark - UIScrollViewDelegate
@@ -598,6 +665,10 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         nr_resizeHeaderView(scrollView)
     }
     
+    func reloadView() {
+        self.activityIndicatorView.hidden = false
+    }
+    
     func popViewController() {
         
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
@@ -615,10 +686,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
             
             let velocity: CGFloat = scrollView.panGestureRecognizer.velocityInView(scrollView).y
             var offset: CGFloat! = scrollView.contentOffset.y
-            
-            NSLog("offset %f", offset)
-            NSLog("height %f", tableView.tableHeaderView!.frame.size.height)
-            
+
             if offset < 111.0 {
                 
                 if offset < 0 {
@@ -635,5 +703,12 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
             navigationBarView.centerElements()
             tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
         }
+    }
+    
+    deinit {
+        infoManager.communicator = nil
+        additionalInfoManager.communicator = nil
+        infoManager = nil
+        additionalInfoManager = nil
     }
 }
