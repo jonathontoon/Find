@@ -39,14 +39,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     
     init(result: NRResult!) {
         super.init(nibName: nil, bundle: nil)
-        
-        self.activityIndicatorView = NRActivityIndicatorView(image: UIImage(named: "activityIndicator")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
-        self.activityIndicatorView.center = CGPointIntegral(self.view.center)
-        self.activityIndicatorView.tintColor = NRColor().domainrBlueColor()
-        self.view.addSubview(self.activityIndicatorView)
-        self.activityIndicatorView.startAnimating()
-        
-        self.result = result
+               self.result = result
         
         infoManager = NRInfoManager()
         infoManager.communicator = NRInfoCommunicator()
@@ -180,17 +173,11 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     func presentAction() {
 
         let registerURL: NSURL! = NSURL(string: info.register_url!)
-        
-        var navController: UINavigationController! = UINavigationController()
-        navController.navigationBar.barTintColor = UIColor.whiteColor()
-        navController.navigationBar.tintColor = NRColor().domainrBlueColor()
-        navController.navigationBar.titleTextAttributes = [NSForegroundColorAttributeName: NRColor().domainrRegularDarkGreyColor()]
-        
+
         let registerViewController: SVWebViewController = SVWebViewController(URL: registerURL)
         registerViewController.title = info.registrars?.objectAtIndex(0).valueForKey("name") as? String
-        
-        navController!.viewControllers = [registerViewController]
-        self.navigationController?.pushViewController(navController, animated: true)
+
+        self.navigationController?.pushViewController(registerViewController, animated: true)
         
     }
     
@@ -208,20 +195,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     
     func fetchingInfoFailedWithError(error: NSError!) {
         NSLog("Error Info %@; %@", error, error.localizedDescription)
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-        self.activityIndicatorView.hidden = true
-        
-        let alert = UIAlertController(title: "Oops!", message: "Uhoh, it looks like this page failed to load.", preferredStyle: UIAlertControllerStyle.Alert)
-        alert.addAction(UIAlertAction(title: "Try Again", style: UIAlertActionStyle.Default, handler: { action in
-            self.activityIndicatorView.hidden = false
-            self.startFetchingInfo()
-        }))
-        
-        alert.addAction(UIAlertAction(title: "Go Back", style: UIAlertActionStyle.Destructive, handler: { action in
-            self.popViewController()
-        }))
-        
-        self.presentViewController(alert, animated: true, completion: nil)
+        loadingFailed()
     }
 
     // #pragma mark - NRAdditionalInfoManagerDelegate
@@ -237,10 +211,14 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
     
     func fetchingAdditionalInfoFailedWithError(error: NSError!) {
         NSLog("Error Additional Info %@; %@", error, error.localizedDescription)
+        loadingFailed()
+    }
+    
+    func loadingFailed() {
         UIApplication.sharedApplication().networkActivityIndicatorVisible = false
         self.activityIndicatorView.hidden = true
         
-        let alert = UIAlertController(title: "Oops!", message: "Uhoh, it looks like this page failed to load.", preferredStyle: UIAlertControllerStyle.Alert)
+        let alert = UIAlertController(title: "Oops!", message: "Sorry 'bout that, it looks like this page failed to load.", preferredStyle: UIAlertControllerStyle.Alert)
         
         alert.addAction(UIAlertAction(title: "Go Back", style: UIAlertActionStyle.Destructive, handler: { action in
             self.popViewController()
@@ -725,5 +703,12 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
             navigationBarView.centerElements()
             tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
         }
+    }
+    
+    deinit {
+        infoManager.communicator = nil
+        additionalInfoManager.communicator = nil
+        infoManager = nil
+        additionalInfoManager = nil
     }
 }
