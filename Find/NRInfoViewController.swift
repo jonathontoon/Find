@@ -99,7 +99,13 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, 25.0, 0.0)
        
         self.view.addSubview(tableView)
-
+        
+        self.activityIndicatorView = NRActivityIndicatorView(image: UIImage(named: "activityIndicator")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate))
+        self.activityIndicatorView.center = CGPointIntegral(self.view.center)
+        self.activityIndicatorView.tintColor = NRColor().domainrBlueColor()
+        self.view.addSubview(self.activityIndicatorView)
+        self.activityIndicatorView.startAnimating()
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -220,7 +226,8 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         
         let alert = UIAlertController(title: "Oops!", message: "Sorry 'bout that, it looks like this page failed to load.", preferredStyle: UIAlertControllerStyle.Alert)
         
-        alert.addAction(UIAlertAction(title: "Go Back", style: UIAlertActionStyle.Destructive, handler: { action in
+        alert.addAction(UIAlertAction(title: "Go Back", style: UIAlertActionStyle.Cancel, handler: { action in
+            self.activityIndicatorView.hidden = true
             self.popViewController()
         }))
         

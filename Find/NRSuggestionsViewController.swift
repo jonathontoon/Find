@@ -125,7 +125,8 @@ class NRSearchSuggestionsViewController: UIViewController, NRSearchSuggestionsMa
         
         let alert = UIAlertController(title: "Oops!", message: "Sorry 'bout that, it looks like this page failed to load.", preferredStyle: UIAlertControllerStyle.Alert)
         
-        alert.addAction(UIAlertAction(title: "Go Back", style: UIAlertActionStyle.Destructive, handler: { action in
+        alert.addAction(UIAlertAction(title: "Go Back", style: UIAlertActionStyle.Cancel, handler: { action in
+            self.activityIndicatorView.hidden = true
             self.popViewController()
         }))
         
