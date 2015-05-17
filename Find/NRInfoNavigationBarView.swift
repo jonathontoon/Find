@@ -43,7 +43,7 @@ class NRInfoNavigationBarView: UIView {
     
     override func drawRect(rect: CGRect) {
         
-        patternView = NRInfoNavigationBarPatternView(frame: CGRectMake(0, 0, self.frame.size.width, UIScreen.mainScreen().bounds.height), topLevelDomain: tldString)
+        patternView = NRInfoNavigationBarPatternView(frame: CGRectMake(0, 0, self.frame.size.width, UIScreen.mainScreen().bounds.height), topLevelDomain: titleString)
         self.addSubview(patternView)
         
         titleLabel = UILabel()
