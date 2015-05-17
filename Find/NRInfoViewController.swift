@@ -88,7 +88,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         tableView.registerClass(NRRegistrarCell.self, forCellReuseIdentifier: "NRRegistrarCell")
         tableView.registerClass(NRDomainCell.self, forCellReuseIdentifier: "NRDomainCell")
         tableView.backgroundColor = NRColor().domainrBackgroundGreyColor()
-        tableView.tableHeaderView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 175.0))
+        tableView.tableHeaderView = UIView(frame: CGRectMake(0, 0, self.view.frame.size.width, 150.0))
         tableView.tableHeaderView!.backgroundColor = NRColor().domainrBackgroundBlackColor()
         tableView.tableHeaderView!.layer.zPosition = 100
         tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
@@ -157,7 +157,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
         }
         
         if navigationBarView == nil {
-            navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 175.0), title: self.info.domain, subTitle: self.info.availability?.capitalizedString, labelType: availabilityType, tld: result.tld)
+            navigationBarView = NRInfoNavigationBarView(frame:CGRectMake(0, 0, self.view.frame.size.width, 150.0), title: self.info.domain, subTitle: self.info.availability?.capitalizedString, labelType: availabilityType, tld: result.tld)
         
             tableView.tableHeaderView = navigationBarView
             tableView.tableHeaderView!.layer.zPosition = 100
@@ -694,10 +694,13 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
             let velocity: CGFloat = scrollView.panGestureRecognizer.velocityInView(scrollView).y
             var offset: CGFloat! = scrollView.contentOffset.y
 
-            if offset < 111.0 {
+            println(scrollView.contentOffset.y)
+            println(tableView.tableHeaderView!.frame.size.height)
+            
+            if offset < 85.0 {
                 
-                if offset < 0 {
-                    tableView.tableHeaderView!.frame.size.height = 175.0
+                if offset <= 0 {
+                    tableView.tableHeaderView!.frame.size.height = 150.0
                 } else {
                     tableView.tableHeaderView!.frame.size.height += (previousScrollOffsetY - scrollView.contentOffset.y)
                 }
@@ -705,7 +708,7 @@ class NRInfoViewController: UIViewController, NRInfoManagerDelegate, NRAdditiona
                 previousScrollOffsetY = offset
             } else {
                 tableView.tableHeaderView!.frame.size.height = 64.0
-                previousScrollOffsetY = 111.0
+                previousScrollOffsetY = 86.0
             }
             navigationBarView.centerElements()
             tableView.scrollIndicatorInsets = UIEdgeInsetsMake(tableView.tableHeaderView!.frame.size.height, 0, 0, 0)
